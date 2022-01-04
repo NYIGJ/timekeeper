@@ -1,5 +1,5 @@
 {
-  "name": "yarny-prototype",
+  "name": "gamejam-prototype",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -33,5 +33,9 @@
     "eslint-plugin-vue": "^8.2.0",
     "postcss": "^8.4.4",
     "prettier": "^2.5.1"
+  },
+  "volta": {
+    "node": "16.13.1",
+    "yarn": "1.22.17"
   }
 }
