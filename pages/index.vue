@@ -6,15 +6,19 @@
       Timekeeper
     </header>
     <main class="bg-gray-400 grid w-full">
-      <div class="units p-8 relative">
+      <div class="units p-8 relative bg-gray-300">
         <div class="units-background absolute top-8 left-0 right-0"></div>
       </div>
-      <div class="tabs flex flex-row w-full text-gray-600">
+      <div class="tabs flex flex-row w-full bg-gray-400 text-gray-400">
         <div
           v-for="(tab, index) in tabs"
           :key="index"
-          class="tab flex-grow text-center text-2xl font-semibold border border-gray-600"
-          :class="{ 'text-gray-400 bg-gray-600': activeTabIndex === index }"
+          class="tab flex-grow text-center text-2xl font-semibold py-1 mr-px"
+          :class="{
+            'text-gray-600 bg-gray-400 border-gray-600':
+              activeTabIndex === index,
+            'bg-gray-600 border-gray-600': activeTabIndex !== index,
+          }"
           @click="activeTabIndex = index"
         >
           {{ tab.label }}
