@@ -38,14 +38,14 @@
 </template>
 
 <script>
-import Decimal from "break_infinity.js"
+import Decimal from 'break_infinity.js'
 
 export default {
   name: 'TabNav',
   data() {
     return {
-        energycurrency: new Decimal(0),
-        timecurrency: new Decimal(0)
+      energycurrency: new Decimal(0),
+      timecurrency: new Decimal(0),
     }
   },
   methods: {
@@ -67,9 +67,9 @@ export default {
         }
       }
     },
-    increaseCurrency (energy, time) {
-        this.energycurrency = Decimal.add(this.energycurrency, energy)
-        this.timecurrency = Decimal.add(this.timecurrency, time)
+    increaseCurrency(energy, time) {
+      this.energycurrency = Decimal.add(this.energycurrency, energy)
+      this.timecurrency = Decimal.add(this.timecurrency, time)
     },
   },
 }
