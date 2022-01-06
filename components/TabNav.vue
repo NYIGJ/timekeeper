@@ -1,5 +1,7 @@
 <template>
   <div class="bg-white grid place-content-center border-2 w-3/4 mx-auto">
+    <div>Energy: {{ $store.state.incremental.currency.energy }}</div>
+    <div>Time: {{ timecurrency }}</div>
     <nav class="flex flex-col sm:flex-row">
       <button
         id="tab1"
@@ -36,10 +38,15 @@
 </template>
 
 <script>
+import Decimal from "break_infinity.js"
+
 export default {
   name: 'TabNav',
   data() {
-    return {}
+    return {
+        energycurrency: new Decimal(0),
+        timecurrency: new Decimal(0)
+    }
   },
   methods: {
     tabclicked(tabnumber) {
@@ -59,6 +66,10 @@ export default {
           viewE.className = 'tabhidden'
         }
       }
+    },
+    increaseCurrency (energy, time) {
+        this.energycurrency = Decimal.add(this.energycurrency, energy)
+        this.timecurrency = Decimal.add(this.timecurrency, time)
     },
   },
 }
