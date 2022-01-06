@@ -1,31 +1,90 @@
 <template>
-  <div class="gridcontainer container mx-auto bg-red-500">
-    <header>I'm a header. Check this box</header>
-    <TabNav />
-    <footer>This is a game jam game.</footer>
+  <div class="page grid container h-full w-full mx-auto bg-gray-300 px-4">
+    <header
+      class="text-3xl flex items-center justify-center font-bold bg-gray-600 text-gray-400"
+    >
+      Timekeeper
+    </header>
+    <main class="bg-gray-400 grid w-full">
+      <div class="units p-8 relative">
+        <div class="units-background absolute top-8 left-0 right-0"></div>
+      </div>
+      <div class="tabs flex flex-row w-full text-gray-600">
+        <div
+          v-for="(tab, index) in tabs"
+          :key="index"
+          class="tab flex-grow text-center text-2xl font-semibold border border-gray-600"
+          :class="{ 'text-gray-400 bg-gray-600': activeTabIndex === index }"
+          @click="activeTabIndex = index"
+        >
+          {{ tab.label }}
+        </div>
+      </div>
+      <div class="tab-content p-8">
+        Colors and art are purely for example, not recommendations. Background
+        colors are used to distinguish individual HTML elements.
+      </div>
+    </main>
+    <footer class="text-lg flex items-center pt-4 pb-2 px-4 hidden md:block">
+      Created by GrapefruitChili, PK, TNNPe, Vice for New Years Incremental Game
+      Jam 2022.
+    </footer>
   </div>
 </template>
 
 <script>
+const TABS = [
+  { id: 'instruments', label: '1' },
+  { id: 'upgrades', label: '2' },
+  { id: 'fathertime', label: '3' },
+  { id: 'timemachine', label: '4' },
+  { id: 'achievements', label: '5' },
+  { id: 'prestige', label: '6' },
+]
+
 export default {
   name: 'IndexPage',
+  data() {
+    return {
+      tabs: TABS,
+      activeTabIndex: 0,
+    }
+  },
 }
 </script>
 
+<style>
+html,
+body,
+#__nuxt,
+#__layout {
+  height: 100%; /* 100vh is broken on mobile. this is the fix. */
+  width: 100vw;
+}
+
+html {
+  background: #e5e7eb;
+}
+</style>
+
 <style scoped>
-.gridcontainer {
-  display: grid;
+.page {
+  grid-template-rows: 4rem 1fr auto;
 }
 
-header {
-  grid-row: 1;
+main {
+  grid-template-rows: 1fr auto 2fr;
 }
 
-.gridcenter {
-  grid-row: 2;
+.units-background {
+  background: url('https://freesvg.org/img/johnny_automatic_hourglass.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.4;
+  height: calc(100% - 4rem); /* 4rem = top padding + bottom padding */
 }
 
-footer {
-  grid-row: 3;
+.tabs {
 }
 </style>
