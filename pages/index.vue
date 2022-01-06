@@ -3,7 +3,10 @@
     <header>
         I'm a header. Check this box
     </header>
-    <TabNav/>
+    <div class="gridcenter">
+        <div> Insert Key Art</div>
+        <TabNav/>
+    </div>
     <footer>
         This is a game jam game.
     </footer>
@@ -13,6 +16,12 @@
 <script>
 export default {
   name: 'IndexPage',
+  data () {
+    return { 
+    }
+  },
+  methods: {
+  }
 }
 </script>
 
