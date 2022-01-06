@@ -15,7 +15,7 @@ export const state = () => ({
             produces: currencies.seasons,
             deviceCount: new Decimal(0),
             workerCount: new Decimal(0),
-            unlockThreshold: {currencies.seasons: 0, tech: null}
+            unlockThreshold: {[currencies.seasons]: 0, tech: null}
         },
         {   device: "Stone Calendar",
             worker: "Stonecarver",
@@ -23,7 +23,7 @@ export const state = () => ({
             produces: currencies.months,
             deviceCount: new Decimal(0),
             workerCount: new Decimal(0),
-            unlockThreshold: {currencies.seasons: 1, tech: null}
+            unlockThreshold: {[currencies.seasons]: 1, tech: null}
         },
         {   device: "Astrolabes",
             worker: "Mathematician",
@@ -31,12 +31,12 @@ export const state = () => ({
             produces: currencies.days,
             deviceCount: new Decimal(0),
             workerCount: new Decimal(0),
-            unlockThreshold: {currencies.days: 10, tech: 0}
+            unlockThreshold: {[currencies.days]: 10, tech: 0}
         }
     ],
 
     upgrades: [
-        {   name: "Mathematics"
+        {   name: "Mathematics",
             boughtWith: currencies.seasons,
             price: 100,
             purchased: false
