@@ -1,50 +1,64 @@
 <template>
   <div>
-    <button @click="add">add {{ addIncrement }}</button>
-    <button @click="stepup">add to the adding</button>
-    <div>big value = {{ bigvalue }}</div>
+    <button @click="add"> add {{addIncrement}} </button>
+    <button @click="stepup"> {{mulIncrement}}x addition per step </button>
+    <button @click="jumpup"> 10x more multiplication per step</button>
+    <button @click="toggletimer">Tick automatically</button>
   </div>
 </template>
 
 <script>
-// import Decimal from "break_infinity.js";
+
+import Decimal from "break_infinity.js";
 
 export default {
   name: 'InfinityTester',
   data() {
     return {
-      addIncrement: 0,
-      bigvalue: 0,
+      addIncrement: new Decimal(100),
+      mulIncrement: new Decimal(10),
+      bigValue: new Decimal(0),
+      timerRunning: false
     }
   },
-  methods: {
-    add() {
-      // eslint-disable-next-line no-console
-      console.log('!')
-      this.bigvalue = 0
-    },
-
-    stepup() {
-      this.addIncrement += 100
-    },
+  beforeMount () {
+        window.setInterval(() => {
+                this.gametick();
+            },250);
   },
+  methods: {
+        add () {
+            // this.bigValue = Decimal.add(this.bigValue, this.addIncrement);
+            this.$store.commit("incremental/add", 
+                {key: "energy", value: this.addIncrement}
+            )
+        },
+
+        stepup () {
+            this.addIncrement = Decimal.mul(this.addIncrement, this.mulIncrement);
+        },
+
+        jumpup() {
+            this.mulIncrement = Decimal.mul(this.mulIncrement, 10.0);
+        },
+
+        gametick() {
+            if (this.timerRunning) {
+                this.$store.commit("incremental/add", 
+                    {key: "energy", value: this.addIncrement}
+                )
+            }
+        },
+
+        toggletimer() {
+            this.timerRunning = !(this.timerRunning)
+        }
+  }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only 
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+button {
+  background-color: #42b983;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>-->
+</style>
