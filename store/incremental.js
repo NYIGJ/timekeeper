@@ -1,19 +1,52 @@
 import Decimal from "break_infinity.js"
+import currencies from "./const.js"
 
 export const state = () => ({
-    currency: {
-        energy: new Decimal(0),
-        // if it hasn't been your
-        days: new Decimal(0),
-        weeks: new Decimal(0),
-        months: new Decimal(0),
-        // or even your
-        years: new Decimal(0)
-    }
+    // use currencies from const as keys; initialize all values to zero
+    currency: currencies.reduce(function(obj, x) {
+                obj[x] = new Decimal(0);
+                return obj;
+            }, {}),
+
+    processes: [
+        {   device: "Star Chart",
+            worker: "Shaman",
+            boughtWith: null,
+            produces: currencies.seasons,
+            deviceCount: new Decimal(0),
+            workerCount: new Decimal(0),
+            unlockThreshold: {currencies.seasons: 0, tech: null}
+        },
+        {   device: "Stone Calendar",
+            worker: "Stonecarver",
+            boughtWith: currencies.seasons,
+            produces: currencies.months,
+            deviceCount: new Decimal(0),
+            workerCount: new Decimal(0),
+            unlockThreshold: {currencies.seasons: 1, tech: null}
+        },
+        {   device: "Astrolabes",
+            worker: "Mathematician",
+            boughtWith: currencies.months,
+            produces: currencies.days,
+            deviceCount: new Decimal(0),
+            workerCount: new Decimal(0),
+            unlockThreshold: {currencies.days: 10, tech: 0}
+        }
+    ],
+
+    upgrades: [
+        {   name: "Mathematics"
+            boughtWith: currencies.seasons,
+            price: 100,
+            purchased: false
+        },
+    ]
 })
 
 export const mutations = {
     add(state, { key, value }) {
+        console.log(state.currency.keys())
         state.currency[key] = Decimal.add(state.currency[key], value)
     },
 
