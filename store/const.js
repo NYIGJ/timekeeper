@@ -1,13 +1,12 @@
 export default {
-    currencies: [
-        "energy",
-        "seasons",
-        "months",
-        "days",
-        "hours",
-        "seconds",
-        "nanoseconds",
-        "plancktime"
-    ]
-
+  currencies: {
+    energy: 'energy',
+    seasons: 'seasons',
+    months: 'months',
+    days: 'days',
+    hours: 'hours',
+    seconds: 'seconds',
+    nanoseconds: 'nanoseconds',
+    plancktime: 'plancktime',
+  },
 }
