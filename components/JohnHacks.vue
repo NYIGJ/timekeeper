@@ -1,10 +1,12 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <button @click="button_clicky()"> Click Me </button>
-    <div> clicks = {{ clicks }} </div>
+    <button @click="button_clicky()">Click Me</button>
+    <div>clicks = {{ clicks }}</div>
     <ul>
-        <li v-for="value in testvalues.slice(0, clicks)" :key="value">{{value}}</li>
+      <li v-for="value in testvalues.slice(0, clicks)" :key="value">
+        {{ value }}
+      </li>
     </ul>
   </div>
 </template>
@@ -12,7 +14,7 @@
 <script>
 export default {
   name: 'JohnHacks',
-  data () {
+  data() {
     return {
       msg: 'John copies files and makes a mess',
       testvalues: [1, 1, 2, 3, 5, 8, 13, 21],
@@ -20,12 +22,12 @@ export default {
     }
   },
   methods: {
-      button_clicky () {
-          // eslint-disable-next-line no-console
-          console.log("!")
-          this.clicks += 1
-      }
-  }
+    button_clicky() {
+      // eslint-disable-next-line no-console
+      console.log('!')
+      this.clicks += 1
+    },
+  },
 }
 </script>
 

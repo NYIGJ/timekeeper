@@ -4,7 +4,6 @@
     <button @click="stepup"> {{mulIncrement}}x addition per step </button>
     <button @click="jumpup"> 10x more multiplication per step</button>
     <button @click="toggletimer">Tick automatically</button>
-    <!-- div> big value = {{ bigValue }} </div -->
   </div>
 </template>
 
@@ -14,7 +13,7 @@ import Decimal from "break_infinity.js";
 
 export default {
   name: 'InfinityTester',
-  data () {
+  data() {
     return {
       addIncrement: new Decimal(100),
       mulIncrement: new Decimal(10),
