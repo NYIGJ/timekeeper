@@ -68,6 +68,25 @@ import GameTab from '~/components/GameTab.vue'
 export default {
   name: 'IndexPage',
   components: { GameTab, FirstTabContent },
+  mounted() {
+    window.setInterval(() => {
+      this.gametick()
+    }, 1000)
+  },
+  methods: {
+    gametick() {
+      for (let i = 0; i <= 4; i++) {
+        const currentCompletion = this.$store.state.processes[i].completion
+        const step = 100.0 / (6.0 * (i + 1)) // go at different rates
+        let newValue = currentCompletion + step
+        if (newValue >= 100) newValue = newValue - 100
+        this.$store.commit('setProcessCompletion', {
+          processIndex: i,
+          value: newValue,
+        })
+      }
+    },
+  },
 }
 </script>
 

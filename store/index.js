@@ -1,4 +1,5 @@
 import Decimal from 'break_infinity.js'
+import Vue from 'vue'
 
 export const state = () => ({
   activeTabIndex: 0,
@@ -50,24 +51,27 @@ export const state = () => ({
   currencyTotal: new Decimal(0),
   processes: [
     {
-      device: 'Star Chart',
+      instrument: 'Star Chart',
       worker: 'Shaman',
       deviceCount: new Decimal(0),
       workerCount: 0,
+      completion: 0,
       unlockThreshold: { tech: null, currency: 0 },
     },
     {
-      device: 'Stone Calendar',
+      instrument: 'Stone Calendar',
       worker: 'Stonecarver',
       deviceCount: new Decimal(0),
       workerCount: 0,
+      completion: 0,
       unlockThreshold: { tech: null, currency: 10000 },
     },
     {
-      device: 'Astrolabes',
+      instrument: 'Astrolabes',
       worker: 'Mathematician',
       deviceCount: new Decimal(0),
       workerCount: 0,
+      completion: 0,
       unlockThreshold: { tech: 0, currency: new Decimal(10e5) },
     },
   ],
@@ -109,5 +113,8 @@ export const mutations = {
   spendCurrency: (state, value) => {
     value = Decimal.mul(value, -1)
     state.currency = Decimal.add(state.currency, value)
+  },
+  setProcessCompletion: (state, { processIndex, value }) => {
+    Vue.set(state.processes[processIndex], 'completion', value)
   },
 }
