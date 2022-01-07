@@ -1,12 +1,14 @@
 <template>
-  <div class="page grid container h-full w-full mx-auto bg-gray-300 px-4">
+  <div
+    class="page grid container max-h-full h-full w-full mx-auto bg-gray-300 px-4"
+  >
     <header
       class="text-3xl flex items-center justify-center font-bold bg-gray-600 text-gray-400"
     >
       Timekeeper
     </header>
 
-    <main class="bg-gray-400 grid w-full">
+    <main class="bg-gray-400 grid w-full h-full overflow-auto">
       <div class="units p-8 relative bg-gray-300">
         <div class="units-background absolute top-8 left-0 right-0"></div>
       </div>
@@ -21,23 +23,18 @@
       </div>
 
       <div
-        class="w-full text-2xl text-center py-1"
+        class="w-full text-2xl text-center pt-1 pb-2"
         :class="$store.getters.activeTabColorClasses"
       >
         {{ $store.getters.activeTab.title }}
       </div>
 
       <div
-        class="tab-content p-8"
+        class="tab-content px-4 w-full overflow-y-scroll"
         :class="$store.getters.activeTabColorClasses"
       >
-        <template v-if="$store.state.activeTabIndex === 0">
-          Tab 1 content
-        </template>
-
-        <template v-else-if="$store.state.activeTabIndex === 1">
-          Tab 2 content
-        </template>
+        <first-tab-content v-if="$store.state.activeTabIndex === 0" />
+        <second-tab-content v-else-if="$store.state.activeTabIndex === 1" />
 
         <template v-else-if="$store.state.activeTabIndex === 2">
           Tab 3 content
@@ -65,10 +62,12 @@
 </template>
 
 <script>
+import FirstTabContent from '~/components/FirstTabContent.vue'
 import GameTab from '~/components/GameTab.vue'
+
 export default {
-  components: { GameTab },
   name: 'IndexPage',
+  components: { GameTab, FirstTabContent },
 }
 </script>
 
@@ -83,6 +82,7 @@ body,
 
 html {
   background: #e5e7eb;
+  overflow-y: hidden;
 }
 </style>
 
@@ -92,7 +92,7 @@ html {
 }
 
 main {
-  grid-template-rows: 1fr auto auto 2fr;
+  grid-template-rows: minmax(0, 1fr) auto auto minmax(0, 2fr);
 }
 
 .units-background {
@@ -102,8 +102,5 @@ main {
   background-position: center;
   opacity: 0.4;
   height: calc(100% - 4rem); /* 4rem = top padding + bottom padding */
-}
-
-.tabs {
 }
 </style>
