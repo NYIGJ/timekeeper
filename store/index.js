@@ -1,5 +1,4 @@
 import Decimal from 'break_infinity.js'
-import { currencies } from './const.js'
 
 export const state = () => ({
   activeTabIndex: 0,
