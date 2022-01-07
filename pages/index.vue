@@ -5,30 +5,58 @@
     >
       Timekeeper
     </header>
+
     <main class="bg-gray-400 grid w-full">
       <div class="units p-8 relative bg-gray-300">
         <div class="units-background absolute top-8 left-0 right-0"></div>
       </div>
+
       <div class="tabs flex flex-row w-full bg-gray-400 text-gray-400">
-        <div
-          v-for="(tab, index) in tabs"
+        <game-tab
+          v-for="(tab, index) in $store.state.tabs"
           :key="index"
-          class="tab flex-grow text-center text-2xl font-semibold py-1 mr-px"
-          :class="{
-            'text-gray-600 bg-gray-400 border-gray-600':
-              activeTabIndex === index,
-            'bg-gray-600 border-gray-600': activeTabIndex !== index,
-          }"
-          @click="activeTabIndex = index"
-        >
-          {{ tab.label }}
-        </div>
+          :index="index"
+          :tab-data="tab"
+        />
       </div>
-      <div class="tab-content p-8">
-        Colors and art are purely for example, not recommendations. Background
-        colors are used to distinguish individual HTML elements.
+
+      <div
+        class="w-full text-2xl text-center py-1"
+        :class="$store.getters.activeTabColorClasses"
+      >
+        {{ $store.getters.activeTab.title }}
+      </div>
+
+      <div
+        class="tab-content p-8"
+        :class="$store.getters.activeTabColorClasses"
+      >
+        <template v-if="$store.state.activeTabIndex === 0">
+          Tab 1 content
+        </template>
+
+        <template v-else-if="$store.state.activeTabIndex === 1">
+          Tab 2 content
+        </template>
+
+        <template v-else-if="$store.state.activeTabIndex === 2">
+          Tab 3 content
+        </template>
+
+        <template v-else-if="$store.state.activeTabIndex === 3">
+          Tab 4 content
+        </template>
+
+        <template v-else-if="$store.state.activeTabIndex === 4">
+          Tab 5 content
+        </template>
+
+        <template v-else-if="$store.state.activeTabIndex === 5">
+          Tab 6 content
+        </template>
       </div>
     </main>
+
     <footer class="text-lg flex items-center pt-4 pb-2 px-4 hidden md:block">
       Created by GrapefruitChili, PK, TNNPe, Vice for New Years Incremental Game
       Jam 2022.
@@ -37,23 +65,10 @@
 </template>
 
 <script>
-const TABS = [
-  { id: 'instruments', label: '1' },
-  { id: 'upgrades', label: '2' },
-  { id: 'fathertime', label: '3' },
-  { id: 'timemachine', label: '4' },
-  { id: 'achievements', label: '5' },
-  { id: 'prestige', label: '6' },
-]
-
+import GameTab from '~/components/GameTab.vue'
 export default {
+  components: { GameTab },
   name: 'IndexPage',
-  data() {
-    return {
-      tabs: TABS,
-      activeTabIndex: 0,
-    }
-  },
 }
 </script>
 
@@ -77,7 +92,7 @@ html {
 }
 
 main {
-  grid-template-rows: 1fr auto 2fr;
+  grid-template-rows: 1fr auto auto 2fr;
 }
 
 .units-background {
