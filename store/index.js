@@ -1,3 +1,6 @@
+import Decimal from 'break_infinity.js'
+import { currencies } from './const.js'
+
 export const state = () => ({
   activeTabIndex: 0,
   tabs: [
@@ -44,6 +47,40 @@ export const state = () => ({
       lightColor: 'teal-200',
     },
   ],
+  currency: new Decimal(0),
+  currencyTotal: new Decimal(0),
+  processes: [
+    {
+      device: 'Star Chart',
+      worker: 'Shaman',
+      deviceCount: new Decimal(0),
+      workerCount: 0,
+      unlockThreshold: { tech: null, currency: 0 },
+    },
+    {
+      device: 'Stone Calendar',
+      worker: 'Stonecarver',
+      deviceCount: new Decimal(0),
+      workerCount: 0,
+      unlockThreshold: { tech: null, currency: 10000 },
+    },
+    {
+      device: 'Astrolabes',
+      worker: 'Mathematician',
+      deviceCount: new Decimal(0),
+      workerCount: 0,
+      unlockThreshold: { tech: 0, currency: new Decimal(10e5) },
+    },
+  ],
+
+  upgrades: [
+    {
+      name: 'Mathematics',
+      boughtWith: currencies.seasons,
+      price: 100,
+      purchased: false,
+    },
+  ],
 })
 
 export const getters = {
@@ -67,4 +104,12 @@ export const mutations = {
   setActiveTab: (state, index) => {
     state.activeTabIndex = index
   },
+  addCurrency: (state, value) => {
+    state.currency = Decimal.add(state.currency, value)
+    state.currencyTotal = Decimal.add(state.currencyTotal, value)
+  },
+  spendCurrency: (state, value) => {
+    value = Decimal.mul(value, -1)
+    state.currency = Decimal.add(state.currency, value)
+  }
 }
