@@ -109,5 +109,5 @@ export const mutations = {
   spendCurrency: (state, value) => {
     value = Decimal.mul(value, -1)
     state.currency = Decimal.add(state.currency, value)
-  }
+  },
 }
