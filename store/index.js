@@ -75,7 +75,6 @@ export const state = () => ({
   upgrades: [
     {
       name: 'Mathematics',
-      boughtWith: currencies.seasons,
       price: 100,
       purchased: false,
     },
