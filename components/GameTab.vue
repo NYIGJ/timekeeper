@@ -4,7 +4,10 @@
     :class="[colorClasses, index < 5 && 'mr-px']"
     @click="$store.commit('setActiveTab', index)"
   >
-    {{ tabData.label }}
+    <template v-if="!tabData.locked">{{ tabData.label }}</template>
+    <template v-if="tabData.locked"
+      ><i class="fa fa-lock" aria-hidden="true"></i
+    ></template>
   </div>
 </template>
 

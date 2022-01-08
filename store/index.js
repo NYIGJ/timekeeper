@@ -10,6 +10,7 @@ export const state = () => ({
       title: 'Instruments',
       darkColor: 'yellow-600',
       lightColor: 'yellow-200',
+      locked: false,
     },
     {
       id: 'upgrades',
@@ -17,6 +18,7 @@ export const state = () => ({
       title: 'Upgrades',
       darkColor: 'blue-600',
       lightColor: 'blue-200',
+      locked: false,
     },
     {
       id: 'missions',
@@ -24,6 +26,7 @@ export const state = () => ({
       title: 'Missions',
       darkColor: 'violet-600',
       lightColor: 'violet-200',
+      locked: true,
     },
     {
       id: 'timemachine',
@@ -31,6 +34,7 @@ export const state = () => ({
       title: 'Time Machine',
       darkColor: 'lime-600',
       lightColor: 'lime-200',
+      locked: true,
     },
     {
       id: 'achievements',
@@ -38,6 +42,7 @@ export const state = () => ({
       title: 'Time Magic',
       darkColor: 'orange-600',
       lightColor: 'orange-200',
+      locked: true,
     },
     {
       id: 'prestige',
@@ -45,6 +50,7 @@ export const state = () => ({
       title: 'Etc.',
       darkColor: 'teal-600',
       lightColor: 'teal-200',
+      locked: true,
     },
   ],
   currency: new Decimal(0),
@@ -131,6 +137,7 @@ export const getters = {
 
 export const mutations = {
   setActiveTab: (state, index) => {
+    if (state.tabs[index].locked) return
     state.activeTabIndex = index
   },
   addCurrency: (state, value) => {
