@@ -1,7 +1,7 @@
 <template>
   <div class="tab-content grid flex-col">
     <div
-      v-for="(process, index) in $store.state.incremental.processes"
+      v-for="(process, index) in $store.state.processes"
       :key="index"
       class="flex flex-col mb-4 p-4 rounded border"
       :class="`border-${$store.getters.activeTab.darkColor}`"

@@ -7,42 +7,42 @@ export const state = () => ({
     {
       id: 'instruments',
       label: '1',
-      title: 'Tab 1 Title',
+      title: 'Instruments',
       darkColor: 'yellow-600',
       lightColor: 'yellow-200',
     },
     {
       id: 'upgrades',
       label: '2',
-      title: 'Tab 2 Title',
+      title: 'Upgrades',
       darkColor: 'blue-600',
       lightColor: 'blue-200',
     },
     {
-      id: 'fathertime',
+      id: 'missions',
       label: '3',
-      title: 'Tab 3 Title',
+      title: 'Missions',
       darkColor: 'violet-600',
       lightColor: 'violet-200',
     },
     {
       id: 'timemachine',
       label: '4',
-      title: 'Tab 4 Title',
+      title: 'Time Machine',
       darkColor: 'lime-600',
       lightColor: 'lime-200',
     },
     {
       id: 'achievements',
       label: '5',
-      title: 'Tab 5 Title',
+      title: 'Time Magic',
       darkColor: 'orange-600',
       lightColor: 'orange-200',
     },
     {
       id: 'prestige',
       label: '6',
-      title: 'Tab 6 Title',
+      title: 'Etc.',
       darkColor: 'teal-600',
       lightColor: 'teal-200',
     },
@@ -83,6 +83,33 @@ export const state = () => ({
       purchased: false,
     },
   ],
+
+  missions: [
+    {
+      name: 'Create the Time Machine',
+      description: 'Soon you will be able to control time itself.',
+      completionCriteria: {
+        cost: 1000,
+      },
+      available: true,
+      viewed: false,
+      complete: false,
+    },
+    {
+      name: 'Time To Cheat Death',
+      description:
+        'Your body seems to be failing you. ' +
+        'Write a book to pass your knowedge to your younger self through the time machine. ' +
+        "Now where's your pen...",
+      appearanceCriteria: {
+        age: 100,
+      },
+      completionCriteria: null,
+      available: true,
+      viewed: false,
+      complete: false,
+    },
+  ],
 })
 
 export const getters = {
@@ -116,5 +143,14 @@ export const mutations = {
   },
   setProcessCompletion: (state, { processIndex, value }) => {
     Vue.set(state.processes[processIndex], 'completion', value)
+  },
+  setMissionAvailable: (state, missionIndex) => {
+    Vue.set(state.missions[missionIndex], 'available', true)
+  },
+  setMissionViewed: (state, missionIndex) => {
+    Vue.set(state.missions[missionIndex], 'viewed', true)
+  },
+  completeMission: (state, missionIndex) => {
+    state.missions[missionIndex].complete = true
   },
 }

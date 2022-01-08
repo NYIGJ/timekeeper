@@ -35,10 +35,7 @@
       >
         <first-tab-content v-if="$store.state.activeTabIndex === 0" />
         <second-tab-content v-else-if="$store.state.activeTabIndex === 1" />
-
-        <template v-else-if="$store.state.activeTabIndex === 2">
-          Tab 3 content
-        </template>
+        <third-tab-content v-else-if="$store.state.activeTabIndex === 2" />
 
         <template v-else-if="$store.state.activeTabIndex === 3">
           Tab 4 content
@@ -62,12 +59,8 @@
 </template>
 
 <script>
-import FirstTabContent from '~/components/FirstTabContent.vue'
-import GameTab from '~/components/GameTab.vue'
-
 export default {
   name: 'IndexPage',
-  components: { GameTab, FirstTabContent },
   mounted() {
     window.setInterval(() => {
       this.gametick()
