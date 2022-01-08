@@ -8,9 +8,40 @@
       Timekeeper
     </header>
 
-    <main class="bg-gray-400 grid w-full h-full overflow-auto">
+    <main class="bg-gray-400 grid w-full h-full overflow-auto relative">
+      <div
+        class="flex flex-row bg-gray-300 border border-gray-600 font-semibold"
+      >
+        <div class="text-center pt-2 pb-1 flex-grow border-r border-gray-600">
+          Dec. 1990
+        </div>
+        <div
+          class="text-center pt-2 pb-1 flex-grow border-r border-gray-600 relative"
+        >
+          <progress
+            class="absolute top-0 left-0 right-0 h-1 w-full"
+            max="100"
+            value="50"
+          />
+          34y4m
+        </div>
+        <div class="text-center pt-2 pb-1 flex-grow">80y max</div>
+      </div>
+
       <div class="units p-8 relative bg-gray-300">
         <div class="units-background absolute top-8 left-0 right-0"></div>
+        <div
+          class="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center"
+        >
+          <span
+            class="spare-time flex flex-row items-center font-bold rounded-2xl"
+          >
+            <span class="text-3xl md:text-5xl">100 </span>
+            <span
+              class="fas fa-hourglass-half text-xl pt-1 pl-2 md:text-3xl md:pt-2"
+            ></span>
+          </span>
+        </div>
       </div>
 
       <div class="tabs flex flex-row w-full bg-gray-400 text-gray-400">
@@ -104,7 +135,7 @@ html {
 }
 
 main {
-  grid-template-rows: minmax(0, 1fr) auto auto minmax(0, 2fr);
+  grid-template-rows: auto minmax(0, 1fr) auto auto minmax(0, 2fr);
 }
 
 .units-background {
@@ -114,5 +145,9 @@ main {
   background-position: center;
   opacity: 0.4;
   height: calc(100% - 4rem); /* 4rem = top padding + bottom padding */
+}
+.spare-time {
+  background: rgba(2555, 255, 255, 0.6);
+  box-shadow: 0px 0px 21px 3px #fff;
 }
 </style>
