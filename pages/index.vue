@@ -10,7 +10,7 @@
 
     <main class="bg-gray-400 grid w-full h-full overflow-auto relative">
       <div
-        class="flex flex-row bg-gray-300 border border-gray-600 font-semibold"
+        class="flex flex-row bg-gray-300 border border-gray-600 font-semibold h-10"
       >
         <div class="text-center pt-2 pb-1 flex-grow border-r border-gray-600">
           Dec. 1990
@@ -44,7 +44,7 @@
         </div>
       </div>
 
-      <div class="tabs flex flex-row w-full bg-gray-400 text-gray-400">
+      <div class="tabs flex flex-row w-full bg-gray-400 text-gray-400 h-10">
         <game-tab
           v-for="(tab, index) in $store.state.tabs"
           :key="index"
@@ -131,11 +131,11 @@ html {
 
 <style scoped>
 .page {
-  grid-template-rows: 4rem 1fr auto;
+  grid-template-rows: 0rem 1fr auto;
 }
 
 main {
-  grid-template-rows: auto minmax(0, 1fr) auto auto minmax(0, 2fr);
+  grid-template-rows: auto minmax(0, 2fr) auto auto minmax(0, 3fr);
 }
 
 .units-background {
