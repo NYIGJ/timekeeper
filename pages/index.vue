@@ -37,7 +37,9 @@
           <span
             class="spare-time flex flex-row items-center font-bold rounded-2xl"
           >
-            <span class="text-3xl md:text-5xl">100 </span>
+            <span class="text-3xl md:text-5xl"
+              >{{ $store.state.currency }}
+            </span>
             <span
               class="fas fa-hourglass-half text-xl pt-1 pl-2 md:text-3xl md:pt-2"
             ></span>
