@@ -107,7 +107,7 @@ export const state = () => ({
       name: 'Create the Time Machine',
       description: 'Soon you will be able to control time itself.',
       completionCriteria: {
-        cost: 1000,
+        cost: 50000,
       },
       available: true,
       viewed: false,
@@ -122,7 +122,9 @@ export const state = () => ({
       appearanceCriteria: {
         age: 100,
       },
-      completionCriteria: null,
+      completionCriteria: {
+        cost: 150000,
+      },
       available: true,
       viewed: false,
       complete: false,

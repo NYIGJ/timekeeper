@@ -5,8 +5,8 @@
         :key="index"
         :label="mission.name"
         :description="mission.description"
-        :max="100"
-        :value="50 * (2 - index)"
+        :max="mission.completionCriteria.cost"
+        :value="$store.state.currency"
       />
     </template>
   </div>
