@@ -29,9 +29,7 @@
       </div>
 
       <div class="units p-8 relative bg-gray-300">
-        <div
-          class="units-background absolute top-8 left-0 right-0"
-        ></div>
+        <div class="units-background absolute top-8 left-0 right-0"></div>
         <div
           class="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center"
           @click="$store.commit('addCurrency', 1)"
