@@ -102,11 +102,15 @@ export default {
   },
   methods: {
     gametick() {
-      for (let i = 0; i <= 4; i++) {
-        const currentCompletion = this.$store.state.processes[i].completion
-        const step = 100.0 / (6.0 * (i + 1)) // go at different rates
-        let newValue = currentCompletion + step
-        if (newValue >= 100) newValue = newValue - 100
+      for (let i = 0; i < this.$store.state.processes.length; i++) {
+        const p = this.$store.state.processes[i]
+        // const step = 100.0 / (6.0 * (i + 1)) // go at different rates
+        const step = p.workerRate * p.workerCount
+        let newValue = p.completion + step
+        while (newValue >= 100) {
+          newValue = newValue - 100
+          this.$store.commit('addCurrency', p.reward)
+        }
         this.$store.commit('setProcessCompletion', {
           processIndex: i,
           value: newValue,
