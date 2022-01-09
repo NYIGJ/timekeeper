@@ -13,7 +13,10 @@
         <span
           class="absolute top-0 bottom-0 left-0 right-0 text-center text-white"
         >
-          1.3 <span class="fas fa-hourglass-half text-sm" /> / sec
+          {{
+            (process.workerCount * process.workerRate * process.reward) / 100.0
+          }}
+          <span class="fas fa-hourglass-half text-sm" /> / sec
           <!-- {{ $store.state.incremental.currency[process.produces] }} {{ process.produces }} -->
         </span>
       </div>
