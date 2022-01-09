@@ -130,6 +130,24 @@ export const state = () => ({
       complete: false,
     },
   ],
+  gameDate: {
+      month: 12,
+      year: 1990
+  },
+  playerAge: {
+      month: 0,
+      year: 34
+  },
+  playerAgeMax: {
+      month: 0,
+      year: 80
+  },
+  playerLivedTotal: {
+      month: 0,
+      year: 0
+  },
+  wisdomGained: 0, // wisdom gained so far on this run, not applied until player sends the book.
+  wisdomApplied: 0, // wisdom from previous runs
 })
 
 export const getters = {
@@ -147,6 +165,11 @@ export const getters = {
   activeTabColorClasses: (state, getters) => {
     return getters.activeColorClasses(state.activeTabIndex)
   },
+  canTimeTravel: (state) => {
+      if (state.playerAge.year < state.playerAgeMax.year) return true
+      if (state.playerAge.year > state.playerAgeMax.year) return false
+      return (state.playerAge.month < state.playerAgeMax.month)
+  }
 }
 
 export const mutations = {
@@ -184,5 +207,30 @@ export const mutations = {
       'nextWorkerCost',
       Math.floor(p.nextWorkerCost * p.nextWorkerFactor)
     )
+  },
+  tickGameDate: (state) => {
+    let gameYear = state.gameDate.year
+    let gameMonth = state.gameDate.month + 1
+    if (gameMonth > 12) {
+        gameMonth = 1
+        gameYear = gameYear + 1
+    }
+    let ageYear = state.playerAge.year
+    let ageMonth = state.playerAge.month + 1
+    let wisdomGained = 0
+    if (ageMonth > 12) {
+        ageMonth = 1
+        ageYear = ageYear + 1
+        wisdomGained += 1
+    }
+    Vue.set(state.gameDate, 'year', gameYear)
+    Vue.set(state.gameDate, 'month', gameMonth)
+    Vue.set(state.playerAge, 'year', ageYear)
+    Vue.set(state.playerAge, 'month', ageMonth)
+    state.wisdomGained = state.wisdomGained + wisdomGained
+  },
+  travelGameDate: (state, { month, year }) => {
+    Vue.set(state.gameDate, 'month', month)
+    Vue.set(state.gameDate, 'year', year)
   },
 }
