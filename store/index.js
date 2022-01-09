@@ -60,30 +60,36 @@ export const state = () => ({
       instrument: 'Star Chart',
       worker: 'Shaman',
       deviceCount: new Decimal(0),
-      workerCount: 1,
+      workerCount: 0,
       completion: 0,
-      workerRate: 8.0, // amount added to "completion" (100=full bar) per worker
-      reward: 10, // currency added when the bar is completed
+      workerRate: 6.0, // amount added to "completion" (100=full bar) per worker
+      reward: 8, // currency added when the bar is completed
+      nextWorkerCost: 15, // currency cost of next worker
+      nextWorkerFactor: 1.4, // worker cost *= this factor after each purchase
       unlockThreshold: { tech: null, currency: 0 },
     },
     {
       instrument: 'Stone Calendar',
       worker: 'Stonecarver',
       deviceCount: new Decimal(0),
-      workerCount: 1,
+      workerCount: 0,
       completion: 0,
       workerRate: 4.0,
       reward: 35,
+      nextWorkerCost: 60,
+      nextWorkerFactor: 1.6,
       unlockThreshold: { tech: null, currency: 10000 },
     },
     {
       instrument: 'Astrolabes',
       worker: 'Mathematician',
       deviceCount: new Decimal(0),
-      workerCount: 1,
+      workerCount: 0,
       completion: 0,
       workerRate: 1.5,
       reward: 80,
+      nextWorkerCost: 90,
+      nextWorkerFactor: 1.8,
       unlockThreshold: { tech: 0, currency: new Decimal(10e5) },
     },
   ],
@@ -165,5 +171,16 @@ export const mutations = {
   },
   completeMission: (state, missionIndex) => {
     state.missions[missionIndex].complete = true
+  },
+  purchaseWorker: (state, processIndex) => {
+    const p = state.processes[processIndex]
+    if (p.nextWorkerCost > state.currency) return
+    state.currency = Decimal.subtract(state.currency, p.nextWorkerCost)
+    Vue.set(state.processes[processIndex], 'workerCount', p.workerCount + 1)
+    Vue.set(
+      state.processes[processIndex],
+      'nextWorkerCost',
+      Math.floor(p.nextWorkerCost * p.nextWorkerFactor)
+    )
   },
 }
