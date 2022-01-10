@@ -14,7 +14,15 @@ const safelist = COLOR_TYPE.flatMap((type) =>
 
 module.exports = {
   purge: {
-    safelist,
+    safelist: [
+      ...safelist,
+      'grid-cols-1',
+      'grid-cols-2',
+      'md:grid-cols-2',
+      'md:grid-cols-4',
+      '2xl:grid-cols-3',
+      '2xl:grid-cols-6',
+    ],
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
