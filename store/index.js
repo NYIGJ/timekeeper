@@ -170,6 +170,22 @@ export const getters = {
     if (state.playerAge.year > state.playerAgeMax.year) return false
     return state.playerAge.month < state.playerAgeMax.month
   },
+  gameMonth: (state) => {
+    return {
+      1: 'Jan.',
+      2: 'Feb.',
+      3: 'Mar.',
+      4: 'Apr.',
+      5: 'May.',
+      6: 'Jun.',
+      7: 'Jul.',
+      8: 'Aug.',
+      9: 'Sep.',
+      10: 'Oct.',
+      11: 'Nov.',
+      12: 'Dec.',
+    }[state.gameDate.month]
+  },
 }
 
 export const mutations = {
@@ -211,6 +227,7 @@ export const mutations = {
   tickGameDate: (state) => {
     let gameYear = state.gameDate.year
     let gameMonth = state.gameDate.month + 1
+    // Intentional: Months are 1 through 12, ages are 0 through 11.
     if (gameMonth > 12) {
       gameMonth = 1
       gameYear = gameYear + 1
@@ -218,8 +235,8 @@ export const mutations = {
     let ageYear = state.playerAge.year
     let ageMonth = state.playerAge.month + 1
     let wisdomGained = 0
-    if (ageMonth > 12) {
-      ageMonth = 1
+    if (ageMonth >= 12) {
+      ageMonth = 0
       ageYear = ageYear + 1
       wisdomGained += 1
     }

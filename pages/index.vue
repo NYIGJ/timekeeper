@@ -13,19 +13,28 @@
         class="flex flex-row bg-gray-300 border border-gray-600 font-semibold h-10"
       >
         <div class="text-center pt-2 pb-1 flex-grow border-r border-gray-600">
-          Dec. 1990
+          {{ $store.getters.gameMonth }} {{ $store.state.gameDate.year }}
         </div>
         <div
           class="text-center pt-2 pb-1 flex-grow border-r border-gray-600 relative"
         >
           <progress
             class="absolute top-0 left-0 right-0 h-1 w-full"
-            max="100"
-            value="50"
+            :max="
+              $store.state.playerAgeMax.year * 12 +
+              $store.state.playerAgeMax.month
+            "
+            :value="
+              $store.state.playerAge.year * 12 + $store.state.playerAge.month
+            "
           />
-          34y4m
+          {{ $store.state.playerAge.year }}y{{ $store.state.playerAge.month }}m
         </div>
-        <div class="text-center pt-2 pb-1 flex-grow">80y max</div>
+        <div class="text-center pt-2 pb-1 flex-grow">
+          {{ $store.state.playerAgeMax.year }}y{{
+            $store.state.playerAgeMax.month
+          }}m max
+        </div>
       </div>
 
       <div class="units p-8 relative bg-gray-300">
@@ -99,6 +108,9 @@ export default {
     window.setInterval(() => {
       this.gametick()
     }, 1000)
+    window.setInterval(() => {
+      this.$store.commit('tickGameDate')
+    }, 100)
   },
   methods: {
     gametick() {
