@@ -43,10 +43,12 @@ export default {
   },
   mounted() {
     window.setInterval(() => {
-      this.gametick()
+      if (this.$store.state.playerAge < this.$store.state.playerAgeMax)
+        this.gametick()
     }, 100)
     window.setInterval(() => {
-      this.$store.commit('tickGameDate')
+      if (this.$store.state.playerAge < this.$store.state.playerAgeMax)
+        this.$store.commit('tickGameDate')
     }, 1000)
   },
   methods: {
