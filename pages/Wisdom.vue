@@ -36,5 +36,10 @@
       <span align="left"><b>Wisdom from other timelines</b></span
       ><span align="right">{{ $store.state.wisdomApplied }}</span>
     </div>
+
+    <hr />
+
+    Created by GrapefruitChili, PK, TNNPe, Vice for New Years Incremental Game
+    Jam 2022.
   </div>
 </template>
