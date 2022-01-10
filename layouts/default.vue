@@ -1,16 +1,19 @@
 <template>
   <div class="page container max-h-full h-full w-full mx-auto bg-gray-400 px-4">
-    <main class="grid w-full h-full overflow-auto relative bg-gray-300">
+    <main
+      class="grid w-full h-full overflow-auto relative"
+      :class="`bg-${$store.getters.activeTab.color}`"
+    >
       <time-header />
 
-      <div class="units p-8 relative bg-gray-300">
+      <div class="units p-8 relative">
         <div class="units-background absolute top-8 left-0 right-0"></div>
         <div
           class="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center"
           @click="$store.commit('addCurrency', 1)"
         >
           <span
-            class="spare-time flex flex-row items-center font-bold rounded-2xl"
+            class="spare-time flex flex-row items-center font-bold rounded-2xl p-2"
             :class="`text-${$store.getters.activeTab.darkColor}`"
           >
             <span class="text-3xl md:text-5xl" v-text="$store.state.currency" />
@@ -108,6 +111,7 @@ html {
 
 main {
   grid-template-rows: auto minmax(0, 2fr) auto auto minmax(0, 3fr);
+  transition: background-color 2000ms;
 }
 
 .tabs {
