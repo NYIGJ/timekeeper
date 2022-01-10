@@ -4,7 +4,8 @@
     :class="colorClasses"
   >
     <div class="text-center pt-2 pb-1 border-r border-gray-600 select-none">
-      {{ $store.getters.gameMonth }} {{ $store.state.gameDate.year }}
+      {{ $store.getters.gameMonth }}
+      {{ Math.floor($store.state.gameDate / 12) }}
     </div>
 
     <div
@@ -12,8 +13,8 @@
     >
       <progress
         class="absolute top-0 left-0 right-0 h-1 w-full"
-        :max="maxAgeValue"
-        :value="ageValue"
+        :max="$store.state.playerAgeMax"
+        :value="$store.state.playerAge"
       />
       {{ ageText }}
     </div>
@@ -26,24 +27,16 @@
 export default {
   computed: {
     ageText() {
-      const { year, month } = this.$store.state.playerAge
+      const year = Math.floor(this.$store.state.playerAge / 12)
+      const month = this.$store.state.playerAge % 12
 
-      return `${year}y${month}m max`
-    },
-    ageValue() {
-      const { year, month } = this.$store.state.playerAge
-
-      return year * 12 + month
+      return `${year}y${month}m`
     },
     maxAgeText() {
-      const { year, month } = this.$store.state.playerAgeMax
+      const year = Math.floor(this.$store.state.playerAgeMax / 12)
+      const month = this.$store.state.playerAgeMax % 12
 
       return `${year}y${month}m max`
-    },
-    maxAgeValue() {
-      const { year, month } = this.$store.state.playerAgeMax
-
-      return year * 12 + month
     },
     colorClasses() {
       const { lightColor, darkColor } = this.$store.getters.activeTab
