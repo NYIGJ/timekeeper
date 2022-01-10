@@ -1,29 +1,18 @@
 <template>
   <nuxt-link
-    class="tab flex-grow text-center text-2xl font-semibold py-1 cursor-pointer rounded-tl-lg rounded-tr-lg"
-    :class="[colorClasses, index < 5 && 'mr-px', active && 'active']"
+    class="text-center text-2xl py-1 cursor-pointer rounded-t-lg"
+    :class="[colorClasses, { active }]"
     :to="tabData.route"
   >
-    <template v-if="!tabData.locked">
-      <span :class="tabData.label" />
-    </template>
-    <template v-if="tabData.locked">
-      <span class="fas fa-lock" />
-    </template>
+    <span v-if="!tabData.locked" :class="tabData.label" />
+    <span v-else class="fas fa-lock" />
   </nuxt-link>
 </template>
 
 <script>
 export default {
   props: {
-    index: {
-      type: Number,
-      required: true,
-    },
-    tabData: {
-      type: Object,
-      required: true,
-    },
+    tabData: { type: Object, required: true },
   },
   computed: {
     active() {
