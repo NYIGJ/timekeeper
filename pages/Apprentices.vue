@@ -8,25 +8,21 @@
       @click="$store.commit('purchaseWorker', index)"
     >
       <span class="text-center font-bold pb-2 text-xl">
-        {{ process.workerCount }} {{ process.worker
-        }}<template v-if="process.workerCount != 1">s</template>
+        {{ process.workerCount }} {{ process.worker }}
+        <template v-if="process.workerCount != 1">s</template>
       </span>
       <span class="text-left font-semibold">
         Each <b>{{ process.worker }}</b> makes your
         <b>{{ process.device }}s</b> produce <b>spare time</b> at an increased
         rate.
       </span>
-      <span class="text-center text-md pt-2"
-        >Cost for next {{ process.worker }}: {{ process.nextWorkerCost }}
-        {{ process.buyWorkersWith }}</span
-      >
+      <span class="text-center text-md pt-2">
+        Cost for next {{ process.worker }}: {{ process.nextWorkerCost }}
+        {{ process.buyWorkersWith }}
+      </span>
     </div>
   </div>
 </template>
-
-<script>
-export default {}
-</script>
 
 <style>
 .tab-content {

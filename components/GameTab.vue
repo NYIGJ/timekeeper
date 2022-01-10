@@ -1,8 +1,8 @@
 <template>
-  <div
+  <nuxt-link
     class="tab flex-grow text-center text-2xl font-semibold py-1 cursor-pointer"
     :class="[colorClasses, index < 5 && 'mr-px']"
-    @click="$store.commit('setActiveTab', index)"
+    :to="tabData.route"
   >
     <template v-if="!tabData.locked">
       <span :class="tabData.label" />
@@ -10,7 +10,7 @@
     <template v-if="tabData.locked">
       <span class="fas fa-lock" />
     </template>
-  </div>
+  </nuxt-link>
 </template>
 
 <script>
@@ -27,12 +27,14 @@ export default {
   },
   computed: {
     active() {
-      return this.$store.state.activeTabIndex === this.index
+      return this.$route.path === this.tabData.route
     },
     colorClasses() {
+      const { lightColor, darkColor } = this.tabData
+
       return this.active
-        ? this.$store.getters.activeColorClasses(this.index)
-        : this.$store.getters.inactiveColorClasses(this.index)
+        ? `bg-${lightColor} text-${darkColor}`
+        : `bg-${darkColor} text-${lightColor}`
     },
   },
 }
