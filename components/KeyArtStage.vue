@@ -1,12 +1,12 @@
 <template>
-  <div class="key-art-stage p-8 relative">
+  <div class="p-8 relative">
     <div class="key-art absolute top-8 left-0 right-0" />
     <div
       class="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center"
       @click="$store.commit('addCurrency', 1)"
     >
       <span
-        class="spare-time flex flex-row items-center font-bold rounded-2xl p-2"
+        class="spare-time flex flex-row items-center font-bold rounded-2xl select-none"
         :class="`text-${$store.getters.activeTab.darkColor}`"
       >
         <span class="text-3xl md:text-5xl" v-text="$store.state.currency" />
@@ -28,8 +28,9 @@
   height: calc(100% - 4rem); /* 4rem = top padding + bottom padding */
 }
 .spare-time {
-  background: rgba(2555, 255, 255, 0.6);
-  box-shadow: 0px 0px 21px 3px #fff;
+  --color: rgba(2555, 255, 255, 0.5);
+  background: var(--color);
+  box-shadow: 0px 0px 20px 20px var(--color);
   transition: color 2000ms;
 }
 </style>
