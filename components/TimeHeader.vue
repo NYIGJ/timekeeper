@@ -45,6 +45,7 @@ header {
   grid-template-columns: 1fr 1fr 1fr;
   min-width: 18rem;
   width: 100%;
+  transition: background-color 2000ms, color 2000ms;
 }
 @media (min-width: 768px) {
   header {
