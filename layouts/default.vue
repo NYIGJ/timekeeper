@@ -1,36 +1,7 @@
 <template>
-  <div
-    class="page grid container max-h-full h-full w-full mx-auto bg-gray-300 px-4"
-  >
-    <main class="bg-gray-400 grid w-full h-full overflow-auto relative">
-      <div
-        class="flex flex-row bg-gray-300 border border-gray-600 font-semibold h-10"
-      >
-        <div class="text-center pt-2 pb-1 flex-grow border-r border-gray-600">
-          {{ $store.getters.gameMonth }} {{ $store.state.gameDate.year }}
-        </div>
-
-        <div
-          class="text-center pt-2 pb-1 flex-grow border-r border-gray-600 relative"
-        >
-          <progress
-            class="absolute top-0 left-0 right-0 h-1 w-full"
-            :max="
-              $store.state.playerAgeMax.year * 12 +
-              $store.state.playerAgeMax.month
-            "
-            :value="
-              $store.state.playerAge.year * 12 + $store.state.playerAge.month
-            "
-          />
-          {{ $store.state.playerAge.year }}y{{ $store.state.playerAge.month }}m
-        </div>
-        <div class="text-center pt-2 pb-1 flex-grow">
-          {{ $store.state.playerAgeMax.year }}y{{
-            $store.state.playerAgeMax.month
-          }}m max
-        </div>
-      </div>
+  <div class="page container max-h-full h-full w-full mx-auto bg-gray-400 px-4">
+    <main class="grid w-full h-full overflow-auto relative bg-gray-300">
+      <time-header />
 
       <div class="units p-8 relative bg-gray-300">
         <div class="units-background absolute top-8 left-0 right-0"></div>
@@ -40,6 +11,7 @@
         >
           <span
             class="spare-time flex flex-row items-center font-bold rounded-2xl"
+            :class="`text-${$store.getters.activeTab.darkColor}`"
           >
             <span class="text-3xl md:text-5xl" v-text="$store.state.currency" />
             <span
@@ -49,7 +21,7 @@
         </div>
       </div>
 
-      <div class="tabs flex flex-row w-full bg-gray-400 text-gray-400 h-10">
+      <div class="tabs grid w-full text-gray-400 h-10 relative">
         <game-tab
           v-for="(tab, index) in $store.state.tabs"
           :key="index"
@@ -59,7 +31,7 @@
       </div>
 
       <div
-        class="w-full text-2xl text-center pt-1 pb-2"
+        class="w-full text-2xl text-center pt-1 pb-2 relative"
         :class="activeTabColorClasses"
       >
         {{ $store.getters.activeTab.title }}
@@ -72,11 +44,6 @@
         <nuxt />
       </div>
     </main>
-
-    <footer class="text-lg items-center pt-4 pb-2 px-4 hidden md:block">
-      Created by GrapefruitChili, PK, TNNPe, Vice for New Years Incremental Game
-      Jam 2022.
-    </footer>
   </div>
 </template>
 
@@ -136,11 +103,16 @@ html {
 
 <style scoped>
 .page {
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr;
 }
 
 main {
   grid-template-rows: auto minmax(0, 2fr) auto auto minmax(0, 3fr);
+}
+
+.tabs {
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 0.25rem;
 }
 
 .units-background {

@@ -1,7 +1,7 @@
 <template>
   <nuxt-link
-    class="tab flex-grow text-center text-2xl font-semibold py-1 cursor-pointer"
-    :class="[colorClasses, index < 5 && 'mr-px']"
+    class="tab flex-grow text-center text-2xl font-semibold py-1 cursor-pointer rounded-tl-lg rounded-tr-lg"
+    :class="[colorClasses, index < 5 && 'mr-px', active && 'active']"
     :to="tabData.route"
   >
     <template v-if="!tabData.locked">
@@ -39,3 +39,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.active {
+  box-shadow: 3px 28px 9px -5px #000, 3px -1px 9px -4px #000;
+}
+</style>
