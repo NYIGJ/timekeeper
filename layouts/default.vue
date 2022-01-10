@@ -66,7 +66,7 @@ export default {
     }, 1000)
     window.setInterval(() => {
       this.$store.commit('tickGameDate')
-    }, 100)
+    }, 1000)
   },
   methods: {
     gametick() {
