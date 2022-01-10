@@ -1,36 +1,50 @@
 <template>
   <header
-    class="grid flex-row font-semibold h-10 m-auto md:relative rounded-bl-full rounded-br-full px-4"
+    class="grid grid-cols-3 w-full font-semibold h-10 m-auto md:relative rounded-bl-full rounded-br-full px-4"
     :class="colorClasses"
   >
-    <div class="text-center pt-2 pb-1 flex-grow border-r border-gray-600">
+    <div class="text-center pt-2 pb-1 border-r border-gray-600 select-none">
       {{ $store.getters.gameMonth }} {{ $store.state.gameDate.year }}
     </div>
 
     <div
-      class="text-center pt-2 pb-1 flex-grow border-r border-gray-600 relative"
+      class="text-center pt-2 pb-1 border-r border-gray-600 relative select-none"
     >
       <progress
         class="absolute top-0 left-0 right-0 h-1 w-full"
-        :max="
-          $store.state.playerAgeMax.year * 12 + $store.state.playerAgeMax.month
-        "
-        :value="$store.state.playerAge.year * 12 + $store.state.playerAge.month"
+        :max="maxAgeValue"
+        :value="ageValue"
       />
-      {{ $store.state.playerAge.year }}y{{ $store.state.playerAge.month }}m
+      {{ ageText }}
     </div>
 
-    <div class="text-center pt-2 pb-1 flex-grow">
-      {{ $store.state.playerAgeMax.year }}y{{
-        $store.state.playerAgeMax.month
-      }}m max
-    </div>
+    <div class="text-center pt-2 pb-1 select-none" v-text="maxAgeText" />
   </header>
 </template>
 
 <script>
 export default {
   computed: {
+    ageText() {
+      const { year, month } = this.$store.state.playerAge
+
+      return `${year}y${month}m max`
+    },
+    ageValue() {
+      const { year, month } = this.$store.state.playerAge
+
+      return year * 12 + month
+    },
+    maxAgeText() {
+      const { year, month } = this.$store.state.playerAgeMax
+
+      return `${year}y${month}m max`
+    },
+    maxAgeValue() {
+      const { year, month } = this.$store.state.playerAgeMax
+
+      return year * 12 + month
+    },
     colorClasses() {
       const { lightColor, darkColor } = this.$store.getters.activeTab
 
@@ -42,9 +56,7 @@ export default {
 
 <style scoped>
 header {
-  grid-template-columns: 1fr 1fr 1fr;
   min-width: 18rem;
-  width: 100%;
   transition: background-color 2000ms, color 2000ms;
 }
 @media (min-width: 768px) {
@@ -52,22 +64,19 @@ header {
     width: 32rem;
   }
 }
-/* progress background for all browsers */
+/* progress for all browsers */
 progress::-webkit-progress-bar {
   background-color: rgba(255, 255, 255, 0.1);
   width: 100%;
 }
 progress {
   background-color: rgba(255, 255, 255, 0.1);
+  color: currentColor;
 }
-/* progress value for all browsers */
 progress::-webkit-progress-value {
   background-color: currentColor;
 }
 progress::-moz-progress-bar {
   background-color: currentColor;
-}
-progress {
-  color: currentColor;
 }
 </style>
