@@ -2,7 +2,6 @@ import Decimal from 'break_infinity.js'
 import Vue from 'vue'
 
 export const state = () => ({
-  activeTabIndex: 0,
   tabs: [
     {
       route: '/',
@@ -152,19 +151,11 @@ export const state = () => ({
 })
 
 export const getters = {
-  activeTab: (state) => {
-    return state.tabs[state.activeTabIndex]
-  },
-  activeColorClasses: (state) => (index) => {
-    const { darkColor, lightColor } = state.tabs[index]
-    return `bg-${lightColor} text-${darkColor}`
-  },
-  inactiveColorClasses: (state) => (index) => {
-    const { darkColor, lightColor } = state.tabs[index]
-    return `bg-${darkColor} text-${lightColor}`
-  },
-  activeTabColorClasses: (state, getters) => {
-    return getters.activeColorClasses(state.activeTabIndex)
+  activeTab(state) {
+    return state.tabs.find(
+      // eslint-disable-next-line no-undef
+      (tab) => tab.route === $nuxt.$route.path
+    )
   },
   canTimeTravel: (state) => {
     if (state.playerAge.year < state.playerAgeMax.year) return true
