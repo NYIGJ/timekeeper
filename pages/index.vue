@@ -1,7 +1,7 @@
 <template>
   <div class="tab-content grid flex-col">
     <template v-for="(process, index) in $store.state.processes">
-      <button :key="index" class="text-right font-semibold">
+      <button :key="process.instrument" class="text-right font-semibold">
         {{ process.instrument }}
       </button>
       <div :key="index" class="progress-bar relative">
