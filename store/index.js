@@ -62,39 +62,54 @@ export const state = () => ({
   currencyTotal: new Decimal(0),
   processes: [
     {
-      instrument: 'Star Chart',
-      worker: 'Shaman',
-      deviceCount: new Decimal(0),
-      workerCount: 0,
-      completion: 0,
-      workerRate: 6.0, // amount added to "completion" (100=full bar) per worker
-      reward: 8, // currency added when the bar is completed
-      nextWorkerCost: 15, // currency cost of next worker
-      nextWorkerFactor: 1.4, // worker cost *= this factor after each purchase
+      instrument: 'Mechanical Clock',
+      worker: 'Engineer',
+
+      cost: 10,
+      created: false,
+
+      completion: 0, // how close it is to giving currency. 10 gained per second.
+      completionRequired: 10, // should be divisible by 10
+      baseReward: 5, // currency added when the bar is completed
+
+      workerLevel: 0, // 0 = not hired; 1+ = hired
+      nextWorkerCost: 25, // currency cost of next worker
+      nextWorkerFactor: 1.5, // worker cost *= this factor after each purchase
+
       unlockThreshold: { tech: null, currency: 0 },
     },
     {
-      instrument: 'Stone Calendar',
-      worker: 'Stonecarver',
-      deviceCount: new Decimal(0),
-      workerCount: 0,
+      instrument: 'Hourglass',
+      worker: 'Glassblower',
+
+      cost: 100,
+      created: false,
+
       completion: 0,
-      workerRate: 4.0,
-      reward: 35,
-      nextWorkerCost: 60,
+      completionRequired: 20,
+      baseReward: 35,
+
+      workerLevel: 0,
+      nextWorkerCost: 200,
       nextWorkerFactor: 1.6,
+
       unlockThreshold: { tech: null, currency: 10000 },
     },
     {
-      instrument: 'Astrolabes',
-      worker: 'Mathematician',
-      deviceCount: new Decimal(0),
-      workerCount: 0,
+      instrument: 'Pocket Watch',
+      worker: 'Miniaturist',
+
+      cost: 1000,
+      created: false,
+
       completion: 0,
-      workerRate: 1.5,
-      reward: 80,
-      nextWorkerCost: 90,
+      completionRequired: 30,
+      baseReward: 80,
+
+      workerLevel: 0,
+      nextWorkerCost: 2000,
       nextWorkerFactor: 1.8,
+
       unlockThreshold: { tech: 0, currency: new Decimal(10e5) },
     },
   ],
@@ -190,10 +205,6 @@ export const getters = {
 }
 
 export const mutations = {
-  setActiveTab: (state, index) => {
-    if (state.tabs[index].locked) return
-    state.activeTabIndex = index
-  },
   addCurrency: (state, value) => {
     state.currency = Decimal.add(state.currency, value)
     state.currencyTotal = Decimal.add(state.currencyTotal, value)
@@ -202,8 +213,12 @@ export const mutations = {
     value = Decimal.mul(value, -1)
     state.currency = Decimal.add(state.currency, value)
   },
-  setProcessCompletion: (state, { processIndex, value }) => {
-    Vue.set(state.processes[processIndex], 'completion', value)
+  createInstrument: (state, instrument) => {
+    const index = state.processes.findIndex((p) => p.instrument === instrument)
+    Vue.set(state.processes[index], 'created', true)
+  },
+  setProcessCompletion: (state, { index, value }) => {
+    Vue.set(state.processes[index], 'completion', value)
   },
   setMissionAvailable: (state, missionIndex) => {
     Vue.set(state.missions[missionIndex], 'available', true)
@@ -214,15 +229,17 @@ export const mutations = {
   completeMission: (state, missionIndex) => {
     state.missions[missionIndex].complete = true
   },
-  purchaseWorker: (state, processIndex) => {
-    const p = state.processes[processIndex]
-    if (p.nextWorkerCost > state.currency) return
-    state.currency = Decimal.subtract(state.currency, p.nextWorkerCost)
-    Vue.set(state.processes[processIndex], 'workerCount', p.workerCount + 1)
+  levelUpApprentice: (state, process) => {
+    if (process.nextWorkerCost > state.currency) {
+      return
+    }
+    const index = state.processes.findIndex((p) => p.worker === process.worker)
+    state.currency = Decimal.subtract(state.currency, process.nextWorkerCost)
+    Vue.set(state.processes[index], 'workerLevel', process.workerLevel + 1)
     Vue.set(
-      state.processes[processIndex],
+      state.processes[index],
       'nextWorkerCost',
-      Math.floor(p.nextWorkerCost * p.nextWorkerFactor)
+      Math.floor(process.nextWorkerCost * process.nextWorkerFactor)
     )
   },
   tickGameDate: (state) => {

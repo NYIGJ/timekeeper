@@ -1,18 +1,17 @@
 <template>
-  <div class="page container max-h-full h-full w-full mx-auto bg-gray-400 px-4">
+  <div class="container max-h-full h-full w-full mx-auto bg-gray-400 px-4">
     <main
       class="grid w-full h-full overflow-auto relative"
-      :class="`bg-${$store.getters.activeTab.color}`"
+      :class="`bg-${activeTab.color}`"
     >
       <time-header />
 
       <key-art-stage />
 
-      <div class="tabs grid w-full text-gray-400 h-10 relative">
+      <div class="grid grid-cols-6 gap-1 w-full h-10 relative">
         <game-tab
-          v-for="(tab, index) in $store.state.tabs"
-          :key="index"
-          :index="index"
+          v-for="tab in $store.state.tabs"
+          :key="tab.route"
           :tab-data="tab"
         />
       </div>
@@ -23,7 +22,7 @@
       >
         <div
           class="w-full text-2xl text-center pt-1 pb-2"
-          v-text="$store.getters.activeTab.title"
+          v-text="activeTab.title"
         />
 
         <nuxt />
@@ -33,39 +32,41 @@
 </template>
 
 <script>
-export default {
-  name: 'IndexPage',
-  computed: {
-    activeTabColorClasses() {
-      const { lightColor, darkColor } = this.$store.getters.activeTab
+import { mapGetters } from 'vuex'
 
-      return `bg-${lightColor} text-${darkColor}`
+export default {
+  computed: {
+    ...mapGetters(['activeTab']),
+    activeTabColorClasses() {
+      return `bg-${this.activeTab.lightColor} text-${this.activeTab.darkColor}`
     },
   },
   mounted() {
     window.setInterval(() => {
       this.gametick()
-    }, 1000)
+    }, 100)
     window.setInterval(() => {
       this.$store.commit('tickGameDate')
     }, 1000)
   },
   methods: {
     gametick() {
-      for (let i = 0; i < this.$store.state.processes.length; i++) {
-        const p = this.$store.state.processes[i]
-        // const step = 100.0 / (6.0 * (i + 1)) // go at different rates
-        const step = p.workerRate * p.workerCount
-        let newValue = p.completion + step
-        while (newValue >= 100) {
-          newValue = newValue - 100
-          this.$store.commit('addCurrency', p.reward)
-        }
-        this.$store.commit('setProcessCompletion', {
-          processIndex: i,
-          value: newValue,
+      this.$store.state.processes
+        .filter((p) => p.created)
+        .forEach((process, index) => {
+          if (process.completion >= process.completionRequired) {
+            this.$store.commit('addCurrency', process.baseReward)
+            this.$store.commit('setProcessCompletion', {
+              index,
+              value: 0,
+            })
+          }
+
+          this.$store.commit('setProcessCompletion', {
+            index,
+            value: process.completion + 1,
+          })
         })
-      }
     },
   },
 }
@@ -87,17 +88,8 @@ html {
 </style>
 
 <style scoped>
-.page {
-  grid-template-rows: 1fr;
-}
-
 main {
   grid-template-rows: auto minmax(0, 2fr) auto minmax(0, 3fr);
   transition: background-color 2000ms;
-}
-
-.tabs {
-  grid-template-columns: repeat(6, 1fr);
-  grid-gap: 0.25rem;
 }
 </style>
