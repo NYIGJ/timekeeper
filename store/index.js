@@ -148,6 +148,7 @@ export const state = () => ({
   },
   wisdomGained: 0, // wisdom gained so far on this run, not applied until player sends the book.
   wisdomApplied: 0, // wisdom from previous runs
+  totalLifetimes: 1,
 })
 
 export const getters = {
@@ -185,6 +186,9 @@ export const getters = {
       11: 'Nov.',
       12: 'Dec.',
     }[state.gameDate.month]
+  },
+  currencySpent: (state) => {
+    return Decimal.subtract(state.currencyTotal, state.currency)
   },
 }
 
