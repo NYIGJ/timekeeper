@@ -88,9 +88,7 @@
           Tab 5 content
         </template>
 
-        <template v-else-if="$store.state.activeTabIndex === 5">
-          Tab 6 content
-        </template>
+        <sixth-tab-content v-else-if="$store.state.activeTabIndex === 5" />
       </div>
     </main>
 
