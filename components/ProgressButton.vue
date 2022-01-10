@@ -26,12 +26,14 @@
 </template>
 
 <script>
+import Decimal from 'break_infinity.js'
+
 export default {
   props: {
     label: { type: String, required: true },
     description: { type: String, default: null },
     max: { type: Number, required: true },
-    value: { type: Number, required: true },
+    value: { type: [Number, Decimal], required: true },
     unit: { type: String, default: null },
   },
   computed: {
