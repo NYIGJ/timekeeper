@@ -1,27 +1,34 @@
 <template>
   <button
-    class="relative flex flex-col pt-2 pb-3 px-3 border rounded-lg overflow-hidden"
+    class="relative flex flex-col pt-2 pb-3 px-3 border rounded-lg overflow-hidden border-current"
     :class="[colorClasses, clickable ? 'cursor-pointer' : 'cursor-default']"
     :disable="!clickable"
+    @click="$emit('click')"
   >
     <progress
       v-if="!clickable"
       class="absolute top-0 left-0 right-0 h-1 w-full"
       :max="max"
-      :value="value"
+      :value="cappedValue"
     />
 
     <span class="absolute top-3 right-3 font-semibold text-sm">
-      {{ value }} / {{ max }}
+      {{ cappedValue }} / {{ max }}
       <span class="fas fa-hourglass-half" />
     </span>
 
     <span
-      class="w-full text-left lg:text-center text-lg md:text-xl font-semibold"
+      class="w-full text-left lg:text-center text-lg lg:text-xl font-semibold"
       v-text="label"
     />
 
     <p class="w-full text-left" v-text="description" />
+
+    <div v-if="current && next" class="text-sm m-auto">
+      <span>Current: {{ current }}</span>
+      <span class="fas fa-arrow-right mx-2" />
+      <span>Next: {{ next }}</span>
+    </div>
   </button>
 </template>
 
@@ -35,8 +42,13 @@ export default {
     max: { type: Number, required: true },
     value: { type: [Number, Decimal], required: true },
     unit: { type: String, default: null },
+    current: { type: String, default: null },
+    next: { type: String, default: null },
   },
   computed: {
+    cappedValue() {
+      return this.value > this.max ? this.max : this.value
+    },
     clickable() {
       return this.value >= this.max
     },
@@ -52,9 +64,6 @@ export default {
 </script>
 
 <style scoped>
-button {
-  border-color: currentColor;
-}
 /* progress background for all browsers */
 progress::-webkit-progress-bar {
   background-color: rgba(0, 0, 0, 0.1);
