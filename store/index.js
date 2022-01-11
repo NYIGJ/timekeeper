@@ -62,22 +62,64 @@ export const state = () => ({
   currencyTotal: new Decimal(0),
   processes: [
     {
-      instrument: 'Mechanical Clock',
-      worker: 'Engineer',
+      instrument: 'Star Chart',
+      worker: 'Shaman',
 
-      unlocked: true,
-      cost: 10,
+      unlocked: false,
+      minDateUnlocked: -1,
+      unlockEra: 'prehistoric',
+      cost: 0,
       created: false,
 
-      completion: 0, // how close it is to giving currency. 10 gained per second.
-      completionRequired: 10, // should be divisible by 10
-      baseReward: 5, // currency added when the bar is completed
+      completion: 0,
+      completionRequired: 30,
+      baseReward: 80,
 
-      workerLevel: 0, // 0 = not hired; 1+ = hired
-      nextWorkerCost: 50, // currency cost of next worker
-      nextWorkerFactor: 1.5, // worker cost *= this factor after each purchase
+      workerLevel: 0,
+      nextWorkerCost: 500,
+      nextWorkerFactor: 1.8,
 
-      unlockThreshold: { tech: null, currency: 0 },
+      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
+    },
+    {
+      instrument: 'Stone Calendar',
+      worker: 'Stone Carver',
+
+      unlocked: false,
+      minDateUnlocked: -1,
+      unlockEra: 'classical',
+      cost: 0,
+      created: false,
+
+      completion: 0,
+      completionRequired: 30,
+      baseReward: 80,
+
+      workerLevel: 0,
+      nextWorkerCost: 500,
+      nextWorkerFactor: 1.8,
+
+      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
+    },
+    {
+      instrument: 'Astrolabe',
+      worker: 'Mathematician',
+
+      unlocked: false,
+      minDateUnlocked: -1,
+      unlockEra: 'middle ages',
+      cost: 0,
+      created: false,
+
+      completion: 0,
+      completionRequired: 30,
+      baseReward: 80,
+
+      workerLevel: 0,
+      nextWorkerCost: 500,
+      nextWorkerFactor: 1.8,
+
+      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
     },
     {
       instrument: 'Hourglass',
@@ -85,6 +127,7 @@ export const state = () => ({
 
       unlocked: false,
       minDateUnlocked: 1100 * 12,
+      unlockEra: 'early modern',
       cost: 100,
       created: false,
 
@@ -104,6 +147,7 @@ export const state = () => ({
 
       unlocked: false,
       minDateUnlocked: 1600 * 12,
+      unlockEra: 'early modern',
       cost: 1000,
       created: false,
 
@@ -116,6 +160,106 @@ export const state = () => ({
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: 0, currency: new Decimal(10e5) },
+    },
+    {
+      instrument: 'Atomic Clock',
+      worker: 'Scientist',
+
+      unlocked: false,
+      minDateUnlocked: -1,
+      unlockEra: 'modern',
+      cost: 0,
+      created: false,
+
+      completion: 0,
+      completionRequired: 30,
+      baseReward: 80,
+
+      workerLevel: 0,
+      nextWorkerCost: 500,
+      nextWorkerFactor: 1.8,
+
+      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
+    },
+    {
+      instrument: 'Quantum Clock',
+      worker: 'Artificial Intelligence',
+
+      unlocked: false,
+      minDateUnlocked: -1,
+      unlockEra: 'future',
+      cost: 0,
+      created: false,
+
+      completion: 0,
+      completionRequired: 30,
+      baseReward: 80,
+
+      workerLevel: 0,
+      nextWorkerCost: 500,
+      nextWorkerFactor: 1.8,
+
+      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
+    },
+    {
+      instrument: 'Mechanical Clock',
+      worker: 'Engineer',
+
+      unlocked: true,
+      minDateUnlocked: -1,
+      unlockEra: 'middle ages',
+      cost: 10,
+      created: false,
+
+      completion: 0, // how close it is to giving currency. 10 gained per second.
+      completionRequired: 10, // should be divisible by 10
+      baseReward: 5, // currency added when the bar is completed
+
+      workerLevel: 0, // 0 = not hired; 1+ = hired
+      nextWorkerCost: 50, // currency cost of next worker
+      nextWorkerFactor: 1.5, // worker cost *= this factor after each purchase
+
+      unlockThreshold: { tech: null, currency: 0 },
+    },
+    {
+      instrument: 'Water Clock',
+      worker: 'Inventor',
+
+      unlocked: false,
+      minDateUnlocked: -1,
+      unlockEra: 'classical',
+      cost: 0,
+      created: false,
+
+      completion: 0,
+      completionRequired: 30,
+      baseReward: 80,
+
+      workerLevel: 0,
+      nextWorkerCost: 500,
+      nextWorkerFactor: 1.8,
+
+      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
+    },
+    {
+      instrument: 'Incense Clock',
+      worker: 'artisan',
+
+      unlocked: false,
+      minDateUnlocked: -1,
+      unlockEra: 'prehistoric',
+      cost: 0,
+      created: false,
+
+      completion: 0,
+      completionRequired: 30,
+      baseReward: 80,
+
+      workerLevel: 0,
+      nextWorkerCost: 500,
+      nextWorkerFactor: 1.8,
+
+      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
     },
   ],
 
