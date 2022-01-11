@@ -4,8 +4,8 @@
     :description="mission.description"
     :max="max"
     :value="value"
-    :unit="unit"
-    @click="complete"
+    :unit="mission.completionCriteria.unit"
+    @click="$emit('click')"
   />
 </template>
 
@@ -16,22 +16,21 @@ export default {
   },
   computed: {
     value() {
-      return 'cost' in this.mission.completionCriteria
-        ? this.$store.state.currency
-        : this.$store.state.playerAge
+      const { unit } = this.mission.completionCriteria
+
+      if (unit === 'maxAge') {
+        return this.$store.state.playerAge
+      } else if (unit === 'spareTime') {
+        return this.$store.state.currency
+      } else {
+        //  (unit === 'apprenticeLevels')
+        return this.$store.getters.apprenticeLevels
+      }
     },
     max() {
-      return 'cost' in this.mission.completionCriteria
-        ? this.mission.completionCriteria.cost
-        : this.$store.state.playerAgeMax
-    },
-    unit() {
-      return 'cost' in this.mission.completionCriteria ? 'spareTime' : 'age'
-    },
-  },
-  methods: {
-    complete() {
-      this.$store.commit('completeMission', this.mission)
+      return this.mission.completionCriteria.unit === 'maxAge'
+        ? this.$store.state.playerAgeMax
+        : this.mission.completionCriteria.value
     },
   },
 }
