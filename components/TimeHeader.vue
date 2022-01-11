@@ -16,28 +16,19 @@
         :max="$store.state.playerAgeMax"
         :value="$store.state.playerAge"
       />
-      {{ ageText }}
+      {{ $store.getters.ageText }}
     </div>
 
-    <div class="text-center pt-2 pb-1 select-none" v-text="maxAgeText" />
+    <div
+      class="text-center pt-2 pb-1 select-none"
+      v-text="$store.getters.ageMaxText"
+    />
   </header>
 </template>
 
 <script>
 export default {
   computed: {
-    ageText() {
-      const year = Math.floor(this.$store.state.playerAge / 12)
-      const month = this.$store.state.playerAge % 12
-
-      return `${year}y${month}m`
-    },
-    maxAgeText() {
-      const year = Math.floor(this.$store.state.playerAgeMax / 12)
-      const month = this.$store.state.playerAgeMax % 12
-
-      return `${year}y${month}m max`
-    },
     colorClasses() {
       const { lightColor, darkColor } = this.$store.getters.activeTab
 
