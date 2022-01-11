@@ -143,6 +143,7 @@ export const state = () => ({
       unlocked: true,
       viewed: false,
       complete: false,
+      resetOnPrestige: false,
     },
     {
       name: 'Study Time Magic',
@@ -159,6 +160,7 @@ export const state = () => ({
       unlocked: true,
       viewed: false,
       complete: false,
+      resetOnPrestige: true,
     },
     {
       name: 'Create the Time Machine',
@@ -175,9 +177,10 @@ export const state = () => ({
       unlocked: false,
       viewed: false,
       complete: false,
+      resetOnPrestige: false,
     },
     {
-      name: 'Time To Cheat Death',
+      name: 'Time to Cheat Death',
       description:
         'Your body seems to be failing you. ' +
         'Write a book to pass your knowedge to your younger self through the time machine. ' +
@@ -192,6 +195,43 @@ export const state = () => ({
       unlocked: false,
       viewed: false,
       complete: false,
+      resetOnPrestige: false,
+    },
+    {
+      // update doPrestige (mutation) if this is renamed
+      name: 'Time Travel Precision',
+      description:
+        'The time machine could target a certain month instead of a decade, ' +
+        'with the proper calibration.',
+      unlockCriteria: {
+        unit: 'missionsCompleted',
+        value: ['Time to Cheat Death', 'Create the Time Machine'],
+      },
+      completionCriteria: {
+        unit: 'spareTime',
+        value: 10000,
+      },
+      unlocked: false,
+      viewed: false,
+      complete: false,
+      resetOnPrestige: false,
+    },
+    {
+      name: 'Time to Cheat Death... Again',
+      description:
+        'Another life well lived. ' +
+        'Add a few chapters to the tome you received and send it back again.',
+      unlockCriteria: {
+        unit: 'missionsCompleted',
+        value: ['Time to Cheat Death', 'Create the Time Machine'],
+      },
+      completionCriteria: {
+        unit: 'maxAge',
+      },
+      unlocked: false,
+      viewed: false,
+      complete: false,
+      resetOnPrestige: true,
     },
   ],
 
@@ -267,6 +307,23 @@ export const getters = {
         process.created ? totalInstruments + 1 : totalInstruments,
       0
     ),
+  currentEra: (state) => {
+    if (state.gameDate < 100 * 12) {
+      return 'prehistoric'
+    } else if (state.gameDate < 999 * 12) {
+      return 'classical'
+    } else if (state.gameDate < 1400 * 12) {
+      return 'middle ages'
+    } else if (state.gameDate < 1750 * 12) {
+      return 'early modern'
+    } else if (state.gameDate < 2100 * 12) {
+      return 'modern'
+    } else if (state.gameDate < 2500 * 12) {
+      return 'future'
+    } else {
+      return 'distant future'
+    }
+  },
 }
 
 export const mutations = {
@@ -320,4 +377,25 @@ export const mutations = {
   travelGameDate: (state, month) => {
     state.gameDate = month
   },
+  doPrestige: (state) => {
+    state.currency = new Decimal(0)
+    state.wisdomApplied += state.wisdomGained
+    state.wisdomGained = 0
+    state.totalLifetimes += 1
+    state.timeJumpsBackwards += 1
+    state.playerLivedTotal += state.playerAge
+    // TODO: refactor next 3 lines if getters can be used in mutators: missionIsCompleted('Time Travel Precision')
+    const precisionMissionIndex = state.missions.findIndex(
+      (m) => m.name === 'Time Travel Precision'
+    )
+    const precisionMission = state.missions[precisionMissionIndex]
+    if (precisionMission.completed) {
+      state.playerAge = 30 * 12
+      state.gameDate = 1400 * 12
+    } else {
+      state.playerAge = 8 * 12
+      state.gameDate = 1378 * 12
+    }
+  },
+  doTimeTravel: (state, monthNumber) => {},
 }
