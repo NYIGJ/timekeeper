@@ -72,17 +72,17 @@ export const state = () => ({
       created: false,
 
       completion: 0,
-      completionRequired: 30,
-      baseReward: 80,
+      completionRequired: 80,
+      baseReward: 3600,
 
       workerLevel: 0,
-      nextWorkerCost: 500,
+      nextWorkerCost: 3600,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
     },
     {
-      instrument: 'Stone Calendar',
+      instrument: 'Sundial',
       worker: 'Stone Carver',
 
       unlocked: false,
@@ -92,11 +92,11 @@ export const state = () => ({
       created: false,
 
       completion: 0,
-      completionRequired: 30,
-      baseReward: 80,
+      completionRequired: 160,
+      baseReward: 13600,
 
       workerLevel: 0,
-      nextWorkerCost: 500,
+      nextWorkerCost: 13600,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -112,11 +112,11 @@ export const state = () => ({
       created: false,
 
       completion: 0,
-      completionRequired: 30,
-      baseReward: 80,
+      completionRequired: 20,
+      baseReward: 300,
 
       workerLevel: 0,
-      nextWorkerCost: 500,
+      nextWorkerCost: 300,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -132,8 +132,8 @@ export const state = () => ({
       created: false,
 
       completion: 0,
-      completionRequired: 20,
-      baseReward: 35,
+      completionRequired: 10,
+      baseReward: 10,
 
       workerLevel: 0,
       nextWorkerCost: 250,
@@ -152,8 +152,8 @@ export const state = () => ({
       created: false,
 
       completion: 0,
-      completionRequired: 30,
-      baseReward: 80,
+      completionRequired: 20,
+      baseReward: 200,
 
       workerLevel: 0,
       nextWorkerCost: 500,
@@ -172,11 +172,11 @@ export const state = () => ({
       created: false,
 
       completion: 0,
-      completionRequired: 30,
-      baseReward: 80,
+      completionRequired: 80,
+      baseReward: 3200,
 
       workerLevel: 0,
-      nextWorkerCost: 500,
+      nextWorkerCost: 3200,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -192,11 +192,11 @@ export const state = () => ({
       created: false,
 
       completion: 0,
-      completionRequired: 30,
-      baseReward: 80,
+      completionRequired: 160,
+      baseReward: 12800,
 
       workerLevel: 0,
-      nextWorkerCost: 500,
+      nextWorkerCost: 12800,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -222,28 +222,8 @@ export const state = () => ({
       unlockThreshold: { tech: null, currency: 0 },
     },
     {
-      instrument: 'Water Clock',
-      worker: 'Inventor',
-
-      unlocked: false,
-      minDateUnlocked: -1,
-      unlockEra: 'classical',
-      cost: 0,
-      created: false,
-
-      completion: 0,
-      completionRequired: 30,
-      baseReward: 80,
-
-      workerLevel: 0,
-      nextWorkerCost: 500,
-      nextWorkerFactor: 1.8,
-
-      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
-    },
-    {
-      instrument: 'Incense Clock',
-      worker: 'artisan',
+      instrument: 'Atlantean Clock',
+      worker: 'Fish Tamer',
 
       unlocked: false,
       minDateUnlocked: -1,
@@ -252,11 +232,31 @@ export const state = () => ({
       created: false,
 
       completion: 0,
-      completionRequired: 30,
-      baseReward: 80,
+      completionRequired: 320,
+      baseReward: 52800,
 
       workerLevel: 0,
       nextWorkerCost: 500,
+      nextWorkerFactor: 1.8,
+
+      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
+    },
+    {
+      instrument: 'Digital Clock',
+      worker: 'Technician',
+
+      unlocked: false,
+      minDateUnlocked: -1,
+      unlockEra: 'modern',
+      cost: 0,
+      created: false,
+
+      completion: 0,
+      completionRequired: 40,
+      baseReward: 800,
+
+      workerLevel: 0,
+      nextWorkerCost: 800,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
