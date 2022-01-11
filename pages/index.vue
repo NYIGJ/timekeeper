@@ -24,11 +24,14 @@
 <script>
 export default {
   computed: {
+    unlocked() {
+      return this.$store.state.processes.filter((p) => p.unlocked)
+    },
     created() {
-      return this.$store.state.processes.filter((p) => p.created)
+      return this.unlocked.filter((p) => p.created)
     },
     uncreated() {
-      return this.$store.state.processes.filter((p) => !p.created)
+      return this.unlocked.filter((p) => !p.created)
     },
   },
   methods: {

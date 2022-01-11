@@ -1,9 +1,19 @@
 <template>
   <responsive-grid>
     <apprentice-button
-      v-for="(process, index) in $store.state.processes"
+      v-for="(process, index) in unlocked"
       :key="`${index}-${process.workerLevel}`"
       :process="process"
     />
   </responsive-grid>
 </template>
+
+<script>
+export default {
+  computed: {
+    unlocked() {
+      return this.$store.state.processes.filter((p) => p.unlocked)
+    },
+  },
+}
+</script>
