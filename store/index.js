@@ -65,6 +65,7 @@ export const state = () => ({
       instrument: 'Mechanical Clock',
       worker: 'Engineer',
 
+      unlocked: true,
       cost: 10,
       created: false,
 
@@ -73,7 +74,7 @@ export const state = () => ({
       baseReward: 5, // currency added when the bar is completed
 
       workerLevel: 0, // 0 = not hired; 1+ = hired
-      nextWorkerCost: 25, // currency cost of next worker
+      nextWorkerCost: 50, // currency cost of next worker
       nextWorkerFactor: 1.5, // worker cost *= this factor after each purchase
 
       unlockThreshold: { tech: null, currency: 0 },
@@ -82,6 +83,8 @@ export const state = () => ({
       instrument: 'Hourglass',
       worker: 'Glassblower',
 
+      unlocked: false,
+      minDateUnlocked: 1100 * 12,
       cost: 100,
       created: false,
 
@@ -90,7 +93,7 @@ export const state = () => ({
       baseReward: 35,
 
       workerLevel: 0,
-      nextWorkerCost: 200,
+      nextWorkerCost: 250,
       nextWorkerFactor: 1.6,
 
       unlockThreshold: { tech: null, currency: 10000 },
@@ -99,6 +102,8 @@ export const state = () => ({
       instrument: 'Pocket Watch',
       worker: 'Miniaturist',
 
+      unlocked: false,
+      minDateUnlocked: 1600 * 12,
       cost: 1000,
       created: false,
 
@@ -107,7 +112,7 @@ export const state = () => ({
       baseReward: 80,
 
       workerLevel: 0,
-      nextWorkerCost: 2000,
+      nextWorkerCost: 500,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: 0, currency: new Decimal(10e5) },
@@ -124,12 +129,50 @@ export const state = () => ({
 
   missions: [
     {
-      name: 'Create the Time Machine',
-      description: 'Soon you will be able to control time itself.',
-      completionCriteria: {
-        cost: 6000,
+      name: 'Train an Apprentice',
+      description:
+        'One man can only spend so much time staring at clocks each day. Hiring a second may make this easier.',
+      unlockCriteria: {
+        unit: 'instruments',
+        value: 1,
       },
-      available: true,
+      completionCriteria: {
+        unit: 'apprenticeLevels',
+        value: 5,
+      },
+      unlocked: true,
+      viewed: false,
+      complete: false,
+    },
+    {
+      name: 'Study Time Magic',
+      description:
+        "As time ticks away you begin to ponder the mysteries of time's origins and possibilities.",
+      unlockCriteria: {
+        unit: 'apprenticeLevels',
+        value: 1,
+      },
+      completionCriteria: {
+        unit: 'spareTime',
+        value: 250,
+      },
+      unlocked: true,
+      viewed: false,
+      complete: false,
+    },
+    {
+      name: 'Create the Time Machine',
+      description:
+        'Your magnum opus. Soon you will be able to control time itself.',
+      unlockCriteria: {
+        unit: 'missionsCompleted',
+        value: ['Train an Apprentice', 'Study Time Magic'],
+      },
+      completionCriteria: {
+        unit: 'spareTime',
+        value: 1000,
+      },
+      unlocked: false,
       viewed: false,
       complete: false,
     },
@@ -139,24 +182,27 @@ export const state = () => ({
         'Your body seems to be failing you. ' +
         'Write a book to pass your knowedge to your younger self through the time machine. ' +
         "Now where's your pen...",
-      appearanceCriteria: {
-        age: 100,
+      unlockCriteria: {
+        unit: 'timeJumpsBackwards',
+        value: 1,
       },
       completionCriteria: {
-        maxAge: true,
+        unit: 'maxAge',
       },
-      available: true,
+      unlocked: false,
       viewed: false,
       complete: false,
     },
   ],
-  gameDate: 1991 * 12,
-  playerAge: 34 * 12,
-  playerAgeMax: 80 * 12,
+
+  gameDate: 1400 * 12,
+  playerAge: 30 * 12,
+  playerAgeMax: 60 * 12,
   playerLivedTotal: 0,
   wisdomGained: 0, // wisdom gained so far on this run, not applied until player sends the book.
   wisdomApplied: 0, // wisdom from previous runs
   totalLifetimes: 1,
+  timeJumpsBackwards: 0,
 })
 
 export const getters = {
@@ -205,6 +251,22 @@ export const getters = {
 
     return `${year}y${month}m`
   },
+  missionIsCompleted: (state) => (missionName) => {
+    const mission = state.missions.find((m) => m.name === missionName)
+
+    return mission && mission.complete
+  },
+  apprenticeLevels: (state) =>
+    state.processes.reduce(
+      (totalLevels, process) => (totalLevels += process.workerLevel),
+      0
+    ),
+  instruments: (state) =>
+    state.processes.reduce(
+      (totalInstruments, process) =>
+        process.created ? totalInstruments + 1 : totalInstruments,
+      0
+    ),
 }
 
 export const mutations = {
@@ -229,9 +291,13 @@ export const mutations = {
   setMissionViewed: (state, missionIndex) => {
     Vue.set(state.missions[missionIndex], 'viewed', true)
   },
-  completeMission: (state, mission) => {
-    const index = state.missions.findIndex((m) => m.name === mission.name)
+  completeMission: (state, missionName) => {
+    const index = state.missions.findIndex((m) => m.name === missionName)
     Vue.set(state.missions[index], 'complete', true)
+  },
+  unlockMission: (state, missionName) => {
+    const index = state.missions.findIndex((m) => m.name === missionName)
+    Vue.set(state.missions[index], 'unlocked', true)
   },
   levelUpApprentice: (state, process) => {
     if (process.nextWorkerCost > state.currency) {
