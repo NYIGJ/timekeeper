@@ -127,7 +127,7 @@ export const state = () => ({
       name: 'Create the Time Machine',
       description: 'Soon you will be able to control time itself.',
       completionCriteria: {
-        cost: 50000,
+        cost: 6000,
       },
       available: true,
       viewed: false,
