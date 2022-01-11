@@ -143,7 +143,7 @@ export const state = () => ({
         age: 100,
       },
       completionCriteria: {
-        cost: 150000,
+        maxAge: true,
       },
       available: true,
       viewed: false,
@@ -193,6 +193,18 @@ export const getters = {
   currencySpent: (state) => {
     return Decimal.subtract(state.currencyTotal, state.currency)
   },
+  ageText: (state) => {
+    const year = Math.floor(state.playerAge / 12)
+    const month = state.playerAge % 12
+
+    return `${year}y${month}m`
+  },
+  ageMaxText: (state) => {
+    const year = Math.floor(state.playerAgeMax / 12)
+    const month = state.playerAgeMax % 12
+
+    return `${year}y${month}m`
+  },
 }
 
 export const mutations = {
@@ -217,8 +229,9 @@ export const mutations = {
   setMissionViewed: (state, missionIndex) => {
     Vue.set(state.missions[missionIndex], 'viewed', true)
   },
-  completeMission: (state, missionIndex) => {
-    state.missions[missionIndex].complete = true
+  completeMission: (state, mission) => {
+    const index = state.missions.findIndex((m) => m.name === mission.name)
+    Vue.set(state.missions[index], 'complete', true)
   },
   levelUpApprentice: (state, process) => {
     if (process.nextWorkerCost > state.currency) {

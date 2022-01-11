@@ -4,6 +4,7 @@
     :description="mission.description"
     :max="max"
     :value="value"
+    :unit="unit"
     @click="complete"
   />
 </template>
@@ -23,6 +24,9 @@ export default {
       return 'cost' in this.mission.completionCriteria
         ? this.mission.completionCriteria.cost
         : this.$store.state.playerAgeMax
+    },
+    unit() {
+      return 'cost' in this.mission.completionCriteria ? 'spareTime' : 'age'
     },
   },
   methods: {

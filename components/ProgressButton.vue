@@ -13,8 +13,8 @@
     />
 
     <span class="absolute top-3 right-3 font-semibold text-sm">
-      {{ cappedValue }} / {{ max }}
-      <span class="fas fa-hourglass-half" />
+      {{ cappedValueText }} / {{ maxText }}
+      <span v-if="unit === 'spareTime'" class="fas fa-hourglass-half" />
     </span>
 
     <span
@@ -41,13 +41,23 @@ export default {
     description: { type: String, default: null },
     max: { type: Number, required: true },
     value: { type: [Number, Decimal], required: true },
-    unit: { type: String, default: null },
+    unit: { type: String, default: 'spareTime' },
     current: { type: String, default: null },
     next: { type: String, default: null },
   },
   computed: {
     cappedValue() {
       return this.value > this.max ? this.max : this.value
+    },
+    cappedValueText() {
+      return this.unit === 'spareTime'
+        ? this.cappedValue
+        : this.$store.getters.ageText
+    },
+    maxText() {
+      return this.unit === 'spareTime'
+        ? this.max
+        : this.$store.getters.ageMaxText
     },
     clickable() {
       return this.value >= this.max

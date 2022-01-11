@@ -1,12 +1,9 @@
 <template>
   <responsive-grid>
-    <progress-button
+    <mission-button
       v-for="(mission, index) in $store.state.missions"
       :key="index"
-      :label="mission.name"
-      :description="mission.description"
-      :max="mission.completionCriteria.cost"
-      :value="$store.state.currency"
+      :mission="mission"
     />
   </responsive-grid>
 </template>
