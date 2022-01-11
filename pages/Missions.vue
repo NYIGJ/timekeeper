@@ -68,6 +68,9 @@ export default {
   methods: {
     complete(mission) {
       this.$store.commit('completeMission', mission.name)
+      if (mission.completionCriteria.unit === 'spareTime') {
+        this.$store.commit('spendCurrency', mission.completionCriteria.value)
+      }
     },
   },
 }
