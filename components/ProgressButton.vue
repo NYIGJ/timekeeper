@@ -3,7 +3,7 @@
     class="relative flex flex-col pt-2 pb-3 px-3 border rounded-lg overflow-hidden border-current"
     :class="[colorClasses, clickable ? 'cursor-pointer' : 'cursor-default']"
     :disable="!clickable"
-    @click="$emit('click')"
+    @click="clickable && $emit('click')"
   >
     <progress
       v-if="!clickable"
@@ -13,7 +13,9 @@
     />
 
     <span class="absolute top-3 right-3 font-semibold text-sm">
-      {{ cappedValueText }} / {{ maxText }}
+      <span v-if="unit === 'apprenticeLevels'">L</span>{{ cappedValueText }}
+      /
+      <span v-if="unit === 'apprenticeLevels'">L</span>{{ maxText }}
       <span v-if="unit === 'spareTime'" class="fas fa-hourglass-half" />
     </span>
 
@@ -50,14 +52,12 @@ export default {
       return this.value > this.max ? this.max : this.value
     },
     cappedValueText() {
-      return this.unit === 'spareTime'
-        ? this.cappedValue
-        : this.$store.getters.ageText
+      return this.unit === 'maxAge'
+        ? this.$store.getters.ageText
+        : this.cappedValue
     },
     maxText() {
-      return this.unit === 'spareTime'
-        ? this.max
-        : this.$store.getters.ageMaxText
+      return this.unit === 'maxAge' ? this.$store.getters.ageMaxText : this.max
     },
     clickable() {
       return this.value >= this.max
