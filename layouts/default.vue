@@ -57,7 +57,9 @@ export default {
         .filter((p) => p.created)
         .forEach((process, index) => {
           if (process.completion >= process.completionRequired) {
-            this.$store.commit('addCurrency', process.baseReward)
+            const reward = process.baseReward * (1 + process.workerLevel)
+
+            this.$store.commit('addCurrency', reward)
             this.$store.commit('setProcessCompletion', {
               index,
               value: 0,
