@@ -20,14 +20,14 @@
 
 <script>
 export default {
-    computed: {
-        currencyText() {
-            if (this.$store.state.currency.greaterThan(1e7)) {
-                return this.$store.state.currency.toString()
-            }
-            return Math.floor(this.$store.state.currency)
-        }
-    }
+  computed: {
+    currencyText() {
+      if (this.$store.state.currency.greaterThan(1e7)) {
+        return this.$store.state.currency.toString()
+      }
+      return Math.floor(this.$store.state.currency)
+    },
+  },
 }
 </script>
 
