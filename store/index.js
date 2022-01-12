@@ -65,7 +65,7 @@ export const state = () => ({
       instrument: 'Star Chart',
       worker: 'Shaman',
 
-      unlocked: false,
+      unlocked: true,
       minDateUnlocked: -1,
       unlockEra: 'prehistoric',
       cost: 0,
@@ -85,7 +85,7 @@ export const state = () => ({
       instrument: 'Sundial',
       worker: 'Stone Carver',
 
-      unlocked: false,
+      unlocked: true,
       minDateUnlocked: -1,
       unlockEra: 'classical',
       cost: 0,
@@ -105,7 +105,7 @@ export const state = () => ({
       instrument: 'Astrolabe',
       worker: 'Mathematician',
 
-      unlocked: false,
+      unlocked: true,
       minDateUnlocked: -1,
       unlockEra: 'middle ages',
       cost: 0,
@@ -125,7 +125,7 @@ export const state = () => ({
       instrument: 'Hourglass',
       worker: 'Glassblower',
 
-      unlocked: false,
+      unlocked: true,
       minDateUnlocked: 1100 * 12,
       unlockEra: 'early modern',
       cost: 100,
@@ -145,7 +145,7 @@ export const state = () => ({
       instrument: 'Pocket Watch',
       worker: 'Miniaturist',
 
-      unlocked: false,
+      unlocked: true,
       minDateUnlocked: 1600 * 12,
       unlockEra: 'early modern',
       cost: 1000,
@@ -165,7 +165,7 @@ export const state = () => ({
       instrument: 'Atomic Clock',
       worker: 'Scientist',
 
-      unlocked: false,
+      unlocked: true,
       minDateUnlocked: -1,
       unlockEra: 'modern',
       cost: 0,
@@ -185,7 +185,7 @@ export const state = () => ({
       instrument: 'Quantum Clock',
       worker: 'Artificial Intelligence',
 
-      unlocked: false,
+      unlocked: true,
       minDateUnlocked: -1,
       unlockEra: 'future',
       cost: 0,
@@ -225,7 +225,7 @@ export const state = () => ({
       instrument: 'Atlantean Clock',
       worker: 'Fish Tamer',
 
-      unlocked: false,
+      unlocked: true,
       minDateUnlocked: -1,
       unlockEra: 'prehistoric',
       cost: 0,
@@ -245,7 +245,7 @@ export const state = () => ({
       instrument: 'Digital Clock',
       worker: 'Technician',
 
-      unlocked: false,
+      unlocked: true,
       minDateUnlocked: -1,
       unlockEra: 'modern',
       cost: 0,
