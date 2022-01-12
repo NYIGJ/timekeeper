@@ -7,7 +7,7 @@
         :label="process.instrument"
         :max="process.cost"
         :value="$store.state.currency"
-        @click="create(process.instrument)"
+        @click="create(process)"
       />
     </responsive-grid>
 
@@ -35,8 +35,9 @@ export default {
     },
   },
   methods: {
-    create(instrument) {
-      this.$store.commit('createInstrument', instrument)
+    create(process) {
+      this.$store.commit('createInstrument', process.instrument)
+      this.$store.commit('spendCurrency', process.cost)
     },
   },
 }
