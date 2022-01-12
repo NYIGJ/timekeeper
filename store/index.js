@@ -62,41 +62,81 @@ export const state = () => ({
   currencyTotal: new Decimal(0),
   processes: [
     {
-      instrument: 'Star Chart',
-      worker: 'Shaman',
+      instrument: 'Atlantean Clock',
+      worker: 'Chronomancer',
 
       unlocked: true,
-      minDateUnlocked: -1,
-      unlockEra: 'prehistoric',
-      cost: 0,
+      minDateUnlocked: -12000 * 12,
+      unlockEra: 'Prehistoric',
+      cost: 1000000000000,
       created: false,
 
       completion: 0,
-      completionRequired: 80,
-      baseReward: 3600,
+      completionRequired: 320,
+      baseReward: 500000000000,
 
       workerLevel: 0,
-      nextWorkerCost: 3600,
+      nextWorkerCost: 5000000000000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
     },
     {
       instrument: 'Sundial',
-      worker: 'Stone Carver',
+      worker: 'Shaman',
 
       unlocked: true,
-      minDateUnlocked: -1,
-      unlockEra: 'classical',
-      cost: 0,
+      minDateUnlocked: -1500 * 12,
+      unlockEra: 'Antiquity',
+      cost: 10000000000,
       created: false,
 
       completion: 0,
       completionRequired: 160,
-      baseReward: 13600,
+      baseReward: 50000000000,
 
       workerLevel: 0,
-      nextWorkerCost: 13600,
+      nextWorkerCost: 50000000000,
+      nextWorkerFactor: 1.8,
+
+      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
+    },
+    {
+      instrument: 'Star Chart',
+      worker: 'Astrologer',
+
+      unlocked: true,
+      minDateUnlocked: -500 * 12,
+      unlockEra: 'Early Classical',
+      cost: 100000000,
+      created: false,
+
+      completion: 0,
+      completionRequired: 80,
+      baseReward: 50000000,
+
+      workerLevel: 0,
+      nextWorkerCost: 500000000,
+      nextWorkerFactor: 1.8,
+
+      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
+    },
+    {
+      instrument: 'Incense Clock',
+      worker: 'Oracle',
+
+      unlocked: true,
+      minDateUnlocked: 400 * 12,
+      unlockEra: 'Classical',
+      cost: 1000000,
+      created: false,
+
+      completion: 0,
+      completionRequired: 40,
+      baseReward: 500000,
+
+      workerLevel: 0,
+      nextWorkerCost: 5000000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -106,17 +146,17 @@ export const state = () => ({
       worker: 'Mathematician',
 
       unlocked: true,
-      minDateUnlocked: -1,
-      unlockEra: 'middle ages',
-      cost: 0,
+      minDateUnlocked: 700 * 12,
+      unlockEra: 'Late Classical',
+      cost: 10000,
       created: false,
 
       completion: 0,
       completionRequired: 20,
-      baseReward: 300,
+      baseReward: 5000,
 
       workerLevel: 0,
-      nextWorkerCost: 300,
+      nextWorkerCost: 50000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -127,87 +167,27 @@ export const state = () => ({
 
       unlocked: true,
       minDateUnlocked: 1100 * 12,
-      unlockEra: 'early modern',
+      unlockEra: 'Middle Ages',
       cost: 100,
       created: false,
 
       completion: 0,
       completionRequired: 10,
-      baseReward: 10,
+      baseReward: 50,
 
       workerLevel: 0,
-      nextWorkerCost: 250,
+      nextWorkerCost: 500,
       nextWorkerFactor: 1.6,
 
       unlockThreshold: { tech: null, currency: 10000 },
     },
     {
-      instrument: 'Pocket Watch',
-      worker: 'Miniaturist',
-
-      unlocked: true,
-      minDateUnlocked: 1600 * 12,
-      unlockEra: 'early modern',
-      cost: 1000,
-      created: false,
-
-      completion: 0,
-      completionRequired: 20,
-      baseReward: 200,
-
-      workerLevel: 0,
-      nextWorkerCost: 500,
-      nextWorkerFactor: 1.8,
-
-      unlockThreshold: { tech: 0, currency: new Decimal(10e5) },
-    },
-    {
-      instrument: 'Atomic Clock',
-      worker: 'Scientist',
-
-      unlocked: true,
-      minDateUnlocked: -1,
-      unlockEra: 'modern',
-      cost: 0,
-      created: false,
-
-      completion: 0,
-      completionRequired: 80,
-      baseReward: 3200,
-
-      workerLevel: 0,
-      nextWorkerCost: 3200,
-      nextWorkerFactor: 1.8,
-
-      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
-    },
-    {
-      instrument: 'Quantum Clock',
-      worker: 'Artificial Intelligence',
-
-      unlocked: true,
-      minDateUnlocked: -1,
-      unlockEra: 'future',
-      cost: 0,
-      created: false,
-
-      completion: 0,
-      completionRequired: 160,
-      baseReward: 12800,
-
-      workerLevel: 0,
-      nextWorkerCost: 12800,
-      nextWorkerFactor: 1.8,
-
-      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
-    },
-    {
       instrument: 'Mechanical Clock',
-      worker: 'Engineer',
+      worker: 'Machinist',
 
       unlocked: true,
-      minDateUnlocked: -1,
-      unlockEra: 'middle ages',
+      minDateUnlocked: 1400 * 12,
+      unlockEra: 'Early Modern',
       cost: 10,
       created: false,
 
@@ -222,41 +202,121 @@ export const state = () => ({
       unlockThreshold: { tech: null, currency: 0 },
     },
     {
-      instrument: 'Atlantean Clock',
-      worker: 'Fish Tamer',
+      instrument: 'Pocket Watch',
+      worker: 'Engineer',
 
       unlocked: true,
-      minDateUnlocked: -1,
-      unlockEra: 'prehistoric',
-      cost: 0,
+      minDateUnlocked: 1600 * 12,
+      unlockEra: 'Modern',
+      cost: 1000,
       created: false,
 
       completion: 0,
-      completionRequired: 320,
-      baseReward: 52800,
+      completionRequired: 8,
+      baseReward: 500,
 
       workerLevel: 0,
-      nextWorkerCost: 500,
+      nextWorkerCost: 5000,
+      nextWorkerFactor: 1.8,
+
+      unlockThreshold: { tech: 0, currency: new Decimal(10e5) },
+    },
+    {
+      instrument: 'Electric Clock',
+      worker: 'Electrician',
+
+      unlocked: true,
+      minDateUnlocked: 1840 * 12,
+      unlockEra: 'Late Modern',
+      cost: 100000,
+      created: false,
+
+      completion: 0,
+      completionRequired: 6,
+      baseReward: 50000,
+
+      workerLevel: 0,
+      nextWorkerCost: 500000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
     },
     {
-      instrument: 'Digital Clock',
-      worker: 'Technician',
+      instrument: 'Atomic Clock',
+      worker: 'Scientist',
 
       unlocked: true,
-      minDateUnlocked: -1,
-      unlockEra: 'modern',
-      cost: 0,
+      minDateUnlocked: 1950 * 12,
+      unlockEra: 'Post-Modern',
+      cost: 10000000,
       created: false,
 
       completion: 0,
-      completionRequired: 40,
-      baseReward: 800,
+      completionRequired: 4,
+      baseReward: 5000000,
 
       workerLevel: 0,
-      nextWorkerCost: 800,
+      nextWorkerCost: 50000000,
+      nextWorkerFactor: 1.8,
+
+      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
+    },
+    {
+      instrument: 'Quantum Clock',
+      worker: 'Artificial Intelligence',
+
+      unlocked: true,
+      minDateUnlocked: 2200 * 12,
+      unlockEra: 'Near Future',
+      cost: 1000000000,
+      created: false,
+
+      completion: 0,
+      completionRequired: 3,
+      baseReward: 500000000,
+
+      workerLevel: 0,
+      nextWorkerCost: 5000000000,
+      nextWorkerFactor: 1.8,
+
+      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
+    },
+    {
+      instrument: 'Non-Euclidian Clock',
+      worker: 'Befuddled Scientist',
+
+      unlocked: true,
+      minDateUnlocked: 3333 * 12,
+      unlockEra: 'Future',
+      cost: 100000000000,
+      created: false,
+
+      completion: 0,
+      completionRequired: 2,
+      baseReward: 50000000000,
+
+      workerLevel: 0,
+      nextWorkerCost: 500000000000,
+      nextWorkerFactor: 1.8,
+
+      unlockThreshold: { tech: null, currency: new Decimal(1e1) },
+    },
+    {
+      instrument: 'Pulsar Clock',
+      worker: 'Deep-Space Satellite',
+
+      unlocked: true,
+      minDateUnlocked: 9000 * 12,
+      unlockEra: 'Deep Future',
+      cost: 10000000000000,
+      created: false,
+
+      completion: 0,
+      completionRequired: 1,
+      baseReward: 5000000000000,
+
+      workerLevel: 0,
+      nextWorkerCost: 50000000000000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -483,8 +543,17 @@ export const mutations = {
     const index = state.processes.findIndex((p) => p.instrument === instrument)
     Vue.set(state.processes[index], 'created', true)
   },
-  setProcessCompletion: (state, { index, value }) => {
-    Vue.set(state.processes[index], 'completion', value)
+  tickProcess: (state, { process }) => {
+    const index = state.processes.findIndex(
+      (p) => p.instrument === process.instrument
+    )
+    Vue.set(state.processes[index], 'completion', process.completion + 1)
+  },
+  resetProcess: (state, { process }) => {
+    const index = state.processes.findIndex(
+      (p) => p.instrument === process.instrument
+    )
+    Vue.set(state.processes[index], 'completion', 0)
   },
   setMissionAvailable: (state, missionIndex) => {
     Vue.set(state.missions[missionIndex], 'available', true)

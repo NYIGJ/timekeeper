@@ -60,16 +60,10 @@ export default {
             const reward = process.baseReward * (1 + process.workerLevel)
 
             this.$store.commit('addCurrency', reward)
-            this.$store.commit('setProcessCompletion', {
-              index,
-              value: 0,
-            })
+            this.$store.commit('resetProcess', { process })
           }
 
-          this.$store.commit('setProcessCompletion', {
-            index,
-            value: process.completion + 1,
-          })
+          this.$store.commit('tickProcess', { process })
         })
     },
   },
