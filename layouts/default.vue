@@ -53,6 +53,7 @@ export default {
   },
   methods: {
     gametick() {
+      // Instruments tick
       this.$store.state.processes
         .filter((p) => p.created)
         .forEach((process, index) => {
@@ -65,6 +66,14 @@ export default {
 
           this.$store.commit('tickProcess', { process })
         })
+
+      // Energy ticks
+      if (
+        this.$store.getters.isTabUnlocked('Time Machine') &&
+        this.$store.state.energy < this.$store.state.energyMax
+      ) {
+        this.$store.commit('tickEnergy')
+      }
     },
   },
 }

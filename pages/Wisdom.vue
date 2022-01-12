@@ -13,8 +13,8 @@
       ><span align="right"></span>
     </div>
     <div>
-      <span align="left"><b>Total lifetimes</b></span
-      ><span align="right">{{ $store.state.totalLifetimes }}</span>
+      <span align="left"><b>Completed lifetimes</b></span
+      ><span align="right">{{ $store.state.lifetimes }}</span>
     </div>
     <div>
       <span align="left"><b>Longest lifetime</b></span

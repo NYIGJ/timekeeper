@@ -68,8 +68,24 @@ export default {
   methods: {
     complete(mission) {
       this.$store.commit('completeMission', mission.name)
+
       if (mission.completionCriteria.unit === 'spareTime') {
         this.$store.commit('spendCurrency', mission.completionCriteria.value)
+      }
+
+      if (mission.name === 'Study Time Magic') {
+        this.$store.commit('unlockTab', 'Time Magic')
+      }
+
+      if (mission.name === 'Create the Time Machine') {
+        this.$store.commit('unlockTab', 'Time Machine')
+      }
+
+      if (mission.name === 'Time to Cheat Death') {
+        this.$store.commit('unlockTab', 'Wisdom')
+        this.$store.commit('setPlayerAge', { year: 30 })
+        this.$store.commit('timeTravel', { year: 1400 })
+        this.$store.commit('tickLifetime')
       }
     },
   },

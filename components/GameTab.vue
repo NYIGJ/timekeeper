@@ -4,7 +4,7 @@
     :class="[colorClasses, { active }]"
     :to="tabData.route"
   >
-    <span v-if="!tabData.locked" :class="tabData.label" />
+    <span v-if="tabData.unlocked" :class="tabData.label" />
     <span v-else class="fas fa-lock" />
   </nuxt-link>
 </template>

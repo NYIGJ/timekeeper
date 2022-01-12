@@ -10,7 +10,7 @@ export const state = () => ({
       darkColor: 'amber-900',
       color: 'amber-400',
       lightColor: 'amber-200',
-      locked: false,
+      unlocked: true,
     },
     {
       route: '/apprentices',
@@ -19,7 +19,7 @@ export const state = () => ({
       darkColor: 'rose-900',
       color: 'rose-400',
       lightColor: 'rose-200',
-      locked: false,
+      unlocked: false,
     },
     {
       route: '/missions',
@@ -28,7 +28,7 @@ export const state = () => ({
       darkColor: 'sky-900',
       color: 'sky-400',
       lightColor: 'sky-200',
-      locked: false,
+      unlocked: false,
     },
     {
       route: '/timemachine',
@@ -37,7 +37,7 @@ export const state = () => ({
       darkColor: 'lime-900',
       color: 'lime-400',
       lightColor: 'lime-200',
-      locked: false,
+      unlocked: false,
     },
     {
       route: '/timemagic',
@@ -46,7 +46,7 @@ export const state = () => ({
       darkColor: 'violet-900',
       color: 'violet-400',
       lightColor: 'violet-200',
-      locked: false,
+      unlocked: false,
     },
     {
       route: '/wisdom',
@@ -55,11 +55,16 @@ export const state = () => ({
       darkColor: 'teal-900',
       color: 'teal-400',
       lightColor: 'teal-100',
-      locked: false,
+      unlocked: false,
     },
   ],
-  currency: new Decimal(0),
+
+  currency: new Decimal(10000),
   currencyTotal: new Decimal(0),
+
+  energy: 0,
+  energyMax: 600, // 60 seconds
+
   processes: [
     {
       instrument: 'Atlantean Clock',
@@ -390,8 +395,8 @@ export const state = () => ({
         'Write a book to pass your knowedge to your younger self through the time machine. ' +
         "Now where's your pen...",
       unlockCriteria: {
-        unit: 'timeJumpsBackwards',
-        value: 1,
+        unit: 'missionsCompleted',
+        value: ['Create the Time Machine'],
       },
       completionCriteria: {
         unit: 'maxAge',
@@ -421,7 +426,7 @@ export const state = () => ({
       resetOnPrestige: false,
     },
     {
-      name: 'Time to Cheat Death... Again',
+      name: 'Cheat Death... Again',
       description:
         'Another life well lived. ' +
         'Add a few chapters to the tome you received and send it back again.',
@@ -439,13 +444,41 @@ export const state = () => ({
     },
   ],
 
+  timeMachineActions: [
+    {
+      name: 'Activate!',
+      description: 'Will it work?? Only one way to find out!',
+      cost: 600,
+      unlocked: true,
+    },
+    {
+      name: 'Jump Forwards a Lot',
+      description: 'This time is boring. You yearn for more interesting times.',
+      cost: 1000,
+      unlocked: true,
+    },
+    {
+      name: 'Loop Back Around',
+      description: '...',
+      cost: 2000,
+      unlocked: true,
+    },
+    {
+      name: 'Jump Forwards a Little',
+      description:
+        'Visit your apprentices a few years into the future to benefit from the fruits of their labor.',
+      cost: 300,
+      unlocked: true,
+    },
+  ],
+
   gameDate: 1400 * 12,
   playerAge: 30 * 12,
   playerAgeMax: 60 * 12,
   playerLivedTotal: 0,
   wisdomGained: 0, // wisdom gained so far on this run, not applied until player sends the book.
   wisdomApplied: 0, // wisdom from previous runs
-  totalLifetimes: 1,
+  lifetimes: 0, // comleted lifetimes
   timeJumpsBackwards: 0,
 })
 
@@ -455,6 +488,9 @@ export const getters = {
       // eslint-disable-next-line no-undef
       (tab) => tab.route === $nuxt.$route.path
     )
+  },
+  isTabUnlocked: (state) => (title) => {
+    return state.tabs.find((t) => t.title === title).unlocked
   },
   canTimeTravel: (state) => {
     if (state.playerAge.year < state.playerAgeMax.year) return true
@@ -539,6 +575,10 @@ export const mutations = {
     value = Decimal.mul(value, -1)
     state.currency = Decimal.add(state.currency, value)
   },
+  unlockTab: (state, title) => {
+    const index = state.tabs.findIndex((t) => t.title === title)
+    Vue.set(state.tabs[index], 'unlocked', true)
+  },
   createInstrument: (state, instrument) => {
     const index = state.processes.findIndex((p) => p.instrument === instrument)
     Vue.set(state.processes[index], 'created', true)
@@ -587,6 +627,18 @@ export const mutations = {
     state.playerAge += 1
     if (!(state.playerAge % 12)) state.wisdomGained++
   },
+  tickEnergy: (state) => {
+    state.energy += 1
+  },
+  spendEnergy: (state, amount) => {
+    if (amount <= state.energy) {
+      state.energy -= amount
+    }
+  },
+  unlockTimeMachineAction: (state, name) => {
+    const index = state.timeMachineActions.findIndex((t) => t.name === name)
+    Vue.set(state.tabs[index], 'unlocked', true)
+  },
   travelGameDate: (state, month) => {
     state.gameDate = month
   },
@@ -594,7 +646,7 @@ export const mutations = {
     state.currency = new Decimal(0)
     state.wisdomApplied += state.wisdomGained
     state.wisdomGained = 0
-    state.totalLifetimes += 1
+    state.lifetimes += 1
     state.timeJumpsBackwards += 1
     state.playerLivedTotal += state.playerAge
     // TODO: refactor next 3 lines if getters can be used in mutators: missionIsCompleted('Time Travel Precision')
@@ -610,5 +662,19 @@ export const mutations = {
       state.gameDate = 1378 * 12
     }
   },
-  doTimeTravel: (state, monthNumber) => {},
+  timeTravel: (state, { year, month = 0 }) => {
+    const newYear = year * 12 + month
+
+    if (newYear < state.gameDate) {
+      state.timeJumpsBackwards += 1
+    }
+
+    state.gameDate = newYear
+  },
+  setPlayerAge: (state, { year, month = 0 }) => {
+    state.playerAge = year * 12 + month
+  },
+  tickLifetime: (state) => {
+    state.lifetimes += 1
+  },
 }
