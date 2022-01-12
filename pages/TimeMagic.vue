@@ -1,3 +1,3 @@
 <template>
-  <div>Tab 5 content</div>
+  <div>Tab 5 content.</div>
 </template>

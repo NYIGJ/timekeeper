@@ -17,6 +17,7 @@
       /
       <span v-if="unit === 'apprenticeLevels'">L</span>{{ maxText }}
       <span v-if="unit === 'spareTime'" class="fas fa-hourglass-half" />
+      <span v-if="unit === 'energy'" class="fas fa-bolt" />
     </span>
 
     <span
