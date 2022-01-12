@@ -65,7 +65,7 @@ export const state = () => ({
       instrument: 'Atlantean Clock',
       worker: 'Chronomancer',
 
-      unlocked: true,
+      unlocked: false,
       minDateUnlocked: -12000 * 12,
       unlockEra: 'Prehistoric',
       cost: 1000000000000,
@@ -85,7 +85,7 @@ export const state = () => ({
       instrument: 'Sundial',
       worker: 'Shaman',
 
-      unlocked: true,
+      unlocked: false,
       minDateUnlocked: -1500 * 12,
       unlockEra: 'Antiquity',
       cost: 10000000000,
@@ -105,7 +105,7 @@ export const state = () => ({
       instrument: 'Star Chart',
       worker: 'Astrologer',
 
-      unlocked: true,
+      unlocked: false,
       minDateUnlocked: -500 * 12,
       unlockEra: 'Early Classical',
       cost: 100000000,
@@ -125,7 +125,7 @@ export const state = () => ({
       instrument: 'Incense Clock',
       worker: 'Oracle',
 
-      unlocked: true,
+      unlocked: false,
       minDateUnlocked: 400 * 12,
       unlockEra: 'Classical',
       cost: 1000000,
@@ -145,7 +145,7 @@ export const state = () => ({
       instrument: 'Astrolabe',
       worker: 'Mathematician',
 
-      unlocked: true,
+      unlocked: false,
       minDateUnlocked: 700 * 12,
       unlockEra: 'Late Classical',
       cost: 10000,
@@ -165,7 +165,7 @@ export const state = () => ({
       instrument: 'Hourglass',
       worker: 'Glassblower',
 
-      unlocked: true,
+      unlocked: false,
       minDateUnlocked: 1100 * 12,
       unlockEra: 'Middle Ages',
       cost: 100,
@@ -205,7 +205,7 @@ export const state = () => ({
       instrument: 'Pocket Watch',
       worker: 'Engineer',
 
-      unlocked: true,
+      unlocked: false,
       minDateUnlocked: 1600 * 12,
       unlockEra: 'Modern',
       cost: 1000,
@@ -225,7 +225,7 @@ export const state = () => ({
       instrument: 'Electric Clock',
       worker: 'Electrician',
 
-      unlocked: true,
+      unlocked: false,
       minDateUnlocked: 1840 * 12,
       unlockEra: 'Late Modern',
       cost: 100000,
@@ -245,7 +245,7 @@ export const state = () => ({
       instrument: 'Atomic Clock',
       worker: 'Scientist',
 
-      unlocked: true,
+      unlocked: false,
       minDateUnlocked: 1950 * 12,
       unlockEra: 'Post-Modern',
       cost: 10000000,
@@ -265,7 +265,7 @@ export const state = () => ({
       instrument: 'Quantum Clock',
       worker: 'Artificial Intelligence',
 
-      unlocked: true,
+      unlocked: false,
       minDateUnlocked: 2200 * 12,
       unlockEra: 'Near Future',
       cost: 1000000000,
@@ -285,7 +285,7 @@ export const state = () => ({
       instrument: 'Non-Euclidian Clock',
       worker: 'Befuddled Scientist',
 
-      unlocked: true,
+      unlocked: false,
       minDateUnlocked: 3333 * 12,
       unlockEra: 'Future',
       cost: 100000000000,
@@ -305,7 +305,7 @@ export const state = () => ({
       instrument: 'Pulsar Clock',
       worker: 'Deep-Space Satellite',
 
-      unlocked: true,
+      unlocked: false,
       minDateUnlocked: 9000 * 12,
       unlockEra: 'Deep Future',
       cost: 10000000000000,
