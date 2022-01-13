@@ -73,7 +73,12 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    publicPath: './_nuxt/',
+    extend(config) {
+      config.output.publicPath = './_nuxt/'
+    },
+  },
 
   router: {
     mode: 'hash',
