@@ -12,7 +12,7 @@
 export default {
   computed: {
     unlocked() {
-      return this.$store.state.processes.filter((p) => p.unlocked && p.created)
+      return this.$store.state.processes.filter((p) => p.visited && p.created)
     },
   },
 }

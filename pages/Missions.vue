@@ -84,7 +84,7 @@ export default {
       if (mission.name === 'Time to Cheat Death') {
         this.$store.commit('unlockTab', 'Wisdom')
         this.$store.commit('setPlayerAge', { year: 30 })
-        this.$store.commit('timeTravel', { year: 1400 })
+        this.$store.commit('timeTravel', { year: 1400, era: 'Early Modern' })
         this.$store.commit('tickLifetime')
       }
     },
