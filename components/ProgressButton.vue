@@ -1,18 +1,30 @@
 <template>
   <button
     class="relative flex flex-col pt-2 pb-3 px-3 border rounded-lg overflow-hidden border-current"
-    :class="[colorClasses, clickable ? 'cursor-pointer' : 'cursor-default']"
+    :class="[
+      colorClasses,
+      {
+        disabled,
+        [`text-${$store.getters.activeTab.darkColor}`]: disabled,
+        'cursor-pointer': clickable,
+        'cursor-default': !clickable,
+      },
+    ]"
     :disable="!clickable"
     @click="clickable && $emit('click')"
   >
     <progress
       v-if="!clickable"
       class="absolute top-0 left-0 right-0 h-1 w-full"
+      :class="{ hidden: disabled }"
       :max="max"
       :value="cappedValue"
     />
 
-    <span class="absolute top-3 right-3 font-semibold text-sm">
+    <span
+      class="absolute top-3 right-3 font-semibold text-sm"
+      :class="{ hidden: disabled }"
+    >
       <span v-if="unit === 'apprenticeLevels'">L</span>{{ cappedValueText }}
       /
       <span v-if="unit === 'apprenticeLevels'">L</span>{{ maxText }}
@@ -45,8 +57,9 @@ export default {
     max: { type: Number, required: true },
     value: { type: [Number, Decimal], required: true },
     unit: { type: String, default: 'spareTime' },
-    current: { type: String, default: null },
-    next: { type: String, default: null },
+    current: { type: [Number, String], default: null },
+    next: { type: [Number, String], default: null },
+    disabled: { type: Boolean, default: false },
   },
   computed: {
     cappedValue() {
@@ -61,7 +74,7 @@ export default {
       return this.unit === 'maxAge' ? this.$store.getters.ageMaxText : this.max
     },
     clickable() {
-      return this.value >= this.max
+      return !this.disabled && this.value >= this.max
     },
     colorClasses() {
       const { lightColor, darkColor } = this.$store.getters.activeTab
@@ -75,6 +88,12 @@ export default {
 </script>
 
 <style scoped>
+.disabled {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.clickable {
+  box-shadow: 0px 4px 8px -3px var(--dark-color);
+}
 /* progress background for all browsers */
 progress::-webkit-progress-bar {
   background-color: rgba(0, 0, 0, 0.1);

@@ -1,5 +1,5 @@
 <template>
-  <div class="md:pt-4 pt-2">
+  <div class="md:pt-4 pt-2 pb-16">
     <div
       class="energy-bar relative mx-auto rounded-full overflow-hidden border-2"
       :class="`text-${$store.getters.activeTab.color} border-${$store.getters.activeTab.darkColor}`"
@@ -20,15 +20,24 @@
       </span>
     </div>
 
+    <h2 class="text-lg font-semibold text-center pt-4 md:pt-8">Upgrades</h2>
+
+    <responsive-grid class="pt-4 md:pt-8">
+      <max-energy-upgrade-button />
+    </responsive-grid>
+
+    <h2 class="text-lg font-semibold text-center pt-4 md:pt-8">Time Travel</h2>
+
     <responsive-grid class="pt-4 md:pt-8">
       <progress-button
-        v-for="(action, index) in $store.state.timeMachineActions"
-        :key="index"
-        :label="action.name"
-        :description="action.description"
-        :max="action.cost"
+        v-for="process in $store.state.processes"
+        :key="process.instrument"
+        :label="getLabel(process)"
+        :max="process.travelCost"
         :value="$store.state.energy"
-        @click="doAction(action)"
+        unit="energy"
+        :disabled="!isEnabled(process)"
+        @click="travelToEra(process)"
       />
     </responsive-grid>
   </div>
@@ -37,10 +46,53 @@
 <script>
 export default {
   methods: {
+    getLabel(process) {
+      if (process.unlockEra === this.$store.state.gameEra) {
+        return process.unlockEra + ' (You Are Here)'
+      } else if (this.isEnabled(process)) {
+        return process.unlockEra
+      } else {
+        return '???'
+      }
+    },
+    isEnabled(process) {
+      const isCurrentEra = process.unlockEra === this.$store.state.gameEra
+      if (isCurrentEra) {
+        return false
+      } else if (process.visited) {
+        return true
+      } else {
+        const processes = this.$store.state.processes
+        const processIndex = processes.findIndex(
+          (p) => p.unlockEra === process.unlockEra
+        )
+
+        const earliestEraIndex = processes.findIndex((p) => p.visited)
+        const nextEarliestEraIndex = earliestEraIndex - 1
+
+        const latestEraIndex = processes.map((p) => p.visited).lastIndexOf(true)
+        const nextLatestEraIndex = latestEraIndex + 1
+
+        return (
+          processIndex === nextEarliestEraIndex ||
+          processIndex === nextLatestEraIndex
+        )
+      }
+    },
     doAction(action) {
       this.$store.commit('spendEnergy', action.cost)
       if (action.name === 'Activate!') {
         // do action-specific things
+      }
+    },
+    travelToEra(process) {
+      this.$store.commit('spendEnergy', process.travelCost)
+      this.$store.commit('timeTravel', {
+        era: process.unlockEra,
+        month: process.minDateUnlocked,
+      })
+      if (process.unlockEra === 'Middle Ages') {
+        // do era-specific things
       }
     },
   },

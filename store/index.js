@@ -64,17 +64,23 @@ export const state = () => ({
 
   energy: 0,
   energyMax: 600, // 60 seconds
+  fluxCapacitorLevel: 1,
+  nextFluxCapacitorCost: 500,
+
+  mana: 0,
+  manaMax: 100,
 
   processes: [
     {
       instrument: 'Atlantean Clock',
       worker: 'Chronomancer',
-
-      unlocked: false,
-      minDateUnlocked: -12000 * 12,
-      unlockEra: 'Prehistoric',
-      cost: 1000000000000,
       created: false,
+      cost: 1000000000000,
+
+      unlockEra: 'Prehistoric',
+      minDateUnlocked: -12000 * 12,
+      travelCost: 2400,
+      visited: false,
 
       completion: 0,
       completionRequired: 320,
@@ -89,12 +95,13 @@ export const state = () => ({
     {
       instrument: 'Sundial',
       worker: 'Shaman',
-
-      unlocked: false,
-      minDateUnlocked: -1500 * 12,
-      unlockEra: 'Antiquity',
-      cost: 10000000000,
       created: false,
+      cost: 10000000000,
+
+      unlockEra: 'Antiquity',
+      minDateUnlocked: -1500 * 12,
+      travelCost: 2200,
+      visited: false,
 
       completion: 0,
       completionRequired: 160,
@@ -109,12 +116,13 @@ export const state = () => ({
     {
       instrument: 'Star Chart',
       worker: 'Astrologer',
-
-      unlocked: false,
-      minDateUnlocked: -500 * 12,
-      unlockEra: 'Early Classical',
       cost: 100000000,
       created: false,
+
+      unlockEra: 'Early Classical',
+      minDateUnlocked: -500 * 12,
+      travelCost: 1800,
+      visited: false,
 
       completion: 0,
       completionRequired: 80,
@@ -129,12 +137,13 @@ export const state = () => ({
     {
       instrument: 'Incense Clock',
       worker: 'Oracle',
-
-      unlocked: false,
-      minDateUnlocked: 400 * 12,
-      unlockEra: 'Classical',
       cost: 1000000,
       created: false,
+
+      unlockEra: 'Classical',
+      minDateUnlocked: 400 * 12,
+      travelCost: 1400,
+      visited: false,
 
       completion: 0,
       completionRequired: 40,
@@ -149,12 +158,13 @@ export const state = () => ({
     {
       instrument: 'Astrolabe',
       worker: 'Mathematician',
-
-      unlocked: false,
-      minDateUnlocked: 700 * 12,
-      unlockEra: 'Late Classical',
       cost: 10000,
       created: false,
+
+      unlockEra: 'Late Classical',
+      minDateUnlocked: 700 * 12,
+      travelCost: 1000,
+      visited: false,
 
       completion: 0,
       completionRequired: 20,
@@ -169,12 +179,13 @@ export const state = () => ({
     {
       instrument: 'Hourglass',
       worker: 'Glassblower',
-
-      unlocked: false,
-      minDateUnlocked: 1100 * 12,
-      unlockEra: 'Middle Ages',
       cost: 100,
       created: false,
+
+      unlockEra: 'Middle Ages',
+      minDateUnlocked: 1100 * 12,
+      travelCost: 600,
+      visited: false,
 
       completion: 0,
       completionRequired: 10,
@@ -189,12 +200,13 @@ export const state = () => ({
     {
       instrument: 'Mechanical Clock',
       worker: 'Machinist',
-
-      unlocked: true,
-      minDateUnlocked: 1400 * 12,
-      unlockEra: 'Early Modern',
       cost: 10,
       created: false,
+
+      minDateUnlocked: 1400 * 12,
+      unlockEra: 'Early Modern',
+      travelCost: 400,
+      visited: true,
 
       completion: 0, // how close it is to giving currency. 10 gained per second.
       completionRequired: 10, // should be divisible by 10
@@ -209,12 +221,13 @@ export const state = () => ({
     {
       instrument: 'Pocket Watch',
       worker: 'Engineer',
-
-      unlocked: false,
-      minDateUnlocked: 1600 * 12,
-      unlockEra: 'Modern',
       cost: 1000,
       created: false,
+
+      unlockEra: 'Modern',
+      minDateUnlocked: 1600 * 12,
+      travelCost: 800,
+      visited: false,
 
       completion: 0,
       completionRequired: 8,
@@ -229,12 +242,13 @@ export const state = () => ({
     {
       instrument: 'Electric Clock',
       worker: 'Electrician',
-
-      unlocked: false,
-      minDateUnlocked: 1840 * 12,
-      unlockEra: 'Late Modern',
       cost: 100000,
       created: false,
+
+      unlockEra: 'Late Modern',
+      minDateUnlocked: 1840 * 12,
+      travelCost: 1200,
+      visited: false,
 
       completion: 0,
       completionRequired: 6,
@@ -249,12 +263,13 @@ export const state = () => ({
     {
       instrument: 'Atomic Clock',
       worker: 'Scientist',
-
-      unlocked: false,
-      minDateUnlocked: 1950 * 12,
-      unlockEra: 'Post-Modern',
       cost: 10000000,
       created: false,
+
+      unlockEra: 'Post-Modern',
+      minDateUnlocked: 1950 * 12,
+      travelCost: 1600,
+      visited: false,
 
       completion: 0,
       completionRequired: 4,
@@ -269,12 +284,13 @@ export const state = () => ({
     {
       instrument: 'Quantum Clock',
       worker: 'Artificial Intelligence',
-
-      unlocked: false,
-      minDateUnlocked: 2200 * 12,
-      unlockEra: 'Near Future',
       cost: 1000000000,
       created: false,
+
+      unlockEra: 'Near Future',
+      minDateUnlocked: 2200 * 12,
+      travelCost: 2000,
+      visited: false,
 
       completion: 0,
       completionRequired: 3,
@@ -289,12 +305,13 @@ export const state = () => ({
     {
       instrument: 'Non-Euclidian Clock',
       worker: 'Befuddled Scientist',
-
-      unlocked: false,
-      minDateUnlocked: 3333 * 12,
-      unlockEra: 'Future',
       cost: 100000000000,
       created: false,
+
+      unlockEra: 'Future',
+      minDateUnlocked: 3333 * 12,
+      travelCost: 2400,
+      visited: false,
 
       completion: 0,
       completionRequired: 2,
@@ -309,12 +326,13 @@ export const state = () => ({
     {
       instrument: 'Pulsar Clock',
       worker: 'Deep-Space Satellite',
-
-      unlocked: false,
-      minDateUnlocked: 9000 * 12,
-      unlockEra: 'Deep Future',
-      cost: 10000000000000,
       created: false,
+      cost: 10000000000000,
+
+      unlockEra: 'Deep Future',
+      minDateUnlocked: 9000 * 12,
+      travelCost: 2800,
+      visited: false,
 
       completion: 0,
       completionRequired: 1,
@@ -473,6 +491,7 @@ export const state = () => ({
   ],
 
   gameDate: 1400 * 12,
+  gameEra: 'Early Modern',
   playerAge: 30 * 12,
   playerAgeMax: 60 * 12,
   playerLivedTotal: 0,
@@ -547,23 +566,6 @@ export const getters = {
         process.created ? totalInstruments + 1 : totalInstruments,
       0
     ),
-  currentEra: (state) => {
-    if (state.gameDate < 100 * 12) {
-      return 'prehistoric'
-    } else if (state.gameDate < 999 * 12) {
-      return 'classical'
-    } else if (state.gameDate < 1400 * 12) {
-      return 'middle ages'
-    } else if (state.gameDate < 1750 * 12) {
-      return 'early modern'
-    } else if (state.gameDate < 2100 * 12) {
-      return 'modern'
-    } else if (state.gameDate < 2500 * 12) {
-      return 'future'
-    } else {
-      return 'distant future'
-    }
-  },
 }
 
 export const mutations = {
@@ -635,6 +637,19 @@ export const mutations = {
       state.energy -= amount
     }
   },
+  upgradeMaxEnergy: (state) => {
+    state.energyMax += 200
+    state.fluxCapacitorLevel += 1
+    state.nextFluxCapacitorCost *= 2
+  },
+  tickMana: (state) => {
+    state.mana += 1
+  },
+  spendMana: (state, amount) => {
+    if (amount <= state.mana) {
+      state.mana -= amount
+    }
+  },
   unlockTimeMachineAction: (state, name) => {
     const index = state.timeMachineActions.findIndex((t) => t.name === name)
     Vue.set(state.tabs[index], 'unlocked', true)
@@ -662,7 +677,7 @@ export const mutations = {
       state.gameDate = 1378 * 12
     }
   },
-  timeTravel: (state, { year, month = 0 }) => {
+  timeTravel: (state, { era, year = 0, month = 0 }) => {
     const newYear = year * 12 + month
 
     if (newYear < state.gameDate) {
@@ -670,6 +685,10 @@ export const mutations = {
     }
 
     state.gameDate = newYear
+    state.gameEra = era
+
+    const processIndex = state.processes.findIndex((p) => p.unlockEra === era)
+    Vue.set(state.processes[processIndex], 'visited', true)
   },
   setPlayerAge: (state, { year, month = 0 }) => {
     state.playerAge = year * 12 + month
