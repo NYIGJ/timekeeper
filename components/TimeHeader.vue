@@ -42,6 +42,7 @@ export default {
 header {
   min-width: 18rem;
   transition: background-color 2000ms, color 2000ms;
+  font-family: 'Roboto Slab', serif;
 }
 @media (min-width: 768px) {
   header {
