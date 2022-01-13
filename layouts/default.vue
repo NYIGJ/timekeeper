@@ -21,7 +21,7 @@
         :class="activeTabColorClasses"
       >
         <div
-          class="w-full text-2xl text-center pt-1 pb-2"
+          class="tab-title w-full text-2xl text-center pt-1 pb-2"
           v-text="activeTab.title"
         />
 
@@ -80,6 +80,8 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&family=Roboto+Slab:wght@600&display=swap');
+
 html,
 body,
 #__nuxt,
@@ -91,6 +93,7 @@ body,
 html {
   background: #e5e7eb;
   overflow-y: hidden;
+  font-family: 'Manrope', sans-serif;
 }
 </style>
 
@@ -98,5 +101,9 @@ html {
 main {
   grid-template-rows: auto minmax(0, 2fr) auto minmax(0, 3fr);
   transition: background-color 2000ms;
+}
+
+.tab-title {
+  font-family: 'Roboto Slab', serif;
 }
 </style>

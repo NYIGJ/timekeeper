@@ -1,12 +1,6 @@
 <template>
   <div class="missions grid">
-    <responsive-grid
-      v-if="incomplete.length"
-      :class="
-        completed.length &&
-        `pb-6 border-b-2 border-${$store.getters.activeTab.darkColor}`
-      "
-    >
+    <responsive-grid v-if="incomplete.length">
       <mission-button
         v-for="(mission, index) in incomplete"
         :key="index"
@@ -15,18 +9,14 @@
       />
     </responsive-grid>
 
-    <div
-      v-else
-      :class="
-        completed.length &&
-        `pt-6 pb-10 border-b-2 border-${$store.getters.activeTab.darkColor}`
-      "
-    >
+    <div v-else>
       <h3 class="text-center">No Missions Currently Available</h3>
     </div>
 
     <template v-if="completed.length">
-      <h2 class="pt-2 pb-2 text-center text-xl">Completed Missions</h2>
+      <h2 class="pt-4 pb-2 md:pt-8 md:pb-4 font-semibold text-center text-xl">
+        Completed Missions
+      </h2>
       <responsive-grid min="1" mid="3" max="6">
         <completed-mission
           v-for="(mission, index) in completed"

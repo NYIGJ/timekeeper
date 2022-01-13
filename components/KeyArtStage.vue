@@ -9,10 +9,11 @@
         class="spare-time flex flex-row items-center font-bold rounded-2xl select-none"
         :class="`text-${$store.getters.activeTab.darkColor}`"
       >
-        <span class="text-3xl md:text-5xl" v-text="currencyText" />
         <span
-          class="fas fa-hourglass-half text-xl pt-1 pl-2 md:text-3xl md:pt-2"
+          class="spare-time-value text-3xl md:text-5xl"
+          v-text="currencyText"
         />
+        <span class="fas fa-hourglass-half text-xl pl-2 md:text-3xl md:pt-1" />
       </span>
     </div>
   </div>
