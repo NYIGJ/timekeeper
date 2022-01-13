@@ -3,7 +3,7 @@
     <div class="key-art absolute top-8 left-0 right-0" />
     <div
       class="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center"
-      @click="$store.commit('addCurrency', 1)"
+      @click="click"
     >
       <span
         class="spare-time flex flex-row items-center font-bold rounded-2xl select-none"
@@ -26,6 +26,17 @@ export default {
         return this.$store.state.currency.toString()
       }
       return Math.floor(this.$store.state.currency)
+    },
+  },
+  methods: {
+    click() {
+      this.$store.commit('addCurrency', 1)
+      if (
+        this.$store.getters.isTabUnlocked('Time Magic') &&
+        this.$store.state.manaMax > this.$store.state.mana
+      ) {
+        this.$store.commit('tickMana')
+      }
     },
   },
 }
