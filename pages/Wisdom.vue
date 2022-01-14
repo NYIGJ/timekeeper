@@ -1,42 +1,33 @@
 <template>
-  <div class="tab-content grid md:overflow-hidden">
-    <div>
+  <div class="tab-content md:overflow-hidden">
+    <div class="grid grid-cols-2">
       <span align="left"><b>Total spare time generated</b></span
       ><span align="right">{{ $store.state.currencyTotal }}</span>
-    </div>
-    <div>
+
       <span align="left"><b>Total spare time spent</b></span
       ><span align="right">{{ $store.getters.currencySpent }}</span>
-    </div>
-    <div>
+
       <span align="left"><b>Total in-game time elapsed</b></span
       ><span align="right"></span>
-    </div>
-    <div>
+
       <span align="left"><b>Completed lifetimes</b></span
       ><span align="right">{{ $store.state.lifetimes }}</span>
-    </div>
-    <div>
+
       <span align="left"><b>Longest lifetime</b></span
       ><span align="right"></span>
-    </div>
-    <div>
+
       <span align="left"><b>Oldest age reached</b></span
       ><span align="right"></span>
-    </div>
-    <div>
+
       <span align="left"><b>Latest time reached</b></span
       ><span align="right"></span>
-    </div>
-    <div>
+
       <span align="left"><b>Wisdom for next prestige</b></span
       ><span align="right">{{ $store.state.wisdomGained }}</span>
-    </div>
-    <div>
+
       <span align="left"><b>Wisdom from other timelines</b></span
       ><span align="right">{{ $store.state.wisdomApplied }}</span>
     </div>
-
     <hr />
 
     Created by GrapefruitChili, PK, TNNPe, Vice for New Years Incremental Game
