@@ -62,6 +62,7 @@ export default {
     },
     isEnabled(process) {
       const isCurrentEra = process.unlockEra === this.$store.state.gameEra
+
       if (isCurrentEra) {
         return false
       } else if (process.visited) {
@@ -78,9 +79,13 @@ export default {
         const latestEraIndex = processes.map((p) => p.visited).lastIndexOf(true)
         const nextLatestEraIndex = latestEraIndex + 1
 
+        const middleAges = this.$store.state.processes.find(
+          (p) => p.unlockEra === 'Middle Ages'
+        )
+
         return (
           processIndex === nextEarliestEraIndex ||
-          processIndex === nextLatestEraIndex
+          (middleAges.visited && processIndex === nextLatestEraIndex)
         )
       }
     },
@@ -91,13 +96,23 @@ export default {
       }
     },
     travelToEra(process) {
+      const hadBeenVisited = process.visited // save this before we time travel
+
       this.$store.commit('spendEnergy', process.travelCost)
       this.$store.commit('timeTravel', {
         era: process.unlockEra,
         month: process.minDateUnlocked,
       })
-      if (process.unlockEra === 'Middle Ages') {
-        // do era-specific things
+
+      if (process.unlockEra === 'Middle Ages' && !hadBeenVisited) {
+        this.$nextTick(() => {
+          const message =
+            'Congratulations! ' +
+            "You've successfully traveled through time and landed in the year 1100" +
+            '... though it was rather hard on your body.'
+
+          this.$store.commit('openModal', message)
+        })
       }
     },
   },

@@ -80,6 +80,15 @@ export default {
         this.$store.commit('setPlayerAge', { year: 30 })
         this.$store.commit('timeTravel', { year: 1400, era: 'Early Modern' })
         this.$store.commit('tickLifetime')
+        this.$store.commit('spendCurrency', this.$store.state.currency)
+        this.$store.commit('startGame')
+
+        const message =
+          'You are young-ish once again and back in the year 1400 with all your wisdom intact.' +
+          '<br><br>' +
+          'Continue to explore the eras and unlock the secrets of time.'
+
+        this.$store.commit('openModal', message)
       }
 
       if (mission.name === 'Live Forever') {

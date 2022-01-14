@@ -58,8 +58,15 @@ export const state = () => ({
       unlocked: false,
     },
   ],
+  modalText:
+    '{{ Premise }}' +
+    '<br><br>' +
+    '{{ Click to generate <span class="fas fa-hourglass-half text-sm"></span> <b>Spare Time</b> }}',
+  modalIsOpen: true,
 
-  currency: new Decimal(10000),
+  gameStopped: false,
+
+  currency: new Decimal(0),
   currencyTotal: new Decimal(0),
 
   gameDate: 1400 * 12,
@@ -387,7 +394,7 @@ export const state = () => ({
       },
       completionCriteria: {
         unit: 'spareTime',
-        value: 1000,
+        value: 300,
       },
       unlocked: false,
       viewed: false,
@@ -485,7 +492,7 @@ export const state = () => ({
   ],
 
   // Time Machine
-  energy: 599,
+  energy: 0,
   energyMax: 600, // 60 seconds
   fluxCapacitorLevel: 1,
   nextFluxCapacitorCost: 500,
@@ -519,7 +526,7 @@ export const state = () => ({
   ],
 
   // Time Magic
-  mana: 99,
+  mana: 0,
   manaMax: 100,
   philosophersStoneUnlocked: false,
 
@@ -688,6 +695,27 @@ export const getters = {
 }
 
 export const mutations = {
+  // UI
+  unlockTab: (state, title) => {
+    const index = state.tabs.findIndex((t) => t.title === title)
+    Vue.set(state.tabs[index], 'unlocked', true)
+  },
+  openModal: (state, text) => {
+    state.modalText = text
+    state.modalIsOpen = true
+  },
+  closeModal: (state) => {
+    state.modalIsOpen = false
+    state.modalText = ''
+  },
+  stopGame: (state) => {
+    state.gameStopped = true
+  },
+  startGame: (state) => {
+    state.gameStopped = false
+  },
+
+  // Currency
   addCurrency: (state, value) => {
     state.currency = Decimal.add(state.currency, value)
     state.currencyTotal = Decimal.add(state.currencyTotal, value)
@@ -696,10 +724,21 @@ export const mutations = {
     value = Decimal.mul(value, -1)
     state.currency = Decimal.add(state.currency, value)
   },
-  unlockTab: (state, title) => {
-    const index = state.tabs.findIndex((t) => t.title === title)
-    Vue.set(state.tabs[index], 'unlocked', true)
+
+  // Dates
+  tickGameDate: (state) => {
+    state.gameDate += 1
+    state.playerAge += 1
+    if (!(state.playerAge % 12)) state.wisdomGained++
   },
+  setPlayerAge: (state, { year, month = 0 }) => {
+    state.playerAge = year * 12 + month
+  },
+  tickLifetime: (state) => {
+    state.lifetimes += 1
+  },
+
+  // Instruments
   createInstrument: (state, instrument) => {
     const index = state.processes.findIndex((p) => p.instrument === instrument)
     Vue.set(state.processes[index], 'created', true)
@@ -716,6 +755,23 @@ export const mutations = {
     )
     Vue.set(state.processes[index], 'completion', 0)
   },
+
+  // Apprentices
+  levelUpApprentice: (state, process) => {
+    if (process.nextWorkerCost > state.currency) {
+      return
+    }
+    const index = state.processes.findIndex((p) => p.worker === process.worker)
+    state.currency = Decimal.subtract(state.currency, process.nextWorkerCost)
+    Vue.set(state.processes[index], 'workerLevel', process.workerLevel + 1)
+    Vue.set(
+      state.processes[index],
+      'nextWorkerCost',
+      Math.floor(process.nextWorkerCost * process.nextWorkerFactor)
+    )
+  },
+
+  // Missions
   setMissionAvailable: (state, missionIndex) => {
     Vue.set(state.missions[missionIndex], 'available', true)
   },
@@ -730,24 +786,8 @@ export const mutations = {
     const index = state.missions.findIndex((m) => m.name === missionName)
     Vue.set(state.missions[index], 'unlocked', true)
   },
-  levelUpApprentice: (state, process) => {
-    if (process.nextWorkerCost > state.currency) {
-      return
-    }
-    const index = state.processes.findIndex((p) => p.worker === process.worker)
-    state.currency = Decimal.subtract(state.currency, process.nextWorkerCost)
-    Vue.set(state.processes[index], 'workerLevel', process.workerLevel + 1)
-    Vue.set(
-      state.processes[index],
-      'nextWorkerCost',
-      Math.floor(process.nextWorkerCost * process.nextWorkerFactor)
-    )
-  },
-  tickGameDate: (state) => {
-    state.gameDate += 1
-    state.playerAge += 1
-    if (!(state.playerAge % 12)) state.wisdomGained++
-  },
+
+  // Time Machine
   tickEnergy: (state) => {
     state.energy += 1
   },
@@ -759,7 +799,7 @@ export const mutations = {
   upgradeMaxEnergy: (state) => {
     state.energyMax += 200
     state.fluxCapacitorLevel += 1
-    state.nextFluxCapacitorCost *= 2
+    state.nextFluxCapacitorCost *= 10
   },
   unlockTimeMachineAction: (state, name) => {
     const index = state.timeMachineActions.findIndex((t) => t.name === name)
@@ -800,12 +840,6 @@ export const mutations = {
 
     const processIndex = state.processes.findIndex((p) => p.unlockEra === era)
     Vue.set(state.processes[processIndex], 'visited', true)
-  },
-  setPlayerAge: (state, { year, month = 0 }) => {
-    state.playerAge = year * 12 + month
-  },
-  tickLifetime: (state) => {
-    state.lifetimes += 1
   },
 
   // Time Magic
