@@ -592,6 +592,7 @@ export const getters = {
     return state.playerAge.month < state.playerAgeMax.month
   },
   gameMonth: (state) => {
+    const gd = state.gameDate < 0 ? state.gameDate + 1440000 : state.gameDate
     return {
       1: 'Jan.',
       2: 'Feb.',
@@ -605,7 +606,7 @@ export const getters = {
       10: 'Oct.',
       11: 'Nov.',
       12: 'Dec.',
-    }[(state.gameDate % 12) + 1]
+    }[(gd % 12) + 1]
   },
   gameYear: (state) => {
     return Math.floor(state.gameDate / 12)
