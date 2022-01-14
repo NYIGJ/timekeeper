@@ -567,7 +567,7 @@ export const getters = {
       0
     ),
   suffixedDecimalText: (state) => (n) => {
-    const DIGITS_AFTER_DP = 3
+    const DIGITS_AFTER_DP = 2
     const suffixValues = { Z: 0, k: 1e3, M: 1e6, B: 1e9, T: 1e12, X: 1e15 }
     n = new Decimal(n)
 
