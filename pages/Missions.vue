@@ -14,7 +14,7 @@
     </div>
 
     <template v-if="completed.length">
-      <h2 class="pt-4 pb-2 md:pt-8 md:pb-4 font-semibold text-center text-xl">
+      <h2 class="pb-2 pt-8 md:pb-4 font-semibold text-center text-xl">
         Completed Missions
       </h2>
       <responsive-grid min="1" mid="3" max="6">

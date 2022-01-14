@@ -20,13 +20,13 @@
       </span>
     </div>
 
-    <h2 class="text-xl font-semibold text-center pt-4 md:pt-8">Upgrades</h2>
+    <h2 class="text-xl font-semibold text-center pt-8">Upgrades</h2>
 
     <responsive-grid class="pt-2 md:pt-4">
       <max-energy-upgrade-button />
     </responsive-grid>
 
-    <h2 class="text-xl font-semibold text-center pt-4 md:pt-8">Time Travel</h2>
+    <h2 class="text-xl font-semibold text-center pt-8">Time Travel</h2>
 
     <responsive-grid class="pt-2 md:pt-4">
       <progress-button
