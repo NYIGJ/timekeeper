@@ -566,6 +566,57 @@ export const getters = {
         process.created ? totalInstruments + 1 : totalInstruments,
       0
     ),
+  suffixedDecimalText: (state) => (n) => {
+    const DIGITS_AFTER_DP = 3
+    const suffixValues = { Z: 0, k: 1e3, M: 1e6, B: 1e9, T: 1e12, X: 1e15 }
+    n = new Decimal(n)
+
+    // iterate over object above to find text suffix and divsior value
+    let largestSuffix = ''
+    let largestValue = 0
+    for (const suffix in suffixValues) {
+      if (
+        n.greaterThanOrEqualTo(suffixValues[suffix]) &&
+        suffixValues[suffix] > largestValue
+      ) {
+        largestSuffix = suffix
+        largestValue = suffixValues[suffix]
+      }
+    }
+
+    // Special case: Small numbers are just displayed
+    if (largestValue === 0) return Math.floor(n)
+
+    // Special case: wicked large numbers are shown in scientific notation
+    if (largestSuffix === 'X') {
+      largestSuffix = 'e' + n.exponent
+      largestValue = new Decimal.fromMantissaExponent(1, n.exponent) // eslint-disable-line new-cap
+    }
+
+    // display value is always in [1, 1000)
+    let displayValue = n.divide(largestValue).toString()
+    // whole exact millions, billions, etc. have no decimal part, and need one built from text
+    if (!displayValue.includes('.')) displayValue += '.'
+
+    // All suffixes should always show exactly DIGITS_AFTER_DP digits; add zeros or truncate
+    const valuesBeforeDP = displayValue.substr(
+      0,
+      displayValue.indexOf('.')
+    ).length
+    let valuesAfterDP = displayValue.substr(displayValue.indexOf('.')).length
+    if (valuesAfterDP > DIGITS_AFTER_DP - 1) {
+      displayValue = displayValue.substr(
+        0,
+        valuesBeforeDP + DIGITS_AFTER_DP + 1
+      )
+    }
+    while (valuesAfterDP < DIGITS_AFTER_DP + 1) {
+      valuesAfterDP += 1
+      displayValue += '0'
+    }
+
+    return displayValue + largestSuffix
+  },
 }
 
 export const mutations = {

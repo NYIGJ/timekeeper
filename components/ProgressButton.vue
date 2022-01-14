@@ -68,10 +68,12 @@ export default {
     cappedValueText() {
       return this.unit === 'maxAge'
         ? this.$store.getters.ageText
-        : this.cappedValue
+        : this.$store.getters.suffixedDecimalText(this.cappedValue)
     },
     maxText() {
-      return this.unit === 'maxAge' ? this.$store.getters.ageMaxText : this.max
+      return this.unit === 'maxAge'
+        ? this.$store.getters.ageMaxText
+        : this.$store.getters.suffixedDecimalText(this.max)
     },
     clickable() {
       return !this.disabled && this.value >= this.max
