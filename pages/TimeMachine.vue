@@ -20,6 +20,11 @@
       </span>
     </div>
 
+    <p class="text-lg text-center py-2 border-b-2 border-current">
+      <b><span class="fas fa-bolt text-base" /> Energy</b>
+      is generated over time
+    </p>
+
     <h2 class="text-xl font-semibold text-center pt-8">Upgrades</h2>
 
     <responsive-grid class="pt-2 md:pt-4">

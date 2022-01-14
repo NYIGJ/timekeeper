@@ -20,9 +20,13 @@
       </span>
     </div>
 
-    <h2 class="font-semibold text-lg text-center pt-4 md:mt-8">
-      Spells coming soon!
-    </h2>
+    <p class="text-lg text-center py-2 border-b-2 border-current">
+      Tapping to gain
+      <b><span class="fas fa-hourglass-half text-base" /> Spare Time</b>
+      <br class="md:hidden" />
+      now also gains
+      <b><span class="fas fa-star text-base" /> Mana</b>
+    </p>
   </div>
 </template>
 
