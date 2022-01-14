@@ -2,10 +2,10 @@
   <div class="tab-content md:overflow-hidden">
     <div class="grid grid-cols-2">
       <span align="left"><b>Total spare time generated</b></span
-      ><span align="right">{{ $store.state.currencyTotal }}</span>
+      ><span align="right">{{ $store.getters.suffixedDecimalText($store.state.currencyTotal) }}</span>
 
       <span align="left"><b>Total spare time spent</b></span
-      ><span align="right">{{ $store.getters.currencySpent }}</span>
+      ><span align="right">{{ $store.getters.suffixedDecimalText($store.getters.currencySpent) }}</span>
 
       <span align="left"><b>Total in-game time elapsed</b></span
       ><span align="right"></span>
