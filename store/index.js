@@ -62,13 +62,17 @@ export const state = () => ({
   currency: new Decimal(10000),
   currencyTotal: new Decimal(0),
 
-  energy: 0,
-  energyMax: 600, // 60 seconds
-  fluxCapacitorLevel: 1,
-  nextFluxCapacitorCost: 500,
+  gameDate: 1400 * 12,
+  gameEra: 'Early Modern',
 
-  mana: 0,
-  manaMax: 100,
+  playerAge: 30 * 12,
+  playerAgeMax: 60 * 12,
+  playerLivedTotal: 0,
+
+  wisdomGained: 0, // wisdom gained so far on this run, not applied until player sends the book.
+  wisdomApplied: 0, // wisdom from previous runs
+  lifetimes: 0, // comleted lifetimes
+  timeJumpsBackwards: 0,
 
   processes: [
     {
@@ -354,6 +358,7 @@ export const state = () => ({
     },
   ],
 
+  // Missions
   missions: [
     {
       name: 'Train an Apprentice',
@@ -365,7 +370,7 @@ export const state = () => ({
       },
       completionCriteria: {
         unit: 'apprenticeLevels',
-        value: 5,
+        value: 3,
       },
       unlocked: true,
       viewed: false,
@@ -373,29 +378,12 @@ export const state = () => ({
       resetOnPrestige: false,
     },
     {
-      name: 'Study Time Magic',
-      description:
-        "As time ticks away you begin to ponder the mysteries of time's origins and possibilities.",
-      unlockCriteria: {
-        unit: 'apprenticeLevels',
-        value: 1,
-      },
-      completionCriteria: {
-        unit: 'spareTime',
-        value: 250,
-      },
-      unlocked: true,
-      viewed: false,
-      complete: false,
-      resetOnPrestige: true,
-    },
-    {
       name: 'Create the Time Machine',
       description:
         'Your magnum opus. Soon you will be able to control time itself.',
       unlockCriteria: {
         unit: 'missionsCompleted',
-        value: ['Train an Apprentice', 'Study Time Magic'],
+        value: ['Train an Apprentice'],
       },
       completionCriteria: {
         unit: 'spareTime',
@@ -405,6 +393,23 @@ export const state = () => ({
       viewed: false,
       complete: false,
       resetOnPrestige: false,
+    },
+    {
+      name: 'Study Time Magic',
+      description:
+        "As time ticks away you begin to ponder the mysteries of time's origins and possibilities.",
+      unlockCriteria: {
+        unit: 'eraVisited',
+        value: 'Middle Ages',
+      },
+      completionCriteria: {
+        unit: 'spareTime',
+        value: 250,
+      },
+      unlocked: true,
+      viewed: false,
+      complete: false,
+      resetOnPrestige: true,
     },
     {
       name: 'Time to Cheat Death',
@@ -424,25 +429,42 @@ export const state = () => ({
       complete: false,
       resetOnPrestige: false,
     },
-    {
-      // update doPrestige (mutation) if this is renamed
-      name: 'Time Travel Precision',
-      description:
-        'The time machine could target a certain month instead of a decade, ' +
-        'with the proper calibration.',
-      unlockCriteria: {
-        unit: 'missionsCompleted',
-        value: ['Time to Cheat Death', 'Create the Time Machine'],
-      },
-      completionCriteria: {
-        unit: 'spareTime',
-        value: 10000,
-      },
-      unlocked: false,
-      viewed: false,
-      complete: false,
-      resetOnPrestige: false,
-    },
+    // {
+    //   // update doPrestige (mutation) if this is renamed
+    //   name: 'Time Travel Precision',
+    //   description:
+    //     'The time machine could target a certain month instead of a decade, ' +
+    //     'with the proper calibration.',
+    //   unlockCriteria: {
+    //     unit: 'missionsCompleted',
+    //     value: ['Time to Cheat Death', 'Create the Time Machine'],
+    //   },
+    //   completionCriteria: {
+    //     unit: 'spareTime',
+    //     value: 10000,
+    //   },
+    //   unlocked: false,
+    //   viewed: false,
+    //   complete: false,
+    //   resetOnPrestige: false,
+    // },
+    // {
+    //   name: 'Live Forever',
+    //   description:
+    //     "Seek out the philosopher's stone so that you can extend your lifespan.",
+    //   unlockCriteria: {
+    //     unit: 'eraVisited',
+    //     value: 'Middle Ages',
+    //   },
+    //   completionCriteria: {
+    //     unit: 'spareTime',
+    //     value: 2000,
+    //   },
+    //   unlocked: false,
+    //   viewed: false,
+    //   complete: false,
+    //   resetOnPrestige: false,
+    // },
     {
       name: 'Cheat Death... Again',
       description:
@@ -461,6 +483,12 @@ export const state = () => ({
       resetOnPrestige: true,
     },
   ],
+
+  // Time Machine
+  energy: 599,
+  energyMax: 600, // 60 seconds
+  fluxCapacitorLevel: 1,
+  nextFluxCapacitorCost: 500,
 
   timeMachineActions: [
     {
@@ -490,15 +518,55 @@ export const state = () => ({
     },
   ],
 
-  gameDate: 1400 * 12,
-  gameEra: 'Early Modern',
-  playerAge: 30 * 12,
-  playerAgeMax: 60 * 12,
-  playerLivedTotal: 0,
-  wisdomGained: 0, // wisdom gained so far on this run, not applied until player sends the book.
-  wisdomApplied: 0, // wisdom from previous runs
-  lifetimes: 0, // comleted lifetimes
-  timeJumpsBackwards: 0,
+  // Time Magic
+  mana: 99,
+  manaMax: 100,
+  philosophersStoneUnlocked: false,
+
+  spells: [
+    {
+      name: 'Chrono Deluge',
+      description:
+        'For 30 seconds, your taps gain additional spare time equal to the total level of your Apprentices. (x{{apprenticeLevels}})',
+      cost: 100,
+      duration: 300,
+      elapsed: 0,
+      unlocked: true,
+    },
+    {
+      name: 'Electric Touch',
+      description: 'For 15 seconds, your taps gain 5 energy as well.',
+      cost: 100,
+      duration: 150,
+      elapsed: 0,
+      unlocked: false,
+    },
+    {
+      name: 'Thermodynamic Loophole',
+      description: 'For 60 seconds, your taps gain triple mana.',
+      cost: 100,
+      duration: 600,
+      elapsed: 0,
+      unlocked: false,
+    },
+  ],
+
+  philosophersStoneActions: [
+    {
+      name: 'Empower the Stone',
+      description:
+        'Increase the number of months the stone adds or subtracts to your lifespan.',
+    },
+    {
+      name: 'Forever Young',
+      description: 'Decrease curreny age.',
+    },
+    {
+      name: 'Necromancy',
+      description: 'Increase maximum lifespan.',
+    },
+  ],
+  philosophersStoneIncrement: 6,
 })
 
 export const getters = {
@@ -693,14 +761,6 @@ export const mutations = {
     state.fluxCapacitorLevel += 1
     state.nextFluxCapacitorCost *= 2
   },
-  tickMana: (state) => {
-    state.mana += 1
-  },
-  spendMana: (state, amount) => {
-    if (amount <= state.mana) {
-      state.mana -= amount
-    }
-  },
   unlockTimeMachineAction: (state, name) => {
     const index = state.timeMachineActions.findIndex((t) => t.name === name)
     Vue.set(state.tabs[index], 'unlocked', true)
@@ -746,5 +806,33 @@ export const mutations = {
   },
   tickLifetime: (state) => {
     state.lifetimes += 1
+  },
+
+  // Time Magic
+  unlockSpell: (state, name) => {
+    const index = state.spells.findIndex((s) => s.name === name)
+    Vue.set(state.spells[index], 'unlocked', true)
+  },
+  tickMana: (state) => {
+    state.mana += 1
+  },
+  spendMana: (state, amount) => {
+    if (amount <= state.mana) {
+      state.mana -= amount
+    }
+  },
+
+  // Philosper's Stone
+  unlockPhilosophersStone: (state) => {
+    state.philosophersStoneUnlocked = true
+  },
+  increasePhilosophersStoneIncrement: (state, months) => {
+    state.philosophersStoneIncrement += months
+  },
+  extendLifespan: (state, months) => {
+    state.playerAgeMax += months
+  },
+  decreaseAge: (state, months) => {
+    state.playerAge -= months
   },
 }

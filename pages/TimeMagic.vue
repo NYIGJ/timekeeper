@@ -27,8 +27,45 @@
       now also gains
       <b><span class="fas fa-star text-base" /> Mana</b>
     </p>
+
+    <h2 class="text-xl font-semibold text-center pt-8">Spells</h2>
+
+    <responsive-grid min="1" mid="1" max="1" class="pt-2 md:pt-4 text-center">
+      <p>Spells coming soon!</p>
+    </responsive-grid>
+
+    <h2 class="text-xl font-semibold text-center pt-8">Philosopher's Stone</h2>
+
+    <responsive-grid class="pt-2 md:pt-4">
+      <philosophers-stone-button
+        v-for="action in $store.state.philosophersStoneActions"
+        :key="action.name"
+        :action="action"
+      />
+    </responsive-grid>
   </div>
 </template>
+
+<script>
+import PhilosophersStoneButton from '~/components/PhilosophersStoneButton.vue'
+export default {
+  components: { PhilosophersStoneButton },
+  data() {
+    return {
+      riteOfChronosTime: 300,
+    }
+  },
+  methods: {
+    castSpell(name) {
+      this.$store.commit('spendMana', 100)
+
+      if (name === 'Rite of Chronos') {
+        //
+      }
+    },
+  },
+}
+</script>
 
 <style scoped>
 .mana-bar {

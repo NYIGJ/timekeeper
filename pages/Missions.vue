@@ -41,6 +41,10 @@ export default {
           return unlockCriteria.value.every((name) =>
             this.$store.getters.missionIsCompleted(name)
           )
+        } else if (unlockCriteria.unit === 'eraVisited') {
+          return this.$store.state.processes.find(
+            (p) => p.unlockEra === unlockCriteria.value
+          ).visited
         } else if (unlockCriteria.unit === 'timeJumpsBackwards') {
           return unlockCriteria.value <= this.$store.state.timeJumpsBackwards
         } else {
@@ -76,6 +80,10 @@ export default {
         this.$store.commit('setPlayerAge', { year: 30 })
         this.$store.commit('timeTravel', { year: 1400, era: 'Early Modern' })
         this.$store.commit('tickLifetime')
+      }
+
+      if (mission.name === 'Live Forever') {
+        this.$store.commit('unlockPhilosophersStone')
       }
     },
   },
