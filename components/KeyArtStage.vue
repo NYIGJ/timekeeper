@@ -27,10 +27,7 @@
 export default {
   computed: {
     currencyText() {
-      if (this.$store.state.currency.greaterThan(1e7)) {
-        return this.$store.state.currency.toString()
-      }
-      return Math.floor(this.$store.state.currency)
+      return this.$store.getters.suffixedDecimalText(this.$store.state.currency)
     },
   },
   methods: {
