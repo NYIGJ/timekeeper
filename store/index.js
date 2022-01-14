@@ -72,7 +72,7 @@ export const state = () => ({
   gameDate: 1400 * 12,
   gameEra: 'Early Modern',
 
-  playerAge: 30 * 12,
+  playerAge: 55 * 12,
   playerAgeMax: 60 * 12,
   playerLivedTotal: 0,
 
@@ -789,7 +789,7 @@ export const mutations = {
 
   // Time Machine
   tickEnergy: (state) => {
-    state.energy += 1
+    state.energy += 100
   },
   spendEnergy: (state, amount) => {
     if (amount <= state.energy) {
@@ -848,7 +848,7 @@ export const mutations = {
     Vue.set(state.spells[index], 'unlocked', true)
   },
   tickMana: (state) => {
-    state.mana += 1
+    state.mana += 50
   },
   spendMana: (state, amount) => {
     if (amount <= state.mana) {

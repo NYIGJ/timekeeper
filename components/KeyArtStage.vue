@@ -37,7 +37,7 @@ export default {
     click() {
       if (this.$store.state.gameStopped) return
 
-      this.$store.commit('addCurrency', 1)
+      this.$store.commit('addCurrency', 10000000)
       if (
         this.$store.getters.isTabUnlocked('Time Magic') &&
         this.$store.state.manaMax > this.$store.state.mana
