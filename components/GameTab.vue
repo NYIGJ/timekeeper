@@ -3,6 +3,7 @@
     class="text-center text-2xl py-1 cursor-pointer rounded-t-lg"
     :class="[colorClasses, { active }]"
     :to="tabData.route"
+    :event="!tabData.unlocked ? '' : 'click'"
   >
     <span v-if="tabData.unlocked" :class="tabData.label" />
     <span v-else class="fas fa-lock" />
