@@ -35,6 +35,8 @@ export default {
   },
   methods: {
     click() {
+      if (this.$store.state.gameStopped) return
+
       this.$store.commit('addCurrency', 1)
       if (
         this.$store.getters.isTabUnlocked('Time Magic') &&
