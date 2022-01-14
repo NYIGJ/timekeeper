@@ -28,6 +28,7 @@
         <nuxt />
       </div>
     </main>
+    <narrative-modal v-if="$store.state.modalIsOpen" />
   </div>
 </template>
 
@@ -43,10 +44,17 @@ export default {
   },
   mounted() {
     window.setInterval(() => {
-      if (this.$store.state.playerAge < this.$store.state.playerAgeMax)
+      if (this.$store.state.modalIsOpen || this.$store.state.gameStopped) return
+
+      if (this.$store.state.playerAge < this.$store.state.playerAgeMax) {
         this.gametick()
+      } else {
+        this.checkLossCondition()
+      }
     }, 100)
     window.setInterval(() => {
+      if (this.$store.state.modalIsOpen || this.$store.state.gameStopped) return
+
       if (this.$store.state.playerAge < this.$store.state.playerAgeMax)
         this.$store.commit('tickGameDate')
     }, 1000)
@@ -56,7 +64,7 @@ export default {
       // Instruments tick
       this.$store.state.processes
         .filter((p) => p.created)
-        .forEach((process, index) => {
+        .forEach((process) => {
           if (process.completion >= process.completionRequired) {
             const reward = process.baseReward * (1 + process.workerLevel)
 
@@ -73,6 +81,32 @@ export default {
         this.$store.state.energy < this.$store.state.energyMax
       ) {
         this.$store.commit('tickEnergy')
+      }
+    },
+    checkLossCondition() {
+      this.$store.commit('stopGame')
+
+      // End state
+      const lostTheGame =
+        this.$store.state.playerAge === this.$store.state.playerAgeMax &&
+        !this.$store.getters.isTabUnlocked('Time Machine')
+
+      if (lostTheGame) {
+        const message =
+          'You wasted your precious time your whole life with nothing to show for it.' +
+          '<br><br>' +
+          'You have lost the game. Reload the page and try again.'
+
+        this.$store.commit('openModal', message)
+      } else {
+        const message =
+          "You are too frail to continue. It's time to gather your knowledge into a book and " +
+          'send it, along with the time machine and your timekeeping instruments, to your younger self. ' +
+          'Hopefully they will know what to do with this valuable wisdom.' +
+          '<br><br>' +
+          'Go to the <b>Missions</b> tab to continue.'
+
+        this.$store.commit('openModal', message)
       }
     },
   },
