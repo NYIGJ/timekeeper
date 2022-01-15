@@ -31,6 +31,36 @@ export default {
         integrity:
           'sha512-P9vJUXK+LyvAzj8otTOKzdfF1F3UYVl13+F8Fof8/2QNb8Twd6Vb+VD52I7+87tex9UXxnzPgWA3rH96RExA7A==',
       },
+      {
+        rel: 'preload',
+        as: 'image',
+        href: '/Instruments.svg',
+      },
+      {
+        rel: 'preload',
+        as: 'image',
+        href: '/Apprentices.svg',
+      },
+      {
+        rel: 'preload',
+        as: 'image',
+        href: '/Missions.svg',
+      },
+      {
+        rel: 'preload',
+        as: 'image',
+        href: '/TimeMachine.svg',
+      },
+      {
+        rel: 'preload',
+        as: 'image',
+        href: '/TimeMagic.svg',
+      },
+      {
+        rel: 'preload',
+        as: 'image',
+        href: '/Wisdom.svg',
+      },
     ],
   },
 
