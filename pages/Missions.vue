@@ -1,5 +1,5 @@
 <template>
-  <div class="missions grid">
+  <div class="missions pb-20">
     <responsive-grid v-if="incomplete.length">
       <mission-button
         v-for="(mission, index) in incomplete"
@@ -87,10 +87,15 @@ export default {
         this.$store.commit('doPrestige')
         this.$store.commit('startGame')
 
-        const message =
-          'You are young-ish once again and back in the year 1400 with all your wisdom intact.' +
-          '<br><br>' +
-          'Continue to explore the eras and unlock the secrets of time.'
+        const message = this.$store.getters.missionIsCompleted(
+          'Time Travel Precision'
+        )
+          ? 'Having increased the precision of the time machine, you were able to bring your wisdom ' +
+            'to yourself as a child and get an earlier start on this next shot at life. You are now ' +
+            'in the year 1372, a young person with a full life ahead of yourself to explore the depths of time.'
+          : 'You are young-ish once again and back in the year 1400 with all your wisdom intact.' +
+            '<br><br>' +
+            'Continue to explore the eras and unlock the secrets of time.'
 
         this.$store.commit('openModal', message)
       }
@@ -102,9 +107,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.missions {
-  grid-template-rows: minmax(0, 1fr) auto auto;
-}
-</style>

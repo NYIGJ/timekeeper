@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-content md:overflow-hidden">
+  <div class="tab-content md:overflow-hidden pb-20">
     <div class="stats grid mb-4 mx-auto max-w-md">
       <span align="left"><b>Total spare time generated</b></span
       ><span align="right">{{
