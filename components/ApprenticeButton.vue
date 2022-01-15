@@ -6,6 +6,7 @@
     :value="$store.state.currency"
     :current="current"
     :next="next"
+    :disabled="$store.state.gameStopped"
     @click="levelUp"
   />
 </template>
