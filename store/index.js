@@ -58,11 +58,8 @@ export const state = () => ({
       unlocked: false,
     },
   ],
-  modalText:
-    '{{ Premise }}' +
-    '<br><br>' +
-    '{{ Click to generate <span class="fas fa-hourglass-half text-sm"></span> <b>Spare Time</b> }}',
-  modalIsOpen: true,
+  modalText: '',
+  modalIsOpen: false,
 
   gameStopped: false,
 

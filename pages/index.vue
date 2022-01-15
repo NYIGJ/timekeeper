@@ -11,7 +11,7 @@
       />
     </responsive-grid>
 
-    <responsive-grid min="2" mid="4" max="6">
+    <responsive-grid class="pb-20" min="2" mid="3" max="5">
       <timekeeping-instrument
         v-for="(process, index) in created"
         :key="index"
