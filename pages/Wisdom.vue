@@ -1,6 +1,6 @@
 <template>
   <div class="tab-content md:overflow-hidden">
-    <div class="grid grid-cols-2">
+    <div class="stats grid mb-4 mx-auto max-w-md">
       <span align="left"><b>Total spare time generated</b></span
       ><span align="right">{{
         $store.getters.suffixedDecimalText($store.state.currencyTotal)
@@ -27,14 +27,29 @@
       ><span align="right">{{ $store.state.wisdomGained }}</span>
 
       <span align="left"><b>Wisdom from other timelines</b></span
-      ><span align="right"
-        >{{ $store.state.wisdomApplied }}: +{{ $store.state.wisdomApplied }}% to
-        Spare Time, Energy, and Mana gained</span
-      >
+      ><span align="right">{{ $store.state.wisdomApplied }}</span>
     </div>
-    <hr />
 
-    Created by GrapefruitChili, PK, TNNPe, Vice for New Years Incremental Game
-    Jam 2022.
+    <p class="text-center pb-2">
+      Accrued <b>Wisdom</b> makes you gain more <br class="md:hidden" />
+      Spare Time, Energy, and Mana.
+    </p>
+
+    <p class="text-center pb-4 text-sm font-bold">
+      Current bonus: +{{ $store.state.wisdomApplied }}%
+    </p>
+
+    <hr class="pb-4" :class="`border-${$store.getters.activeTab.darkColor}`" />
+
+    <p class="text-center">
+      Created by GrapefruitChili, PK, TNNPe, Vice <br class="md:hidden" />
+      for New Years Incremental Game Jam 2022.
+    </p>
   </div>
 </template>
+
+<style scoped>
+.stats {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+</style>
