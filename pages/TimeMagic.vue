@@ -1,5 +1,5 @@
 <template>
-  <div class="md:pt-4 pt-2 pb-16">
+  <div class="md:pt-4 pt-2 pb-20">
     <div
       class="mana-bar relative mx-auto rounded-full overflow-hidden border-2"
       :class="`text-${$store.getters.activeTab.color} border-${$store.getters.activeTab.darkColor}`"

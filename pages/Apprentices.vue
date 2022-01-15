@@ -1,5 +1,5 @@
 <template>
-  <responsive-grid>
+  <responsive-grid class="pb-20">
     <apprentice-button
       v-for="(process, index) in unlocked"
       :key="`${index}-${process.workerLevel}`"

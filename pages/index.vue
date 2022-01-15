@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pb-20">
     <responsive-grid class="mb-4">
       <progress-button
         v-for="(process, index) in uncreated"
@@ -11,7 +11,7 @@
       />
     </responsive-grid>
 
-    <responsive-grid class="pb-20" min="2" mid="3" max="5">
+    <responsive-grid min="2" mid="3" max="5">
       <timekeeping-instrument
         v-for="(process, index) in created"
         :key="index"
