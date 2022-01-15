@@ -75,12 +75,16 @@ export default {
         this.$store.commit('unlockTab', 'Time Machine')
       }
 
-      if (mission.name === 'Time to Cheat Death') {
+      if (
+        mission.name === 'Time to Cheat Death' ||
+        mission.name === 'Cheat Death... Again'
+      ) {
         this.$store.commit('unlockTab', 'Wisdom')
-        this.$store.commit('setPlayerAge', { year: 30 })
-        this.$store.commit('timeTravel', { year: 1400, era: 'Early Modern' })
-        this.$store.commit('tickLifetime')
-        this.$store.commit('spendCurrency', this.$store.state.currency)
+        // this.$store.commit('setPlayerAge', { year: 30 })
+        // this.$store.commit('timeTravel', { year: 1400, era: 'Early Modern' })
+        // this.$store.commit('tickLifetime')
+        // this.$store.commit('spendCurrency', this.$store.state.currency)
+        this.$store.commit('doPrestige')
         this.$store.commit('startGame')
 
         const message =
