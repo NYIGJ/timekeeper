@@ -17,8 +17,8 @@
         class="absolute top-0 left-0 right-0 w-full text-center text-sm h-5"
         :class="`text-${$store.getters.activeTab.darkColor}`"
       >
-        {{ reward }} <span class="fas fa-hourglass-half" /> every
-        {{ interval }} seconds
+        {{ rewardText }} <span class="fas fa-hourglass-half" /> /
+        {{ interval }} sec
       </span>
     </div>
     <div
@@ -91,6 +91,11 @@ export default {
   computed: {
     reward() {
       return this.process.baseReward * (1 + this.process.workerLevel)
+    },
+    rewardText() {
+      return this.$store.getters.suffixedDecimalText(
+        this.process.baseReward * (1 + this.process.workerLevel)
+      )
     },
     interval() {
       return this.process.completionRequired / 10 /* in seconds */
