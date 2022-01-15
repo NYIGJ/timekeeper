@@ -6,6 +6,7 @@
     :value="$store.state.mana"
     :current="current"
     :next="next"
+    unit="mana"
     @click="doAction"
   />
 </template>
