@@ -1,5 +1,8 @@
 <template>
-  <div class="container max-h-full h-full w-full mx-auto bg-gray-400 px-4">
+  <div
+    class="wrapper container max-h-full h-full w-full mx-auto px-4"
+    :class="`bg-${activeTab.darkColor}`"
+  >
     <main
       class="grid w-full h-full overflow-auto relative"
       :class="`bg-${activeTab.color}`"
@@ -132,6 +135,9 @@ html {
 </style>
 
 <style scoped>
+.wrapper {
+  transition: background-color 2000ms;
+}
 main {
   grid-template-rows: auto minmax(0, 2fr) auto minmax(0, 3fr);
   transition: background-color 2000ms;
