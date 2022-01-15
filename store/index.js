@@ -71,9 +71,12 @@ export const state = () => ({
 
   gameDate: 1400 * 12,
   gameEra: 'Early Modern',
+  gameTimeTotal: 0,
+  gameDateRecord: 0,
 
   playerAge: 30 * 12,
   playerAgeMax: 60 * 12,
+  playerAgeRecord: 0,
   playerLivedTotal: 0,
 
   wisdomGained: 0, // wisdom gained so far on this run, not applied until player sends the book.
@@ -625,6 +628,19 @@ export const getters = {
   gameYear: (state) => {
     return Math.floor(state.gameDate / 12)
   },
+  gameDateRecordText: (state) => {
+    return (
+      (state.gameDateRecord % 12) +
+      1 +
+      '/' +
+      Math.floor(state.gameDateRecord / 12)
+    )
+  },
+  gameTimeTotalText: (state) => {
+    return `${Math.floor(state.gameTimeTotal / 12)}y${
+      state.gameTimeTotal % 12
+    }m`
+  },
   currencySpent: (state) => {
     return Decimal.subtract(state.currencyTotal, state.currency)
   },
@@ -637,6 +653,12 @@ export const getters = {
   ageMaxText: (state) => {
     const year = Math.floor(state.playerAgeMax / 12)
     const month = state.playerAgeMax % 12
+
+    return `${year}y${month}m`
+  },
+  ageRecordText: (state) => {
+    const year = Math.floor(state.playerAgeRecord / 12)
+    const month = state.playerAgeRecord % 12
 
     return `${year}y${month}m`
   },
@@ -745,6 +767,11 @@ export const mutations = {
     state.gameDate += 1
     state.playerAge += 1
     if (!(state.playerAge % 12)) state.wisdomGained++
+    state.gameTimeTotal += 1
+    if (state.playerAge > state.playerAgeRecord)
+      state.playerAgeRecord = state.playerAge
+    if (state.gameDate > state.gameDateRecord)
+      state.gameDateRecord = state.gameDate
   },
   setPlayerAge: (state, { year, month = 0 }) => {
     state.playerAge = year * 12 + month
@@ -854,7 +881,7 @@ export const mutations = {
 
     // delete all apprentices
     state.processes.forEach((e) => {
-      e.visited = false // require re-travel to time period to hire
+      // e.visited = false // require re-travel to time period to hire
       e.workerLevel = 0
       e.nextWorkerCost = e.baseWorkerCost
     })
