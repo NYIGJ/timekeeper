@@ -33,7 +33,7 @@
     </span>
 
     <span
-      class="w-full text-left lg:text-center text-lg lg:text-xl font-semibold"
+      class="w-full text-left text-lg lg:text-xl font-semibold"
       v-text="label"
     />
 
