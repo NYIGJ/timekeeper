@@ -429,7 +429,7 @@ export const state = () => ({
       unlocked: true,
       viewed: false,
       complete: false,
-      resetOnPrestige: true,
+      resetOnPrestige: false,
     },
     {
       name: 'Time to Cheat Death',
@@ -864,9 +864,11 @@ export const mutations = {
     if (precisionMission.complete) {
       state.playerAge = 8 * 12
       state.gameDate = 1378 * 12
+      state.gameEra = 'Early Modern'
     } else {
       state.playerAge = 30 * 12
       state.gameDate = 1400 * 12
+      state.gameEra = 'Early Modern'
     }
 
     // restart missions as appropriate
