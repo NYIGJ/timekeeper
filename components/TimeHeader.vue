@@ -1,6 +1,6 @@
 <template>
   <header
-    class="grid grid-cols-3 w-full font-semibold h-10 m-auto md:relative rounded-bl-full rounded-br-full px-4"
+    class="grid grid-cols-3 w-full font-semibold h-10 m-auto relative rounded-bl-full rounded-br-full px-4 z-10"
     :class="colorClasses"
   >
     <div class="text-center pt-2 pb-1 border-r border-gray-600 select-none">
