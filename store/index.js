@@ -99,6 +99,7 @@ export const state = () => ({
 
       workerLevel: 0,
       nextWorkerCost: 5000000000000,
+      baseWorkerCost: 5000000000000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -120,6 +121,7 @@ export const state = () => ({
 
       workerLevel: 0,
       nextWorkerCost: 50000000000,
+      baseWorkerCost: 50000000000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -141,6 +143,7 @@ export const state = () => ({
 
       workerLevel: 0,
       nextWorkerCost: 500000000,
+      baseWorkerCost: 500000000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -162,6 +165,7 @@ export const state = () => ({
 
       workerLevel: 0,
       nextWorkerCost: 5000000,
+      baseWorkerCost: 5000000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -183,6 +187,7 @@ export const state = () => ({
 
       workerLevel: 0,
       nextWorkerCost: 50000,
+      baseWorkerCost: 50000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -204,6 +209,7 @@ export const state = () => ({
 
       workerLevel: 0,
       nextWorkerCost: 500,
+      baseWorkerCost: 500,
       nextWorkerFactor: 1.6,
 
       unlockThreshold: { tech: null, currency: 10000 },
@@ -225,6 +231,7 @@ export const state = () => ({
 
       workerLevel: 0, // 0 = not hired; 1+ = hired
       nextWorkerCost: 50, // currency cost of next worker
+      baseWorkerCost: 50, // currency cost of first worker (for prestige reset)
       nextWorkerFactor: 1.5, // worker cost *= this factor after each purchase
 
       unlockThreshold: { tech: null, currency: 0 },
@@ -246,6 +253,7 @@ export const state = () => ({
 
       workerLevel: 0,
       nextWorkerCost: 5000,
+      baseWorkerCost: 5000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: 0, currency: new Decimal(10e5) },
@@ -267,6 +275,7 @@ export const state = () => ({
 
       workerLevel: 0,
       nextWorkerCost: 500000,
+      baseWorkerCost: 500000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -288,6 +297,7 @@ export const state = () => ({
 
       workerLevel: 0,
       nextWorkerCost: 50000000,
+      baseWorkerCost: 50000000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -309,6 +319,7 @@ export const state = () => ({
 
       workerLevel: 0,
       nextWorkerCost: 5000000000,
+      baseWorkerCost: 5000000000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -330,6 +341,7 @@ export const state = () => ({
 
       workerLevel: 0,
       nextWorkerCost: 500000000000,
+      baseWorkerCost: 500000000000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -351,6 +363,7 @@ export const state = () => ({
 
       workerLevel: 0,
       nextWorkerCost: 50000000000000,
+      baseWorkerCost: 50000000000000,
       nextWorkerFactor: 1.8,
 
       unlockThreshold: { tech: null, currency: new Decimal(1e1) },
@@ -436,25 +449,26 @@ export const state = () => ({
       complete: false,
       resetOnPrestige: false,
     },
-    // {
-    //   // update doPrestige (mutation) if this is renamed
-    //   name: 'Time Travel Precision',
-    //   description:
-    //     'The time machine could target a certain month instead of a decade, ' +
-    //     'with the proper calibration.',
-    //   unlockCriteria: {
-    //     unit: 'missionsCompleted',
-    //     value: ['Time to Cheat Death', 'Create the Time Machine'],
-    //   },
-    //   completionCriteria: {
-    //     unit: 'spareTime',
-    //     value: 10000,
-    //   },
-    //   unlocked: false,
-    //   viewed: false,
-    //   complete: false,
-    //   resetOnPrestige: false,
-    // },
+    {
+      // update doPrestige (mutation) if this is renamed
+      name: 'Time Travel Precision',
+      description:
+        'The time machine could target a certain month instead of a decade, ' +
+        'with the proper calibration. Send it to yourself as a child and ' +
+        'give your past self even more of a head start.',
+      unlockCriteria: {
+        unit: 'missionsCompleted',
+        value: ['Time to Cheat Death', 'Create the Time Machine'],
+      },
+      completionCriteria: {
+        unit: 'spareTime',
+        value: 1e15,
+      },
+      unlocked: false,
+      viewed: false,
+      complete: false,
+      resetOnPrestige: false,
+    },
     // {
     //   name: 'Live Forever',
     //   description:
@@ -790,7 +804,8 @@ export const mutations = {
 
   // Time Machine
   tickEnergy: (state) => {
-    state.energy += 1
+    state.energy += 1 + Math.floor(state.wisdomApplied / 100)
+    if (state.energy > state.energyMax) state.energy = state.energyMax
   },
   spendEnergy: (state, amount) => {
     if (amount <= state.energy) {
@@ -810,24 +825,39 @@ export const mutations = {
     state.gameDate = month
   },
   doPrestige: (state) => {
+    // sum up statistics for Wisdom tab
     state.currency = new Decimal(0)
     state.wisdomApplied += state.wisdomGained
     state.wisdomGained = 0
     state.lifetimes += 1
     state.timeJumpsBackwards += 1
     state.playerLivedTotal += state.playerAge
+
+    // If the "Time Travel Precision" mission is done, send players back as a child for +20ish more years of life
     // TODO: refactor next 3 lines if getters can be used in mutators: missionIsCompleted('Time Travel Precision')
     const precisionMissionIndex = state.missions.findIndex(
       (m) => m.name === 'Time Travel Precision'
     )
     const precisionMission = state.missions[precisionMissionIndex]
-    if (precisionMission.completed) {
-      state.playerAge = 30 * 12
-      state.gameDate = 1400 * 12
-    } else {
+    if (precisionMission.complete) {
       state.playerAge = 8 * 12
       state.gameDate = 1378 * 12
+    } else {
+      state.playerAge = 30 * 12
+      state.gameDate = 1400 * 12
     }
+
+    // restart missions as appropriate
+    state.missions.forEach((e) => {
+      if (e.resetOnPrestige) e.complete = false
+    })
+
+    // delete all apprentices
+    state.processes.forEach((e) => {
+      e.visited = false // require re-travel to time period to hire
+      e.workerLevel = 0
+      e.nextWorkerCost = e.baseWorkerCost
+    })
   },
   timeTravel: (state, { era, year = 0, month = 0 }) => {
     const newYear = year * 12 + month
@@ -849,7 +879,10 @@ export const mutations = {
     Vue.set(state.spells[index], 'unlocked', true)
   },
   tickMana: (state) => {
-    state.mana += 1
+    state.mana += 1 + Math.floor(state.wisdomApplied / 100)
+    // apply a n% chance of extra mana for wisdom not part of a full hundred
+    if (Math.random() * 100 < state.wisdomApplied % 100) state.mana += 1
+    if (state.mana > state.manaMax) state.mana = state.manaMax
   },
   spendMana: (state, amount) => {
     if (amount <= state.mana) {
