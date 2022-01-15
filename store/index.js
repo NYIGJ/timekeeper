@@ -453,9 +453,7 @@ export const state = () => ({
       // update doPrestige (mutation) if this is renamed
       name: 'Time Travel Precision',
       description:
-        'The time machine could target a certain month instead of a decade, ' +
-        'with the proper calibration. Send it to yourself as a child and ' +
-        'give your past self even more of a head start.',
+        'When you pass your wisdom to your younger self, you will restart at age 8 instead of age 30.',
       unlockCriteria: {
         unit: 'missionsCompleted',
         value: ['Time to Cheat Death', 'Create the Time Machine'],
@@ -923,8 +921,10 @@ export const mutations = {
   },
   extendLifespan: (state, months) => {
     state.playerAgeMax += months
+    state.gameStopped = false
   },
   decreaseAge: (state, months) => {
     state.playerAge -= months
+    state.gameStopped = false
   },
 }
