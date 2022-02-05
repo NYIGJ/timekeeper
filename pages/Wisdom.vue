@@ -39,7 +39,7 @@
       Current bonus: +{{ $store.state.wisdomApplied }}%
     </p>
 
-    <hr class="pb-4" :class="`border-${$store.getters.activeTab.darkColor}`" />
+    <hr class="pb-4" :class="`border-${activeTab.darkColor}`" />
 
     <p class="text-center">
       Created by GrapefruitChili, PK, TNNPe, Vice <br class="md:hidden" />
@@ -47,6 +47,16 @@
     </p>
   </div>
 </template>
+
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+  computed: {
+    ...mapGetters('tabs', ['activeTab']),
+  },
+}
+</script>
 
 <style scoped>
 .stats {

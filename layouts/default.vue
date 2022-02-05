@@ -12,11 +12,7 @@
       <key-art-stage />
 
       <div class="grid grid-cols-6 gap-1 w-full h-10 relative">
-        <game-tab
-          v-for="tab in $store.state.tabs"
-          :key="tab.route"
-          :tab-data="tab"
-        />
+        <game-tab v-for="tab in tabs" :key="tab.route" :tab-data="tab" />
       </div>
 
       <div
@@ -36,11 +32,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['activeTab']),
+    ...mapState('tabs', ['tabs']),
+    ...mapGetters('tabs', ['activeTab', 'isTabUnlocked']),
     activeTabColorClasses() {
       return `bg-${this.activeTab.lightColor} text-${this.activeTab.darkColor}`
     },
@@ -80,7 +77,7 @@ export default {
 
       // Energy ticks
       if (
-        this.$store.getters.isTabUnlocked('Time Machine') &&
+        this.isTabUnlocked('Time Machine') &&
         this.$store.state.energy < this.$store.state.energyMax
       ) {
         this.$store.commit('tickEnergy')
@@ -92,7 +89,7 @@ export default {
       // End state
       const lostTheGame =
         this.$store.state.playerAge === this.$store.state.playerAgeMax &&
-        !this.$store.getters.isTabUnlocked('Time Machine')
+        !this.isTabUnlocked('Time Machine')
 
       if (lostTheGame) {
         const message =

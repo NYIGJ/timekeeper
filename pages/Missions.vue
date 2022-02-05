@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   computed: {
     unlocked() {
@@ -60,6 +62,7 @@ export default {
     },
   },
   methods: {
+    ...mapMutations('tabs', ['unlockTab']),
     complete(mission) {
       this.$store.commit('completeMission', mission.name)
 
@@ -68,18 +71,18 @@ export default {
       }
 
       if (mission.name === 'Study Time Magic') {
-        this.$store.commit('unlockTab', 'Time Magic')
+        this.unlockTab('Time Magic')
       }
 
       if (mission.name === 'Create the Time Machine') {
-        this.$store.commit('unlockTab', 'Time Machine')
+        this.unlockTab('Time Machine')
       }
 
       if (
         mission.name === 'Time to Cheat Death' ||
         mission.name === 'Cheat Death... Again'
       ) {
-        this.$store.commit('unlockTab', 'Wisdom')
+        this.unlockTab('Wisdom')
         // this.$store.commit('setPlayerAge', { year: 30 })
         // this.$store.commit('timeTravel', { year: 1400, era: 'Early Modern' })
         // this.$store.commit('tickLifetime')

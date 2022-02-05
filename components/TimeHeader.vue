@@ -27,10 +27,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   computed: {
+    ...mapGetters('tabs', ['activeTab']),
     colorClasses() {
-      const { lightColor, darkColor } = this.$store.getters.activeTab
+      const { lightColor, darkColor } = this.activeTab
 
       return `bg-${darkColor} text-${lightColor}`
     },

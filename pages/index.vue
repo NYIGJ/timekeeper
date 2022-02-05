@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   computed: {
     unlocked() {
@@ -35,12 +37,13 @@ export default {
     },
   },
   methods: {
+    ...mapMutations('tabs', ['unlockTab']),
     create(process) {
       this.$store.commit('createInstrument', process.instrument)
       this.$store.commit('spendCurrency', process.cost)
       if (process.instrument === 'Mechanical Clock') {
-        this.$store.commit('unlockTab', 'Apprentices')
-        this.$store.commit('unlockTab', 'Missions')
+        this.unlockTab('Apprentices')
+        this.unlockTab('Missions')
       }
     },
   },

@@ -13,7 +13,7 @@
     />
     <div
       class="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center"
-      :class="`text-${$store.getters.activeTab.darkColor}`"
+      :class="`text-${activeTab.darkColor}`"
       @click="click"
     >
       <span
@@ -36,14 +36,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   computed: {
+    ...mapGetters('tabs', ['activeTab', 'isTabUnlocked']),
     currencyText() {
       return this.$store.getters.suffixedDecimalText(this.$store.state.currency)
     },
-  },
-  mounted() {
-    console.log(this.$route)
   },
   methods: {
     click() {
@@ -51,7 +51,7 @@ export default {
 
       this.$store.commit('addCurrency', 1)
       if (
-        this.$store.getters.isTabUnlocked('Time Magic') &&
+        this.isTabUnlocked('Time Magic') &&
         this.$store.state.manaMax > this.$store.state.mana
       ) {
         this.$store.commit('tickMana')

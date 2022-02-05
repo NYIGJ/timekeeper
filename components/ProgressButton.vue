@@ -5,7 +5,7 @@
       colorClasses,
       {
         disabled,
-        [`text-${$store.getters.activeTab.darkColor}`]: disabled,
+        [`text-${activeTab.darkColor}`]: disabled,
         'cursor-pointer': clickable,
         'cursor-default': !clickable,
       },
@@ -50,6 +50,7 @@
 
 <script>
 import Decimal from 'break_infinity.js'
+import { mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -63,6 +64,7 @@ export default {
     disabled: { type: Boolean, default: false },
   },
   computed: {
+    ...mapGetters('tabs', ['activeTab']),
     cappedValue() {
       return this.value > this.max ? this.max : this.value
     },
@@ -80,7 +82,7 @@ export default {
       return !this.disabled && this.value >= this.max
     },
     colorClasses() {
-      const { lightColor, darkColor } = this.$store.getters.activeTab
+      const { lightColor, darkColor } = this.activeTab
 
       return this.clickable
         ? `bg-${darkColor} text-${lightColor}`

@@ -1,30 +1,27 @@
 <template>
   <div
     class="relative rounded-lg overflow-hidden border"
-    :class="`border-${$store.getters.activeTab.darkColor}`"
+    :class="`border-${activeTab.darkColor}`"
   >
     <div
       class="progress-wrapper absolute top-0 left-0 right-0 w-full h-5"
-      :class="`text-${$store.getters.activeTab.color}`"
+      :class="`text-${activeTab.color}`"
     >
       <progress
         class="w-full h-5 border-b"
-        :class="`border-${$store.getters.activeTab.darkColor}`"
+        :class="`border-${activeTab.darkColor}`"
         :max="process.completionRequired"
         :value="process.completion"
       />
       <span
         class="absolute top-0 left-0 right-0 w-full text-center text-sm h-5"
-        :class="`text-${$store.getters.activeTab.darkColor}`"
+        :class="`text-${activeTab.darkColor}`"
       >
         {{ rewardText }} <span class="fas fa-hourglass-half" /> /
         {{ interval }} sec
       </span>
     </div>
-    <div
-      class="frame pt-5 m-4"
-      :class="`text-${$store.getters.activeTab.darkColor}`"
-    >
+    <div class="frame pt-5 m-4" :class="`text-${activeTab.darkColor}`">
       <atlantean-clock-image v-if="process.instrument === 'Atlantean Clock'" />
       <sundail-image v-if="process.instrument === 'Sundial'" />
       <star-chart-image v-if="process.instrument === 'Star Chart'" />
@@ -47,7 +44,7 @@
     </div>
     <p
       class="text-center text-sm font-semibold h-5 border-t"
-      :class="`border-${$store.getters.activeTab.darkColor}`"
+      :class="`border-${activeTab.darkColor}`"
     >
       {{ process.instrument }}
     </p>
@@ -55,6 +52,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import AstrolabeImage from './svg/AstrolabeImage.vue'
 import AtlanteanClockImage from './svg/AtlanteanClockImage.vue'
 import AtomicClockImage from './svg/AtomicClockImage.vue'
@@ -89,6 +88,7 @@ export default {
     process: { type: Object, required: true },
   },
   computed: {
+    ...mapGetters('tabs', ['activeTab']),
     reward() {
       return this.process.baseReward * (1 + this.process.workerLevel)
     },

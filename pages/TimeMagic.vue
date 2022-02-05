@@ -2,7 +2,7 @@
   <div class="md:pt-4 pt-2 pb-20">
     <div
       class="mana-bar relative mx-auto rounded-full overflow-hidden border-2"
-      :class="`text-${$store.getters.activeTab.color} border-${$store.getters.activeTab.darkColor}`"
+      :class="`text-${activeTab.color} border-${activeTab.darkColor}`"
     >
       <progress
         class="absolute top-0 right-0 left-0 w-full h-full"
@@ -11,7 +11,7 @@
       />
       <span
         class="relative block pt-1 pb-2 text-center text-lg font-semibold"
-        :class="`text-${$store.getters.activeTab.darkColor}`"
+        :class="`text-${activeTab.darkColor}`"
       >
         <span class="mr-1"
           >{{ $store.state.mana }} / {{ $store.state.manaMax }}</span
@@ -47,13 +47,19 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import PhilosophersStoneButton from '~/components/PhilosophersStoneButton.vue'
+
 export default {
   components: { PhilosophersStoneButton },
   data() {
     return {
       riteOfChronosTime: 300,
     }
+  },
+  computed: {
+    ...mapGetters('tabs', ['activeTab']),
   },
   methods: {
     castSpell(name) {
